@@ -1,0 +1,13 @@
+{
+  "repo": "atlassian-compass",
+  "feeds": [
+    {
+      "source": "https://www.atlassian.com/blog/",
+      "feed_url": "https://www.atlassian.com/blog/rss/",
+      "title": "Inside Atlassian",
+      "saved": 5
+    }
+  ],
+  "fetched": "2026-05-09T20:17:51Z",
+  "post_count": 5
+}
