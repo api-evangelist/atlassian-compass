@@ -2,12 +2,20 @@
   "repo": "atlassian-compass",
   "feeds": [
     {
-      "source": "https://www.atlassian.com/blog/",
+      "source": "https://www.atlassian.com/blog/rss/",
       "feed_url": "https://www.atlassian.com/blog/rss/",
-      "title": "Inside Atlassian",
-      "saved": 5
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://www.atlassian.com/software/compass/pricing",
+      "feed_url": "https://www.atlassian.com/software/compass/pricing",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
-  "fetched": "2026-05-17T20:20:35Z",
-  "post_count": 10
+  "fetched": "2026-06-01T23:35:02Z",
+  "post_count": 15
 }
