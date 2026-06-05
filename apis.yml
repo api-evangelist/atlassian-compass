@@ -33,6 +33,8 @@ apis:
     url: https://developer.atlassian.com/cloud/compass/getting-started/
   - type: GettingStarted
     url: https://developer.atlassian.com/cloud/compass/getting-started/
+  - url: graphql/atlassian-compass-graphql.md
+    type: GraphQL
 - aid: atlassian-compass:atlassian-compass-rest-api
   name: Atlassian Compass REST API
   description: |
