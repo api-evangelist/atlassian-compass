@@ -1,0 +1,76 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Atlassian Compass REST API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metrics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a metric value into a metric source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.atlassian.com/compass/v1/metrics",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.atlassian.com/authorize",
+              "accessTokenUrl": "https://auth.atlassian.com/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Sends a single metric value tied to a Compass component. Rate\nlimited to 100 requests per user per minute.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send an event into an event source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.atlassian.com/compass/v1/events",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.atlassian.com/authorize",
+              "accessTokenUrl": "https://auth.atlassian.com/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Sends an event into a Compass event source. Returns 202 Accepted\nand processes the event asynchronously. Rate limited to 100 requests\nper user per minute.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
