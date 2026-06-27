@@ -62,7 +62,7 @@ common:
   url: https://developer.atlassian.com/cloud/compass/getting-started/
 - type: Authentication
   url: https://developer.atlassian.com/cloud/compass/getting-started/
-- type: SignUp
+- type: Signup
   url: https://www.atlassian.com/software/compass
 - type: GitHubOrganization
   url: https://github.com/atlassian
