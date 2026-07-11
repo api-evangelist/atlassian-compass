@@ -52,6 +52,14 @@ apis:
   - type: Authentication
     url: https://developer.atlassian.com/cloud/compass/getting-started/
 common:
+- type: TrustCenter
+  url: security/atlassian-compass-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/atlassian-compass-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/atlassian-compass-domain-security.yml
+- type: Authentication
+  url: authentication/atlassian-compass-authentication.yml
 - type: OAuthScopes
   url: scopes/atlassian-compass-scopes.yml
 - type: Website
