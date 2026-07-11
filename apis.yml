@@ -52,6 +52,8 @@ apis:
   - type: Authentication
     url: https://developer.atlassian.com/cloud/compass/getting-started/
 common:
+- type: OAuthScopes
+  url: scopes/atlassian-compass-scopes.yml
 - type: Website
   url: https://www.atlassian.com/software/compass
 - type: Portal

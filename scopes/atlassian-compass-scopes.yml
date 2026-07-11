@@ -1,0 +1,36 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/atlassian-compass-openapi.yml
+schemes:
+- name: oauth2
+  source: openapi/atlassian-compass-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://auth.atlassian.com/authorize
+    tokenUrl: https://auth.atlassian.com/oauth/token
+  description: OAuth 2.0 (3LO) for Atlassian Cloud
+scopes:
+- scope: read:component:compass
+  description: Read component data
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/atlassian-compass-openapi.yml
+- scope: write:component:compass
+  description: Write component data
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/atlassian-compass-openapi.yml
+- scope: write:event:compass
+  description: Send events
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/atlassian-compass-openapi.yml
+- scope: write:metric:compass
+  description: Send metric values
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/atlassian-compass-openapi.yml
