@@ -52,6 +52,8 @@ apis:
   - type: Authentication
     url: https://developer.atlassian.com/cloud/compass/getting-started/
 common:
+- type: AgenticAccess
+  url: agentic-access/atlassian-compass-agentic-access.yml
 - type: TrustCenter
   url: security/atlassian-compass-trust-center.yml
 - type: VulnerabilityDisclosure
