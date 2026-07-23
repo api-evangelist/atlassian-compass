@@ -1,0 +1,104 @@
+openapi: 3.1.0
+info:
+  title: Atlassian Compass REST Events Metrics API
+  version: '2.0'
+  description: 'Atlassian Compass is a developer experience platform with a software
+
+    component catalog, scorecards, metrics, and event ingestion. This
+
+    document describes the public REST API v2 (`/compass/v1`) used to send
+
+    metric values and events. Most Compass operations (querying components,
+
+    scorecards, dependencies, etc.) are exposed via the Compass GraphQL API
+
+    at https://api.atlassian.com/graphql and not enumerated here.
+
+    '
+  contact:
+    name: Atlassian Developer
+    url: https://developer.atlassian.com/cloud/compass/
+servers:
+- url: https://api.atlassian.com
+  description: Atlassian Cloud edge gateway
+tags:
+- name: Metrics
+  description: Ingest metric values
+paths:
+  /compass/v1/metrics:
+    post:
+      tags:
+      - Metrics
+      summary: Send a metric value into a metric source
+      description: 'Sends a single metric value tied to a Compass component. Rate
+
+        limited to 100 requests per user per minute.
+
+        '
+      security:
+      - oauth2:
+        - write:metric:compass
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InsertMetricRequest'
+      responses:
+        '200':
+          description: Metric value recorded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsertMetricResponse'
+        '429':
+          description: Rate limited
+components:
+  schemas:
+    InsertMetricRequest:
+      type: object
+      required:
+      - metricDefinitionId
+      - value
+      properties:
+        title:
+          type: string
+        value:
+          type: number
+        annotation:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        url:
+          type: string
+          format: uri
+        metricDefinitionId:
+          type: string
+        componentId:
+          type: string
+    InsertMetricResponse:
+      type: object
+      properties:
+        metricSourceId:
+          type: string
+        value:
+          type: number
+        timestamp:
+          type: string
+          format: date-time
+        annotation:
+          type: string
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 (3LO) for Atlassian Cloud
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.atlassian.com/authorize
+          tokenUrl: https://auth.atlassian.com/oauth/token
+          scopes:
+            write:metric:compass: Send metric values
+            write:event:compass: Send events
+            read:component:compass: Read component data
+            write:component:compass: Write component data
