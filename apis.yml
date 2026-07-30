@@ -3,7 +3,20 @@ name: Atlassian Compass
 description: |
   Atlassian Compass is a developer experience platform that helps engineering teams understand, manage, and improve the health of their software components and services. It provides a centralized catalog of software components with scorecards, metrics, dependency tracking, and event ingestion to improve developer productivity and software quality. Compass exposes a GraphQL API for querying and mutating component data and a REST Operations API for integrations.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/atlassian-compass.png
 tags:
 - Atlassian
 - Component Management
@@ -17,8 +30,10 @@ specificationVersion: '0.19'
 apis:
 - aid: atlassian-compass:atlassian-compass-graphql-api
   name: Atlassian Compass GraphQL API
-  description: |
-    The Compass GraphQL API enables programmatic management of software components, scorecards, metrics, relationships, custom fields, and event ingestion within the Compass developer experience platform using OAuth 2.0 authentication.
+  description: >
+    The Compass GraphQL API enables programmatic management of software components, scorecards, metrics,
+    relationships, custom fields, and event ingestion within the Compass developer experience platform
+    using OAuth 2.0 authentication.
   humanURL: https://developer.atlassian.com/cloud/compass/graphql/
   baseURL: https://api.atlassian.com/graphql
   tags:
@@ -37,8 +52,9 @@ apis:
     type: GraphQL
 - aid: atlassian-compass:atlassian-compass-rest-api
   name: Atlassian Compass REST API
-  description: |
-    The Compass REST API v1 provides operations for component management, scorecard configuration, and webhook registration via standard HTTP REST conventions with OAuth 2.0 authentication.
+  description: >
+    The Compass REST API v1 provides operations for component management, scorecard configuration, and
+    webhook registration via standard HTTP REST conventions with OAuth 2.0 authentication.
   humanURL: https://developer.atlassian.com/cloud/compass/rest/
   baseURL: https://api.atlassian.com/compass/v1
   tags:
@@ -51,6 +67,26 @@ apis:
     url: https://developer.atlassian.com/cloud/compass/rest/
   - type: Authentication
     url: https://developer.atlassian.com/cloud/compass/getting-started/
+- aid: atlassian-compass:atlassian-compass-events-api
+  name: Atlassian Compass Events API
+  description: Ingest events into a Compass event source
+  humanURL: https://developer.atlassian.com/cloud/compass/graphql/
+  baseURL: https://api.atlassian.com/graphql
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/atlassian-compass-events-api-openapi.yml
+- aid: atlassian-compass:atlassian-compass-metrics-api
+  name: Atlassian Compass Metrics API
+  description: Ingest metric values
+  humanURL: https://developer.atlassian.com/cloud/compass/graphql/
+  baseURL: https://api.atlassian.com/graphql
+  tags:
+  - Metrics
+  properties:
+  - type: OpenAPI
+    url: openapi/atlassian-compass-metrics-api-openapi.yml
 common:
 - type: AgenticAccess
   url: agentic-access/atlassian-compass-agentic-access.yml
