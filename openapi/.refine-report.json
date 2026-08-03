@@ -1,0 +1,16 @@
+{
+  "provider": "atlassian-compass",
+  "sources": [
+    "atlassian-compass-events-api-openapi.yml",
+    "atlassian-compass-metrics-api-openapi.yml"
+  ],
+  "outputs": [
+    "atlassian-compass-events-api-openapi.yml",
+    "atlassian-compass-metrics-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
