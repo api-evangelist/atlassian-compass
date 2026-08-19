@@ -1,0 +1,204 @@
+{
+  "item": [
+    {
+      "id": "33e14990-524b-4f58-a56d-282024bc883d",
+      "name": "Metrics",
+      "description": {
+        "content": "Ingest metric values",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "825de59e-1cc8-4cc8-917e-25661b7c8029",
+          "name": "Send a metric value into a metric source",
+          "request": {
+            "name": "Send a metric value into a metric source",
+            "description": {
+              "content": "Sends a single metric value tied to a Compass component. Rate\nlimited to 100 requests per user per minute.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "compass",
+                "v1",
+                "metrics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "write:metric:compass write:event:compass read:component:compass write:component:compass"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.atlassian.com/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://auth.atlassian.com/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"metricDefinitionId\": \"<string>\",\n  \"value\": \"<number>\",\n  \"title\": \"<string>\",\n  \"annotation\": \"<string>\",\n  \"timestamp\": \"<dateTime>\",\n  \"url\": \"<uri>\",\n  \"componentId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cb97e94c-8c28-4b0d-a177-fb2f54cb5fda",
+              "name": "Metric value recorded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compass",
+                    "v1",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"metricDefinitionId\": \"<string>\",\n  \"value\": \"<number>\",\n  \"title\": \"<string>\",\n  \"annotation\": \"<string>\",\n  \"timestamp\": \"<dateTime>\",\n  \"url\": \"<uri>\",\n  \"componentId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"metricSourceId\": \"string\",\n  \"value\": 7483.659470458277,\n  \"timestamp\": \"2011-09-16T23:38:57.874Z\",\n  \"annotation\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba367353-e0b8-476e-8ec4-3a8447c9f042",
+              "name": "Rate limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compass",
+                    "v1",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"metricDefinitionId\": \"<string>\",\n  \"value\": \"<number>\",\n  \"title\": \"<string>\",\n  \"annotation\": \"<string>\",\n  \"timestamp\": \"<dateTime>\",\n  \"url\": \"<uri>\",\n  \"componentId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.atlassian.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "976b71de-6ada-4812-b1ee-1e7e958aa305",
+    "name": "Atlassian Compass REST Events Metrics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Atlassian Compass is a developer experience platform with a software\ncomponent catalog, scorecards, metrics, and event ingestion. This\ndocument describes the public REST API v2 (`/compass/v1`) used to send\nmetric values and events. Most Compass operations (querying components,\nscorecards, dependencies, etc.) are exposed via the Compass GraphQL API\nat https://api.atlassian.com/graphql and not enumerated here.\n\n\nContact Support:\n Name: Atlassian Developer",
+      "type": "text/plain"
+    }
+  }
+}
