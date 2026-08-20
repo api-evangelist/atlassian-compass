@@ -73,6 +73,8 @@ apis:
   humanURL: https://developer.atlassian.com/cloud/compass/graphql/
   baseURL: https://api.atlassian.com/graphql
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
