@@ -37,7 +37,7 @@ tags:
 - GraphQL
 url: https://raw.githubusercontent.com/api-evangelist/atlassian-compass/refs/heads/main/apis.yml
 created: '2026-03-16'
-modified: '2026-04-19'
+modified: '2026-09-06'
 specificationVersion: '0.23'
 apis:
 - aid: atlassian-compass:atlassian-compass-graphql-api
@@ -57,9 +57,9 @@ apis:
   - type: Documentation
     url: https://developer.atlassian.com/cloud/compass/graphql/
   - type: Authentication
-    url: https://developer.atlassian.com/cloud/compass/getting-started/
+    url: https://developer.atlassian.com/cloud/compass/integrations/get-started-integrating-with-Compass/
   - type: GettingStarted
-    url: https://developer.atlassian.com/cloud/compass/getting-started/
+    url: https://developer.atlassian.com/cloud/compass/integrations/get-started-integrating-with-Compass/
   - url: graphql/atlassian-compass-graphql.md
     type: GraphQL
 - aid: atlassian-compass:atlassian-compass-rest-api
@@ -78,7 +78,13 @@ apis:
   - type: Documentation
     url: https://developer.atlassian.com/cloud/compass/rest/
   - type: Authentication
-    url: https://developer.atlassian.com/cloud/compass/getting-started/
+    url: https://developer.atlassian.com/cloud/compass/integrations/get-started-integrating-with-Compass/
+  - type: OpenAPI
+    url: openapi/atlassian-compass-compass-rest-api-openapi.json
+  - type: APIReference
+    url: https://developer.atlassian.com/cloud/compass/rest/
+  - type: Overlay
+    url: overlays/atlassian-compass-compass-rest-api-overlay.yaml
 - aid: atlassian-compass:atlassian-compass-events-api
   name: Atlassian Compass Events API
   description: Ingest events into a Compass event source
@@ -102,6 +108,60 @@ apis:
   - type: OpenAPI
     url: openapi/atlassian-compass-metrics-api-openapi.yml
 common:
+- type: OpenAPI
+  url: openapi/atlassian-compass-compass-rest-api-openapi.json
+- type: Overlay
+  url: overlays/atlassian-compass-compass-rest-api-overlay.yaml
+- type: Packages
+  url: packages/atlassian-compass-packages.yml
+- type: SDKs
+  url: packages/atlassian-compass-packages.yml
+- type: CLI
+  url: cli/atlassian-compass-cli.yml
+- type: MCPServer
+  url: mcp/atlassian-compass-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/atlassian-compass-tool-crosswalk.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/atlassian-compass-llms.txt
+- type: WellKnown
+  url: well-known/atlassian-compass-well-known.yml
+- type: SecurityTxt
+  url: well-known/atlassian-compass-security.txt
+- type: Security
+  url: security/atlassian-compass-vulnerability-disclosure.yml
+- type: Compliance
+  url: security/atlassian-compass-trust-center.yml
+- type: Conformance
+  url: conformance/atlassian-compass-conformance.yml
+- type: Conventions
+  url: conventions/atlassian-compass-conventions.yml
+- type: ErrorCatalog
+  url: errors/atlassian-compass-error-types.yml
+- type: DataModel
+  url: data-model/atlassian-compass-data-model.yml
+- type: Webhooks
+  url: asyncapi/atlassian-compass-webhooks.yml
+- type: Lifecycle
+  url: lifecycle/atlassian-compass-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/atlassian-compass-lifecycle.yml
+- type: ChangeLog
+  url: changelog/atlassian-compass-changelog.yml
+- type: RateLimits
+  url: rate-limits/atlassian-compass-rate-limits.yml
+- type: Plans
+  url: plans/atlassian-compass-plans-pricing.yml
+- type: FinOps
+  url: finops/atlassian-compass-finops.yml
+- type: APIReference
+  url: https://developer.atlassian.com/cloud/compass/rest/
+- type: Roadmap
+  url: https://www.atlassian.com/roadmap/cloud
+- type: SourceCode
+  url: https://github.com/atlassian-labs/compass-examples
 - type: AgenticAccess
   url: agentic-access/atlassian-compass-agentic-access.yml
 - type: TrustCenter
@@ -121,9 +181,9 @@ common:
 - type: Documentation
   url: https://developer.atlassian.com/cloud/compass/
 - type: GettingStarted
-  url: https://developer.atlassian.com/cloud/compass/getting-started/
+  url: https://developer.atlassian.com/cloud/compass/integrations/get-started-integrating-with-Compass/
 - type: Authentication
-  url: https://developer.atlassian.com/cloud/compass/getting-started/
+  url: https://developer.atlassian.com/cloud/compass/integrations/get-started-integrating-with-Compass/
 - type: Signup
   url: https://www.atlassian.com/software/compass
 - type: GitHubOrganization
@@ -193,3 +253,10 @@ common:
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-09-06'
+  status: enriched
+  artifacts_added: 26
+  pass: local-v3
+x-parent: atlassian
+x-relationship: product

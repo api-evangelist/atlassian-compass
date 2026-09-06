@@ -1,0 +1,133 @@
+generated: '2026-09-06'
+method: probed
+source: live HTTPS probes of every host this record knows (registrable domain + www, each apis.yml
+  baseURL host, every OpenAPI servers[] host, the docs host, the auth host named by the OpenAPI
+  securityScheme tokenUrl, and the MCP host named in the Atlassian Rovo MCP Server documentation)
+note: >
+  Atlassian serves a PGP-signed RFC 9116 security.txt from every host probed, including the API
+  gateway and the MCP host. auth.atlassian.com (the tokenUrl/authorizationUrl host declared in the
+  Compass OpenAPI oauth2 securityScheme) serves both OpenID Connect discovery and RFC 8414 OAuth
+  authorization-server metadata. mcp.atlassian.com (the official Atlassian Rovo MCP Server, which
+  documents Compass as a supported product) serves RFC 8414 authorization-server metadata with a
+  dynamic client registration endpoint, and RFC 9728 protected-resource metadata at the
+  path-scoped location /.well-known/oauth-protected-resource/v2/mcp. No /.well-known/api-catalog,
+  ai-plugin.json, or A2A agent card is served on any host - every probe returned 404.
+hosts:
+- host: www.atlassian.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: atlassian-compass-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: atlassian.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: atlassian-compass-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: developer.atlassian.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: atlassian-compass-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: api.atlassian.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: atlassian-compass-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: auth.atlassian.com
+  note: authorizationUrl/tokenUrl host declared in the Compass OpenAPI oauth2 securityScheme
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: atlassian-compass-security.txt
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: atlassian-compass-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: atlassian-compass-oauth-authorization-server.json
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: mcp.atlassian.com
+  note: official Atlassian Rovo MCP Server host; its README lists Compass as a supported product
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: atlassian-compass-security.txt
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: atlassian-compass-mcp-oauth-authorization-server.json
+  - path: /.well-known/oauth-protected-resource/v2/mcp
+    status: 200
+    file: atlassian-compass-mcp-oauth-protected-resource.json
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+findings:
+  security_txt: served
+  security_txt_signed: true
+  security_txt_expires: '2027-02-04'
+  openid_configuration: served on auth.atlassian.com
+  oauth_authorization_server: served on auth.atlassian.com and mcp.atlassian.com
+  protected_resource_metadata: served on mcp.atlassian.com (RFC 9728, path-scoped)
+  dynamic_client_registration: true
+  dcr_endpoints:
+  - https://auth.atlassian.com/oidc/register
+  - https://mcp.atlassian.com/v1/register
+  api_catalog: not served
+  ai_plugin: not served
+  agent_card: not served

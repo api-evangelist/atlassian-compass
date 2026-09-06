@@ -1,0 +1,170 @@
+generated: '2026-09-06'
+method: derived
+source: graphql/atlassian-compass-introspection.json (field types read from the captured schema) and
+  openapi/atlassian-compass-compass-rest-api-openapi.json ($ref graph of the 38 component schemas)
+description: >
+  The Compass entity graph, derived from the two contracts in this repository. The catalog model
+  lives almost entirely in GraphQL - the REST contract contributes only the ingestion payloads
+  (events, metric values, package dependencies, attachments). Relationships below are read from
+  actual field types in the introspection document; none are inferred from naming.
+identifier_scheme:
+  name: ARI (Atlassian Resource Identifier)
+  form: ari:cloud:compass:<cloudId>:<resource-type>/<id>
+  note: >
+    Every catalog entity is addressed by an ARI. A malformed ARI has its own published error codes
+    (COMPONENT_ARI_INVALID, SCORECARD_ARI_INVALID, RELATIONSHIP_START_NODE_ARI_INVALID,
+    RELATIONSHIP_END_NODE_ARI_INVALID).
+  external_identity: >
+    CompassExternalAlias lets a caller attach its own identifier to a component and look it up with
+    componentByExternalAlias. Aliases are unique - reusing one raises
+    EXTERNAL_ALIAS_COULD_NOT_BE_CREATED - and both source and id are capped at 1024 characters.
+root_entity: CompassComponent
+entities:
+- name: CompassComponent
+  description: A catalogued piece of software - a service, library, application or website - and the
+    hub every other Compass entity hangs off.
+  key: id (ARI)
+  attributes: [id, type, typeId, name, slug, url, description, state, ownerId, changeMetadata]
+  constraints:
+  - name must be under 100 characters (COMPONENT_NAME_TOO_LONG) and non-blank (COMPONENT_NAME_BLANK)
+  - description must be under 1000 characters (COMPONENT_DESCRIPTION_TOO_LONG)
+  relationships:
+  - to: CompassComponentType
+    kind: belongs_to
+    via: type / typeId
+  - to: TeamV2
+    kind: belongs_to
+    via: ownerTeam / ownerId
+    note: ownership is a Team ARI; an invalid format raises INVALID_COMPONENT_OWNER_FORMAT
+  - to: CompassRelationship
+    kind: has_many
+    via: relationships
+  - to: CompassLink
+    kind: has_many
+    via: links
+    note: link count is capped per link type (COMPONENT_LINKS_MAXIMUM_PER_TYPE_REACHED); only Service
+      components may carry an On Call link type
+  - to: CompassExternalAlias
+    kind: has_many
+    via: externalAliases
+  - to: CompassComponentLabel
+    kind: has_many
+    via: labels
+  - to: CompassScorecard
+    kind: has_many
+    via: scorecards / appliedScorecards / deactivatedScorecards
+  - to: CompassScorecardScore
+    kind: has_many
+    via: scorecardScores
+  - to: CompassCustomField
+    kind: has_many
+    via: customFields
+    note: Atlassian states fields are currently supported only for components of the Service type
+      (FIELDS_NOT_SUPPORTED)
+  - to: EventSource
+    kind: has_many
+    via: eventSources
+  - to: CompassMetricSource
+    kind: has_many
+    via: metricSources
+  - to: CompassAnnouncement
+    kind: has_many
+    via: announcements
+  - to: CompassComponentApi
+    kind: has_one
+    via: api
+    note: populated by the REST uploadAPISpec operation
+  - to: CompassComponentPackageDependencyConnection
+    kind: has_many
+    via: packageDependencies
+    note: populated by the REST uploadLockFile operation
+  - to: CompassComponentDataManager
+    kind: has_one
+    via: dataManager
+    note: present when the component is managed by config as code (compass.yml)
+- name: CompassRelationship
+  description: A typed directed edge between two components - the dependency graph.
+  attributes: [type, relationshipType, changeMetadata]
+  relationships:
+  - to: CompassComponent
+    kind: belongs_to
+    via: startNode
+  - to: CompassComponent
+    kind: belongs_to
+    via: endNode
+  constraints:
+  - both nodes must exist (RELATIONSHIP_START_NODE_NOT_FOUND / RELATIONSHIP_END_NODE_NOT_FOUND)
+  - both nodes must belong to the same Compass site
+    (RELATIONSHIP_START_AND_END_NODES_MUST_BELONG_TO_THE_SAME_SITE)
+  - self-reference is rejected (RELATIONSHIP_NODES_SELF_REFERENCING_ERROR)
+  - duplicates are rejected (RELATIONSHIP_ALREADY_EXISTS)
+  - per-node relationship count is capped (RELATIONSHIP_LIMIT_REACHED)
+- name: CompassScorecard
+  description: A weighted set of criteria applied to components to measure health.
+  key: id (ARI)
+  attributes: [id, type, name, state, verified, description, importance, scoringStrategyType,
+    scoreSystem, url]
+  relationships:
+  - to: CompassScorecardCriteria
+    kind: has_many
+    via: criterias
+  - to: User
+    kind: belongs_to
+    via: owner
+  - to: CompassComponent
+    kind: has_many
+    via: appliedToComponents
+  - to: CompassComponentType
+    kind: has_many
+    via: componentTypeIds
+  - to: CompassCampaign
+    kind: has_many
+    via: campaigns
+  constraints:
+  - name under 40 characters, unique per site (SCORECARD_NAME_TOO_LONG, SCORECARD_NAME_NOT_UNIQUE)
+  - description under 330 characters (SCORECARD_DESCRIPTION_TOO_LONG)
+  - at least one criterion required (SCORECARD_CRITERIA_ARE_REQUIRED), criteria must be unique
+    (SCORECARD_CRITERIA_NOT_UNIQUE)
+  - criterion weights are 1-100 and must total 100 (SCORECARD_CRITERIA_WEIGHT_INVALID,
+    SCORECARD_CRITERIA_WEIGHT_TOTAL_INVALID)
+  - a scorecard with Required importance must be owned by an administrator
+    (SCORECARD_REQUIRED_IMPORTANCE_MUST_HAVE_ADMIN_PERM)
+- name: CompassMetricSource
+  description: A bound instance of a metric definition on one component; the target of REST metric
+    ingestion.
+  attributes: [id, externalMetricSourceId, url, title, forgeAppId]
+  relationships:
+  - to: CompassMetricDefinition
+    kind: belongs_to
+    via: metricDefinition
+  - to: CompassComponent
+    kind: belongs_to
+    via: component
+  - to: EventSource
+    kind: belongs_to
+    via: derivedFrom
+- name: EventSource
+  description: A connected tool supplying events to a component's activity feed, identified uniquely
+    by (externalEventSourceId, eventType).
+  relationships:
+  - to: CompassComponent
+    kind: belongs_to
+    via: attachEventSource / detachEventSource
+- name: CompassCustomFieldDefinition
+  kind: interface
+  description: A site-level custom field definition bound to one or more component types.
+  attributes: [id, name, description, componentTypeIds]
+  constraints:
+  - definition ids are unique per site (DUPLICATE_FIELD_DEFINITION_ID)
+  - a value must match its definition's type (FIELD_VALUE_DOES_NOT_MATCH_FIELD_DEFINITION) and
+    element count (FIELD_VALUE_INVALID_NUMBER_OF_ELEMENTS)
+rest_payload_model:
+  note: The REST contract carries no catalog entities, only ingestion payloads.
+  roots:
+  - CreateStreamlinedEventRequest -> CompassEventInputDto (a oneOf across 10 event kinds)
+  - InsertMetricRequestDto / InsertMetricByMetricDefinitionRequestDto /
+    InsertMetricByMetricSourceRequestDto -> InsertMetricResponseDto
+  - EntitlementRequestDto -> EntitlementResponseDto -> EntitlementResultDto
+  - Attachment
+  - ErrorResponseDto -> ErrorDto
+  schema_count: 38

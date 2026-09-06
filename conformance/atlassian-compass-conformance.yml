@@ -1,0 +1,156 @@
+generated: '2026-09-06'
+method: searched
+source: https://developer.atlassian.com/cloud/compass/swagger.v3.json,
+  https://auth.atlassian.com/.well-known/openid-configuration,
+  https://mcp.atlassian.com/.well-known/oauth-authorization-server,
+  https://mcp.atlassian.com/.well-known/oauth-protected-resource/v2/mcp,
+  https://www.atlassian.com/.well-known/security.txt, https://www.atlassian.com/trust
+description: >
+  Cross-cutting standards this provider demonstrably conforms to, each with evidence pointing at a
+  document that was actually fetched. Entries where the standard is absent are recorded as
+  conforms:false rather than omitted, so an absence is a measurement rather than a gap in the file.
+conformance:
+- id: oauth2
+  name: OAuth 2.0 Authorization Framework (RFC 6749)
+  conforms: true
+  evidence: >
+    The Compass OpenAPI declares an oauth2 securityScheme with an authorizationCode flow
+    (authorizationUrl https://auth.atlassian.com/authorize, tokenUrl
+    https://auth.atlassian.com/oauth/token) and four Compass scopes.
+  source: https://developer.atlassian.com/cloud/compass/swagger.v3.json
+- id: oidc
+  name: OpenID Connect Discovery 1.0
+  conforms: true
+  evidence: >
+    https://auth.atlassian.com/.well-known/openid-configuration returns HTTP 200 with issuer,
+    authorization_endpoint, token_endpoint, userinfo_endpoint, jwks_uri, registration_endpoint,
+    revocation_endpoint, claims_supported and scopes_supported.
+  file: well-known/atlassian-compass-openid-configuration.json
+- id: rfc8414
+  name: OAuth 2.0 Authorization Server Metadata (RFC 8414)
+  conforms: true
+  evidence: >
+    Served with HTTP 200 on two hosts - auth.atlassian.com (the token host declared in the Compass
+    contract) and mcp.atlassian.com (the official MCP host that supports Compass).
+  file: well-known/atlassian-compass-oauth-authorization-server.json
+- id: rfc9728
+  name: OAuth 2.0 Protected Resource Metadata (RFC 9728)
+  conforms: true
+  evidence: >
+    The MCP endpoint's 401 challenge carries
+    WWW-Authenticate: Bearer resource_metadata="https://mcp.atlassian.com/.well-known/oauth-protected-resource/v2/mcp",
+    and that document returns HTTP 200 with resource, authorization_servers, bearer_methods_supported
+    and scopes_supported.
+  file: well-known/atlassian-compass-mcp-oauth-protected-resource.json
+- id: rfc7591
+  name: OAuth 2.0 Dynamic Client Registration (RFC 7591)
+  conforms: true
+  evidence: >
+    Both authorization-server metadata documents advertise a registration_endpoint -
+    https://auth.atlassian.com/oidc/register and https://mcp.atlassian.com/v1/register.
+- id: pkce
+  name: Proof Key for Code Exchange (RFC 7636)
+  conforms: true
+  evidence: >
+    code_challenge_methods_supported is present in both metadata documents - S256 on
+    auth.atlassian.com, and S256 plus plain on mcp.atlassian.com.
+- id: rfc9116
+  name: security.txt (RFC 9116)
+  conforms: true
+  evidence: >
+    A PGP-signed security.txt with Contact, Expires (2027-02-04), Encryption, Preferred-Languages,
+    Canonical, Policy and Hiring fields is served with HTTP 200 from www.atlassian.com,
+    atlassian.com, developer.atlassian.com, api.atlassian.com, auth.atlassian.com and
+    mcp.atlassian.com.
+  file: well-known/atlassian-compass-security.txt
+- id: openapi
+  name: OpenAPI 3.1.0
+  conforms: true
+  evidence: >
+    Atlassian publishes a machine-readable OpenAPI 3.1.0 document for the Compass REST API with 11
+    operations, 38 component schemas, unique operationIds and declared 4xx/5xx responses.
+  source: https://developer.atlassian.com/cloud/compass/swagger.v3.json
+- id: graphql
+  name: GraphQL (introspection-capable)
+  conforms: true
+  evidence: >
+    The Atlassian platform GraphQL gateway exposes the Compass catalog under the compass root field
+    (CompassCatalogQueryApi, 44 fields; CompassCatalogMutationApi, 84 mutations), captured in this
+    repository's introspection document.
+  file: graphql/atlassian-compass-introspection.json
+- id: relay-connections
+  name: Relay cursor connection specification
+  conforms: true
+  evidence: >
+    Compass collection fields resolve to *Connection types with edges/nodes/pageInfo and take
+    first/after cursor arguments.
+  file: graphql/atlassian-compass-introspection.json
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  evidence: >
+    Atlassian operates the official Atlassian Rovo MCP Server (registry name
+    com.atlassian/atlassian-mcp-server) at https://mcp.atlassian.com/v2/mcp over streamable HTTP,
+    and lists Compass among its supported products under read_compass / write_compass.
+  source: https://github.com/atlassian/atlassian-mcp-server
+- id: rfc9457
+  name: Problem Details for HTTP APIs (RFC 9457)
+  conforms: false
+  evidence: >
+    No operation declares application/problem+json. Errors use a vendor envelope,
+    {"errors":[{"type","message"}]}, with the stable codes published in a separate error-type
+    registry.
+  source: https://developer.atlassian.com/cloud/compass/error-handling/error-types/
+- id: idempotency
+  name: Idempotency-Key for HTTP APIs
+  conforms: false
+  evidence: No Idempotency-Key header or equivalent replay guard is declared in the contract or
+    documented in the reference.
+- id: rfc8594
+  name: Sunset HTTP header (RFC 8594)
+  conforms: false
+  evidence: >
+    Deprecations are announced as dated changelog entries, not as Sunset or Deprecation response
+    headers. No Sunset header is documented for any Compass endpoint.
+- id: scim
+  name: SCIM 2.0
+  conforms: false
+  evidence: >
+    No SCIM schema URN appears in the Compass contract or GraphQL schema. Atlassian operates user
+    provisioning at the organization level through Atlassian Guard, not through the Compass API.
+- id: odata
+  name: OData
+  conforms: false
+  evidence: No $metadata surface or OData query conventions are present.
+- id: asyncapi
+  name: AsyncAPI
+  conforms: false
+  evidence: >
+    Compass ingests events but publishes no AsyncAPI document and no outbound event catalog; see
+    asyncapi/atlassian-compass-webhooks.yml.
+domain_standards:
+  market: internal developer platform / software catalog / DevEx measurement
+  note: >
+    This market has no ratified interchange standard for a software catalog - the de-facto
+    reference points (Backstage catalog-info.yaml, CNCF Score, OpenTelemetry service attributes)
+    are project conventions, not standards bodies. Compass declares its own compass.yml
+    config-as-code schema instead. Nothing is claimed here, because there is no domain standard to
+    claim. The closest adjacent signal is DORA metrics, which Compass measures but does not encode
+    as a published schema.
+  candidates_probed:
+  - name: Backstage catalog-info.yaml
+    conforms: false
+    evidence: >
+      Compass uses its own compass.yml format
+      (https://developer.atlassian.com/cloud/compass/config-as-code/structure-and-contents-of-a-compass-yml-file/),
+      not the Backstage entity schema, and publishes no Backstage compatibility claim.
+compliance:
+  trust_center: https://www.atlassian.com/trust
+  compliance_program: https://www.atlassian.com/trust/compliance
+  certifications_verified:
+  - FedRAMP
+  note: >
+    Atlassian runs a public trust and compliance program. Only FedRAMP could be confirmed from the
+    rendered page text on this probe - the remaining compliance resource listings are rendered
+    client-side and did not yield verifiable text, so no further certification is asserted here.
+    See security/atlassian-compass-trust-center.yml.

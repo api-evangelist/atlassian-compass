@@ -1,0 +1,108 @@
+generated: '2026-09-06'
+method: derived
+source: openapi/atlassian-compass-compass-rest-api-openapi.json (CompassEventInputDto and the
+  incoming-webhook operation), graphql/atlassian-compass-introspection.json (incoming webhook
+  mutations and queries), https://developer.atlassian.com/cloud/compass/components/send-events-using-rest-api/
+description: >
+  Compass's event surface, recorded honestly. Compass is an event SINK, not an event source - it
+  ingests build, deployment, incident, alert, flag, lifecycle, push, pull-request, vulnerability and
+  custom events from a team's toolchain into a component's activity feed. It publishes no AsyncAPI
+  document and no outbound webhook catalog: there is no way to subscribe to Compass and be notified
+  when a component or scorecard changes. Everything below is an INBOUND channel. Nothing was
+  fabricated - the event taxonomy is read from the oneOf branches of CompassEventInputDto in
+  Atlassian's own published contract.
+asyncapi_published: false
+outbound_webhooks: false
+outbound_note: >
+  No subscribe/notify surface is published. The Compass GraphQL schema carries incoming-webhook
+  mutations (createIncomingWebhook, createIncomingWebhookToken, deleteIncomingWebhook) and an
+  incomingWebhooks query, all of which configure a URL that a THIRD-PARTY tool posts INTO. A
+  consumer that wants to react to Compass changes has to poll the GraphQL API.
+direction: inbound
+channels:
+- name: Incoming webhook
+  direction: inbound
+  transport: HTTPS POST
+  path: /compass/v1/webhooks/{webhookId}
+  operationId: handleWebhookInvocation
+  auth: webhook token (a 401 is returned when the request token is invalid)
+  rate_limited: true
+  errors: [400, 401, 404, 405, 429]
+  provisioning:
+    graphql_mutations:
+    - compass.createIncomingWebhook
+    - compass.createIncomingWebhookToken
+    - compass.deleteIncomingWebhook
+    graphql_query: compass.incomingWebhooks
+  note: A per-webhook URL a connected tool posts into; the payload is a Compass event.
+- name: Event ingestion (direct)
+  direction: inbound
+  transport: HTTPS POST
+  path: /compass/v1/events
+  operationId: createCompassEvent
+  auth: HTTP Basic (Atlassian account email + API token)
+  rate_limit: 100 requests per user per minute
+  response: 202 Accepted, processed asynchronously
+  request_schema: CreateStreamlinedEventRequest (cloudId, componentId, event)
+- name: Metric ingestion
+  direction: inbound
+  transport: HTTPS POST
+  path: /compass/v1/metrics
+  operationId: insertMetricValue
+  auth: HTTP Basic (Atlassian account email + API token)
+  rate_limit: 100 requests per user per minute
+event_types:
+  discriminator: CompassEventInputDto - exactly one of the following fields must be provided
+  count: 10
+  types:
+  - name: deployment
+    schema: CompassCreateDeploymentEventInputDto
+    properties_schema: CompassCreateDeploymentEventPropertiesInputDto
+    carries: environment (CompassDeploymentEventEnvironmentInputDto), pipeline
+      (CompassDeploymentEventPipelineInputDto)
+  - name: build
+    schema: CompassCreateBuildEventInputDto
+    properties_schema: CompassBuildEventPropertiesInputDto
+    carries: pipeline (CompassBuildEventPipelineInputDto)
+  - name: incident
+    schema: CompassCreateIncidentEventInputDto
+    properties_schema: CompassCreateIncidentEventPropertiesInputDto
+    carries: severity (CompassIncidentEventSeverityInputDto)
+  - name: alert
+    schema: CompassCreateAlertEventInputDto
+    properties_schema: CompassAlertEventPropertiesInputDto
+  - name: flag
+    schema: CompassCreateFlagEventInputDto
+    properties_schema: CompassCreateFlagEventPropertiesInputDto
+  - name: lifecycle
+    schema: CompassCreateLifecycleEventInputDto
+    properties_schema: CompassLifecycleEventInputPropertiesDto
+  - name: push
+    schema: CompassCreatePushEventInputDto
+    properties_schema: CompassPushEventInputPropertiesDto
+    carries: author (CompassPushEventAuthorInputDto)
+  - name: pullRequest
+    schema: CompassCreatePullRequestEventInputDto
+    properties_schema: CompassPullRequestInputPropertiesDto
+  - name: vulnerability
+    schema: CompassCreateVulnerabilityEventInputDto
+    properties_schema: CompassCreateVulnerabilityEventPropertiesInputDto
+    carries: severity (CompassVulnerabilityEventSeverityInputDto)
+  - name: custom
+    schema: CompassCreateCustomEventInputDto
+    properties_schema: CompassCustomEventPropertiesInputDto
+event_sources:
+  concept: >
+    An event source represents a tool connected to Compass that supplies events to a component's
+    activity feed. Compass identifies an event source uniquely by (externalEventSourceId,
+    eventType), so one repository emitting both build and deployment events needs two event sources.
+  graphql_mutations:
+  - compass.createEventSource
+  - compass.attachEventSource
+  - compass.detachEventSource
+  - compass.deleteEventSource
+  docs: https://developer.atlassian.com/cloud/compass/components/send-events-using-rest-api-with-event-sources/
+docs:
+- https://developer.atlassian.com/cloud/compass/components/send-events-using-rest-api/
+- https://developer.atlassian.com/cloud/compass/components/send-events-using-rest-api-with-event-sources/
+- https://developer.atlassian.com/cloud/compass/integrations/create-a-data-provider-app/

@@ -1,0 +1,48 @@
+generated: '2026-09-06'
+method: searched
+source: https://developer.atlassian.com/cloud/compass/integrations/get-started-integrating-with-Compass/
+  and https://www.npmjs.com/package/@forge/cli
+description: >
+  Compass ships no Compass-branded CLI. The first-party command-line tool a Compass integrator
+  installs is the Atlassian Forge CLI, which the Compass getting-started guide requires before you
+  can create, deploy or install a Compass app. It is a platform CLI, not a Compass API client - it
+  manages apps, not components - and it is recorded here on that basis rather than as a Compass
+  product surface.
+name: Forge CLI
+binary: forge
+official: true
+scope: Atlassian Forge platform (used by Compass, Jira, Confluence and Bitbucket app developers)
+package: '@forge/cli'
+package_url: https://www.npmjs.com/package/@forge/cli
+version: 13.5.0
+published: '2026-08-31'
+install:
+- method: npm
+  command: npm install -g @forge/cli
+docs: https://developer.atlassian.com/platform/forge/getting-started/
+authentication:
+  method: Atlassian account email plus an API token
+  command: forge login
+  note: the same API token used for the Compass REST API, issued at
+    https://id.atlassian.com/manage/api-tokens
+commands:
+- group: authentication
+  commands:
+  - name: forge login
+    description: Authenticate the CLI against an Atlassian account using an email and API token.
+- group: app lifecycle
+  commands:
+  - name: forge create
+    description: Scaffold a new app; the Compass guide directs you to choose the UI kit category,
+      the Compass product, and the compass-component-page template.
+  - name: forge deploy
+    description: Deploy the app to Atlassian infrastructure.
+  - name: forge install
+    description: Install the deployed app onto an Atlassian site.
+compass_modules_referenced:
+- compass-component-page
+- compass-team-page
+- compass-admin-page
+- compass-data-provider
+- web-trigger
+verified: not executed; command surface read from Atlassian's published Compass getting-started guide

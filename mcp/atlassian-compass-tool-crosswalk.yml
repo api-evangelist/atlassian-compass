@@ -1,0 +1,121 @@
+generated: '2026-09-06'
+method: derived
+source: openapi/atlassian-compass-compass-rest-api-openapi.json, mcp/atlassian-compass-mcp.yml,
+  graphql/atlassian-compass-introspection.json
+note: >
+  Compass has three non-identical projections of one data core, and they barely overlap. The REST
+  contract is an ingestion and attachment surface only - 11 operations, none of which create, read
+  or relate components. Everything catalog-shaped (components, scorecards, relationships, custom
+  fields, teams) lives in the Atlassian platform GraphQL gateway. The MCP surface reaches Compass
+  components through generic Teamwork Graph tools rather than Compass-named tools. Because the live
+  MCP tools/list is OAuth-gated (HTTP 401 anonymously), every binding below is mapped by documented
+  name and semantics, not by a fetched inputSchema, and confidence is set accordingly. Nothing here
+  was invented to fill a row.
+surfaces:
+  openapi:
+    file: openapi/atlassian-compass-compass-rest-api-openapi.json
+    source: https://developer.atlassian.com/cloud/compass/swagger.v3.json
+    server: https://your-domain.atlassian.net/gateway/api
+    operations: 11
+    gated: false
+  graphql:
+    endpoint: https://api.atlassian.com/graphql
+    introspection: graphql/atlassian-compass-introspection.json
+    docs: https://developer.atlassian.com/cloud/compass/graphql/
+    gated: true
+    gated_note: the gateway requires an authenticated Atlassian token; the captured introspection
+      document is the platform-wide schema, not a Compass-only schema
+  mcp:
+    url: https://mcp.atlassian.com/v2/mcp
+    gated: true
+    gated_note: tools/list returns 401 invalid_token anonymously; tool inputSchemas require
+      authenticated introspection
+crosswalk:
+- tool: getTeamworkGraphContext
+  category: read
+  rest: []
+  graphql:
+  - compass.component
+  - compass.componentRelationships
+  binding: semantic
+  confidence: medium
+  note: Atlassian documents "Compass - components" as an entry point for this tool. There is no
+    public REST operation that reads a component, so the backing surface is the GraphQL gateway.
+- tool: getTeamworkGraphObject
+  category: read
+  rest: []
+  graphql:
+  - compass.component
+  binding: semantic
+  confidence: medium
+  note: Fetches a Compass component by ARI. No REST equivalent is published.
+- tool: addTeamworkGraphContext
+  category: write
+  rest: []
+  graphql:
+  - compass.createRelationship
+  binding: semantic
+  confidence: low
+  note: Relationship creation is a GraphQL mutation; the exact mutation this tool calls is not
+    published and the live schema is gated.
+mcp_only: []
+rest_only:
+- operationId: insertMetricValue
+  path: /compass/v1/metrics
+  method: post
+  reason: Metric ingestion has no published MCP tool; it is an unattended machine-to-machine write.
+- operationId: createCompassEvent
+  path: /compass/v1/events
+  method: post
+  reason: Event ingestion has no published MCP tool.
+- operationId: uploadLockFile
+  path: /compass/v1/package_dependencies/lock_file
+  method: put
+  reason: Package-dependency ingestion has no published MCP tool.
+- operationId: deleteLockFile
+  path: /compass/v1/package_dependencies/lock_file/{componentId}/{sourceId}
+  method: delete
+  reason: No published MCP tool.
+- operationId: uploadAttachment
+  path: /compass/v1/component/{componentId}/app/{forgeAppId}/attachment/{key}
+  method: put
+  reason: Forge-app attachment surface; requires an allowlisted Forge app, no MCP tool.
+- operationId: getAttachment
+  path: /compass/v1/component/{componentId}/app/{forgeAppId}/attachment/{key}
+  method: get
+  reason: Forge-app attachment surface, no MCP tool.
+- operationId: deleteAttachment
+  path: /compass/v1/component/{componentId}/app/{forgeAppId}/attachment/{key}
+  method: delete
+  reason: Forge-app attachment surface, no MCP tool.
+- operationId: uploadAPISpec
+  path: /compass/v1/component/{componentId}/api_specs
+  method: put
+  reason: No published MCP tool.
+- operationId: deleteAPISpec
+  path: /compass/v1/component/{componentId}/api_specs
+  method: delete
+  reason: No published MCP tool.
+- operationId: handleWebhookInvocation
+  path: /compass/v1/webhooks/{webhookId}
+  method: post
+  reason: Inbound webhook receiver for Forge apps, not an agent-callable operation.
+- operationId: evaluateEntitlements
+  path: /compass/v1/entitlements
+  method: post
+  reason: Entitlement evaluation, no MCP tool.
+graphql_only:
+  note: >
+    The whole Compass catalog CRUD surface - createComponent, updateComponent, deleteComponent,
+    scorecards, custom fields, external aliases, teams - exists only in GraphQL. It is neither in
+    the REST contract nor named as a Compass MCP tool. The published error-type registry
+    (errors/atlassian-compass-error-types.yml) enumerates roughly 75 GraphQL error codes covering
+    these operations, which is the strongest public evidence of that surface's shape.
+coverage:
+  mcp_tools_documented: 3
+  mcp_tools_bound_to_rest: 0
+  mcp_tools_bound_to_graphql: 3
+  rest_operations: 11
+  rest_operations_with_a_tool: 0
+  rest_only: 11
+  mcp_only: 0

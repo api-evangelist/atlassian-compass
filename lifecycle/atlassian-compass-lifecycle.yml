@@ -1,0 +1,83 @@
+generated: '2026-09-06'
+method: searched
+source: https://www.atlassian.com/blog/announcements/the-next-chapter-for-compass,
+  https://developer.atlassian.com/cloud/compass/changelog/,
+  https://developer.atlassian.com/cloud/compass/swagger.v3.json, https://status.atlassian.com/
+product_status:
+  state: being-phased-out
+  announced: '2026-04-13'
+  announcement: https://www.atlassian.com/blog/announcements/the-next-chapter-for-compass
+  successor: DX Fabric (DX Engineering Intelligence Platform)
+  successor_url: https://www.getdx.com
+  sunset_date: null
+  sunset_date_published: false
+  statement: >
+    Atlassian's 13 April 2026 announcement states "Compass is being phased out, and its core
+    capabilities will be delivered through DX Fabric", that Compass scorecard and catalog
+    functionality will move to DX, and that customers will get a guided transition path. It also
+    states "No immediate change to access. We'll provide clear, early communication well before any
+    changes to your environment." No end-of-life or end-of-support date has been published. The same
+    notice is repeated as a banner on every page of the Compass developer documentation.
+  evidence:
+  - url: https://www.atlassian.com/blog/announcements/the-next-chapter-for-compass
+    status: 200
+  - url: https://developer.atlassian.com/cloud/compass/error-handling/error-types/
+    status: 200
+    note: carries the "Compass Scorecards and Catalog are moving to DX" banner
+versioning:
+  scheme: path-segment major version
+  rest_current: v1
+  rest_path_prefix: /compass/v1
+  rest_contract_version: '1'
+  note: >
+    The reference is published under /cloud/compass/rest/v2/ but the contract it renders declares
+    info.version "1" and every path is /compass/v1/. The v2 in the docs URL is the documentation
+    generation, not an API version.
+  graphql: unversioned; the Atlassian platform GraphQL gateway evolves additively and announces
+    breaking changes through the changelog
+deprecation:
+  policy_published: true
+  policy_url: https://developer.atlassian.com/cloud/compass/changelog/
+  mechanism: >
+    Atlassian announces deprecations and upcoming changes as dated entries on the Compass changelog,
+    which explicitly states it is where to "keep track of new features, upcoming changes and
+    deprecation notices about the Compass developer platform and GraphQL API".
+  rfc8594_sunset_header: not documented
+  deprecated_operations_in_spec: 0
+  known_deprecations:
+  - item: Atlassian Rovo MCP Server legacy Server-Sent Events endpoint
+    identifier: https://mcp.atlassian.com/v1/sse
+    sunset: '2026-06-30'
+    source: https://github.com/atlassian/atlassian-mcp-server
+    note: Atlassian's README states the /sse endpoint will no longer be supported after 30 June 2026;
+      clients should move to https://mcp.atlassian.com/v2/mcp
+status_page:
+  url: https://status.atlassian.com/
+  vendor: Atlassian Statuspage
+  probe_status: 200
+  scope: all Atlassian Cloud products including Compass
+sla:
+  published: true
+  url: https://www.atlassian.com/software/compass/pricing
+  uptime: 99.9%
+  tier: Premium
+  note: >
+    The Compass pricing page states the Premium tier carries an "around the clock 99.9% uptime SLA,
+    financially backed with service level credits". Free and Standard carry no published uptime
+    commitment. Support response commitments are published per tier on the same page.
+support_tiers:
+- tier: Free
+  support: community only
+- tier: Standard
+  support: 9/5 regional support, 2-hour response for critical issues
+- tier: Premium
+  support: 24/7 support for critical issues, 1-hour response time
+data_retention:
+- tier: Free
+  retention: not stated
+- tier: Standard
+  retention: one year of metrics, events and scorecard scores; catalog data unlimited
+  source: https://www.atlassian.com/software/compass/pricing
+- tier: Premium
+  retention: two years of metrics, events and scorecard scores; catalog data unlimited
+  source: https://www.atlassian.com/software/compass/pricing

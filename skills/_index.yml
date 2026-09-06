@@ -1,0 +1,42 @@
+generated: '2026-09-06'
+method: generated
+source: openapi/atlassian-compass-compass-rest-api-openapi.json,
+  conventions/atlassian-compass-conventions.yml, errors/atlassian-compass-error-types.yml,
+  rate-limits/atlassian-compass-rate-limits.yml
+description: >
+  Packaged Agent Skills for the Compass REST API. Every operationId referenced was verified against
+  Atlassian's published OpenAPI; no operation was invented. Skills cover only the REST surface -
+  the catalog CRUD flows (create a component, apply a scorecard, map a dependency) live in the
+  Atlassian platform GraphQL API, whose live schema requires an authenticated site, so no skill is
+  written for them.
+provider_published_skills: none found
+skills:
+- file: atlassian-compass-send-deployment-event.md
+  name: atlassian-compass-send-deployment-event
+  operations: [createCompassEvent]
+  summary: Send a deployment, build, incident, alert, flag, lifecycle, push, pull-request,
+    vulnerability or custom event to a component's activity feed.
+  write: true
+  reversible: false
+- file: atlassian-compass-push-metric-value.md
+  name: atlassian-compass-push-metric-value
+  operations: [insertMetricValue]
+  summary: Push a numeric value onto a component's metric source.
+  write: true
+  reversible: false
+- file: atlassian-compass-attach-api-spec.md
+  name: atlassian-compass-attach-api-spec
+  operations: [uploadAPISpec, deleteAPISpec]
+  summary: Attach an API specification file to a component and remove it again.
+  write: true
+  reversible: true
+not_covered:
+- operations: [uploadLockFile, deleteLockFile]
+  reason: Package-dependency lock-file ingestion; a narrow CI concern with no distinct agent flow.
+- operations: [uploadAttachment, getAttachment, deleteAttachment]
+  reason: Requires a Forge app with attachment upload enabled by Atlassian support; not reachable
+    by a general agent.
+- operations: [handleWebhookInvocation]
+  reason: Inbound receiver, not an agent-callable operation.
+- operations: [evaluateEntitlements]
+  reason: Internal entitlement evaluation with no documented consumer flow.

@@ -1,0 +1,111 @@
+generated: '2026-09-06'
+method: derived
+source: openapi/atlassian-compass-compass-rest-api-openapi.json
+description: >
+  HTTP problem types derived from the 4xx/5xx responses declared in Atlassian's published Compass
+  REST OpenAPI. Compass does NOT use RFC 9457 application/problem+json - the envelope is a
+  vendor-specific {"errors":[{"type","message"}]} array, and the stable machine-readable codes
+  live in the separate GraphQL error-type registry captured in
+  errors/atlassian-compass-error-types.yml.
+format: vendor-specific
+rfc9457: false
+media_type: application/json
+envelope: '{"errors":[{"type":"<CODE>","message":"<text>"}]}'
+problem_type_count: 8
+problem_types:
+- status: 400
+  title: Bad Request
+  occurrences: 9
+  operations:
+  - uploadLockFile (PUT /compass/v1/package_dependencies/lock_file)
+  - getAttachment (GET /compass/v1/component/{componentId}/app/{forgeAppId}/attachment/{key})
+  - uploadAttachment (PUT /compass/v1/component/{componentId}/app/{forgeAppId}/attachment/{key})
+  - deleteAttachment (DELETE /compass/v1/component/{componentId}/app/{forgeAppId}/attachment/{key})
+  - uploadAPISpec (PUT /compass/v1/component/{componentId}/api_specs)
+  - handleWebhookInvocation (POST /compass/v1/webhooks/{webhookId})
+  - insertMetricValue (POST /compass/v1/metrics)
+  - createCompassEvent (POST /compass/v1/events)
+  - deleteLockFile (DELETE /compass/v1/package_dependencies/lock_file/{componentId}/{sourceId})
+  documented_meanings:
+  - "Returned if the api spec file is not valid."
+  - "Returned if the request is not valid."
+- status: 401
+  title: Unauthorized
+  occurrences: 2
+  operations:
+  - handleWebhookInvocation (POST /compass/v1/webhooks/{webhookId})
+  - evaluateEntitlements (POST /compass/v1/entitlements)
+  documented_meanings:
+  - "Returned if the request token is invalid"
+  - "Returned if the user is not authenticated"
+- status: 403
+  title: Forbidden
+  occurrences: 8
+  operations:
+  - uploadLockFile (PUT /compass/v1/package_dependencies/lock_file)
+  - getAttachment (GET /compass/v1/component/{componentId}/app/{forgeAppId}/attachment/{key})
+  - uploadAttachment (PUT /compass/v1/component/{componentId}/app/{forgeAppId}/attachment/{key})
+  - deleteAttachment (DELETE /compass/v1/component/{componentId}/app/{forgeAppId}/attachment/{key})
+  - uploadAPISpec (PUT /compass/v1/component/{componentId}/api_specs)
+  - deleteAPISpec (DELETE /compass/v1/component/{componentId}/api_specs)
+  - insertMetricValue (POST /compass/v1/metrics)
+  - deleteLockFile (DELETE /compass/v1/package_dependencies/lock_file/{componentId}/{sourceId})
+  documented_meanings:
+  - "Returned if the Forge app does not have attachment upload enabled. If your Compass Forge app needs this functionality enabled, contact Atlassian support."
+  - "Returned if the user does not have permission to insert metrics."
+  - "Returned if the user is not authorized to delete API specs."
+  - "Returned if the user is not authorized to upload API specs."
+  - "Returned if the user is not permitted to modify the given component."
+- status: 404
+  title: Not Found
+  occurrences: 9
+  operations:
+  - uploadLockFile (PUT /compass/v1/package_dependencies/lock_file)
+  - getAttachment (GET /compass/v1/component/{componentId}/app/{forgeAppId}/attachment/{key})
+  - uploadAttachment (PUT /compass/v1/component/{componentId}/app/{forgeAppId}/attachment/{key})
+  - deleteAttachment (DELETE /compass/v1/component/{componentId}/app/{forgeAppId}/attachment/{key})
+  - deleteAPISpec (DELETE /compass/v1/component/{componentId}/api_specs)
+  - handleWebhookInvocation (POST /compass/v1/webhooks/{webhookId})
+  - insertMetricValue (POST /compass/v1/metrics)
+  - createCompassEvent (POST /compass/v1/events)
+  - deleteLockFile (DELETE /compass/v1/package_dependencies/lock_file/{componentId}/{sourceId})
+  documented_meanings:
+  - "Returned if the component is not found."
+  - "Returned if the component or attachment is not found."
+  - "Returned if the event source is not found."
+  - "Returned if the metric source, metric definition or component is not found."
+  - "Returned if the webhook is not found."
+- status: 405
+  title: Method Not Allowed
+  occurrences: 1
+  operations:
+  - handleWebhookInvocation (POST /compass/v1/webhooks/{webhookId})
+  documented_meanings:
+  - "Returned if the request was not a POST"
+- status: 422
+  title: Unprocessable Entity
+  occurrences: 3
+  operations:
+  - uploadLockFile (PUT /compass/v1/package_dependencies/lock_file)
+  - uploadAttachment (PUT /compass/v1/component/{componentId}/app/{forgeAppId}/attachment/{key})
+  - uploadAPISpec (PUT /compass/v1/component/{componentId}/api_specs)
+  documented_meanings:
+  - "Returned if the uploaded file type is not accepted and/or file content cannot be parsed."
+  - "Returned if the uploaded file type is not accepted and/or file content cannot be parsed. Accepted file types are JSON and YML."
+  - "Returned if the uploaded file type is not accepted and/or file content cannot be parsed. Accepted file types include JSON, YAML, and XML."
+- status: 429
+  title: Too Many Requests
+  occurrences: 3
+  operations:
+  - handleWebhookInvocation (POST /compass/v1/webhooks/{webhookId})
+  - insertMetricValue (POST /compass/v1/metrics)
+  - createCompassEvent (POST /compass/v1/events)
+  documented_meanings:
+  - "Returned if the request exceeds the rate limit."
+- status: 500
+  title: Internal Server Error
+  occurrences: 1
+  operations:
+  - uploadAttachment (PUT /compass/v1/component/{componentId}/app/{forgeAppId}/attachment/{key})
+  documented_meanings:
+  - "Returned if the file upload to Optic fails for an unexpected reason."

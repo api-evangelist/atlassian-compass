@@ -1,0 +1,102 @@
+generated: '2026-09-06'
+method: searched
+source: https://github.com/atlassian/atlassian-mcp-server (official Atlassian repository, README +
+  server.json) and live probes of https://mcp.atlassian.com
+name: Atlassian Rovo MCP Server
+description: >
+  The official Atlassian Model Context Protocol server. It is a cloud-hosted bridge between an
+  Atlassian Cloud site and an MCP client, and Atlassian's own README lists Compass among the
+  supported products - Compass is exposed through the read_compass and write_compass permission
+  groups, which are available over OAuth 2.1 only (API-token authentication is not supported for
+  Compass). It is NOT a Compass-specific server: the same endpoint serves Jira, Confluence, Jira
+  Service Management, Bitbucket, Loom, Goals, Projects, Teams, Focus, Talent and the Teamwork Graph.
+deployment:
+  mode: remote
+  endpoint: https://mcp.atlassian.com/v2/mcp
+  auth: oauth
+  verified: probed
+transport: streamable-http
+endpoints:
+- url: https://mcp.atlassian.com/v2/mcp
+  status: recommended
+  probe:
+    method: POST tools/list
+    http_status: 401
+    www_authenticate: Bearer resource_metadata="https://mcp.atlassian.com/.well-known/oauth-protected-resource/v2/mcp",
+      error="invalid_token"
+- url: https://mcp.atlassian.com/v1/mcp
+  status: supported (legacy)
+  probe:
+    method: POST tools/list
+    http_status: 401
+- url: https://mcp.atlassian.com/v1/sse
+  status: deprecated
+  note: Atlassian's README states the legacy Server-Sent Events endpoint will no longer be supported
+    after 30 June 2026
+  probe:
+    method: POST tools/list
+    http_status: 401
+authorization:
+  model: OAuth 2.1 with dynamic client registration
+  authorization_server: https://mcp.atlassian.com (RFC 8414 metadata served at
+    /.well-known/oauth-authorization-server)
+  protected_resource_metadata: https://mcp.atlassian.com/.well-known/oauth-protected-resource/v2/mcp
+  registration_endpoint: https://mcp.atlassian.com/v1/register
+  pkce: [S256, plain]
+  compass_permission_groups:
+  - read_compass
+  - write_compass
+  note: >
+    The path-scoped RFC 9728 protected-resource document lists scopes_supported for Jira,
+    Confluence, Bitbucket, Loom, Goals, Projects, Teams, Focus, Talent and the Teamwork Graph but
+    does NOT enumerate a compass scope - Compass access is granted through the read_compass /
+    write_compass permission groups named in Atlassian's README and negotiated at consent time.
+tools:
+  status: auth-gated
+  note: >
+    tools/list returns HTTP 401 invalid_token anonymously on every endpoint, so the live inputSchema
+    set could not be introspected. Atlassian's public supported-tools reference does not publish a
+    separate Compass tool table; Compass components are reachable through the Teamwork Graph tools,
+    whose documented entry points explicitly include "Compass - components". The tools below are
+    recorded from Atlassian's own published documentation, names only - no input schemas were
+    fabricated.
+  documented:
+  - name: getTeamworkGraphContext
+    primary: true
+    permission_group: read_teamwork_graph
+    scope: read:all:twg
+    description: >-
+      Traverses related objects in one traversal across products; documented entry points include
+      "Compass - components".
+    schema: requires authenticated introspection
+  - name: getTeamworkGraphObject
+    primary: true
+    permission_group: read_teamwork_graph
+    scope: read:all:twg
+    description: Fetches all available data for one or more objects by ARI or URL, including Compass
+      components returned by getTeamworkGraphContext.
+    schema: requires authenticated introspection
+  - name: addTeamworkGraphContext
+    primary: true
+    permission_group: write_teamwork_graph
+    scope: write:all:twg
+    description: Adds a relationship between two objects in the Teamwork Graph.
+    schema: requires authenticated introspection
+  discovery_model: >
+    Atlassian exposes a small primary tool set at connection time and lets clients discover the rest
+    on demand; the query override https://mcp.atlassian.com/v2/mcp?tools=all returns every tool as a
+    paginated flat list (also 401 anonymously).
+documented_workflows:
+- Create a service component based on the current repository
+- Import components and custom fields from a CSV or JSON file
+- Query what depends on a given service
+- Fetch the Confluence documentation page linked to a Compass component
+registry:
+  mcp_registry_name: com.atlassian/atlassian-mcp-server
+  server_json: https://github.com/atlassian/atlassian-mcp-server/blob/main/server.json
+  version: 1.1.3
+docs:
+- https://github.com/atlassian/atlassian-mcp-server
+- https://www.atlassian.com/platform/remote-mcp-server
+- https://support.atlassian.com/atlassian-rovo-mcp-server/docs/supported-tools/
+- https://support.atlassian.com/atlassian-rovo-mcp-server/docs/getting-started-with-the-atlassian-remote-mcp-server/

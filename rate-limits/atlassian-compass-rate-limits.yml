@@ -3,95 +3,84 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Atlassian Compass
 providerId: atlassian-compass
+generated: '2026-09-06'
+method: searched
+source: https://developer.atlassian.com/cloud/compass/swagger.v3.json (operation descriptions and
+  429 responses in Atlassian's published OpenAPI) and https://developer.atlassian.com/cloud/compass/rest/
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-09-06'
+description: >
+  Rate limits Atlassian actually publishes for Compass, read from the operation descriptions and
+  429 responses in the Compass REST OpenAPI. This file replaces a 2026-05-04 scaffold whose tiers,
+  quotas and headers were bulk-sweep defaults rather than provider-published values - in particular
+  the scaffold advertised X-RateLimit-* and RateLimit-Policy response headers that Atlassian does
+  not document for Compass.
 tags:
-  - Atlassian
-  - Component Management
-  - Developer Experience
-  - Software Catalog
-  - GraphQL
-  - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Atlassian Compass API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
+- Atlassian
+- Component Management
+- Developer Experience
+- Rate Limiting
+limit_count: 3
+scope_model: per authenticated user
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  published: false
+  note: >
+    Atlassian publishes no rate-limit response headers for the Compass API. The OpenAPI declares a
+    429 response with no headers block, and the REST reference documents no X-RateLimit-*,
+    RateLimit-* or Retry-After semantics for Compass. An agent has the documented number but no
+    runtime signal, and must treat a 429 as the only feedback.
+  observed:
+    probed: false
+    reason: every Compass endpoint requires authentication, so no unauthenticated response was
+      available to read headers from
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Atlassian Compass GraphQL API
-      - Atlassian Compass REST API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Atlassian Compass GraphQL API
-      - Atlassian Compass REST API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Atlassian Compass GraphQL API
-      - Atlassian Compass REST API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Atlassian Compass GraphQL API
-      - Atlassian Compass REST API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Atlassian Compass GraphQL API
-      - Atlassian Compass REST API
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- name: Metric ingestion
+  scope: per user
+  applies_to:
+    operationId: insertMetricValue
+    path: /compass/v1/metrics
+    method: post
+  metric: requests_per_minute
+  limit: 100
+  timeFrame: minute
+  burst: null
+  tier: all
+  evidence: >
+    "This API is rate limited. Only 100 requests per user per minute are allowed." -
+    paths./compass/v1/metrics.post.description
+- name: Event ingestion
+  scope: per user
+  applies_to:
+    operationId: createCompassEvent
+    path: /compass/v1/events
+    method: post
+  metric: requests_per_minute
+  limit: 100
+  timeFrame: minute
+  burst: null
+  tier: all
+  evidence: >
+    "This API is rate limited. Only 100 requests per user per minute are allowed." -
+    paths./compass/v1/events.post.description
+- name: Incoming webhook invocation
+  scope: per webhook
+  applies_to:
+    operationId: handleWebhookInvocation
+    path: /compass/v1/webhooks/{webhookId}
+    method: post
+  metric: unspecified
+  limit: null
+  timeFrame: null
+  tier: all
+  evidence: >
+    The operation declares a 429 response ("Returned if the request exceeds the rate limit.") but
+    Atlassian publishes no numeric ceiling for it.
+undocumented:
+- surface: Atlassian platform GraphQL API (https://api.atlassian.com/graphql)
+  note: No Compass-specific GraphQL rate limit is published on the Compass GraphQL reference.
+- surface: Atlassian Rovo MCP Server (https://mcp.atlassian.com/v2/mcp)
+  note: >
+    No request-rate ceiling is published. Atlassian instead documents a Rovo credit cost for some
+    tools - the Teamwork Graph context tool is noted as consuming up to 10 Rovo credits per call.

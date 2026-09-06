@@ -1,0 +1,122 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Compass REST API
+  version: 1.0.0
+extends: ../openapi/atlassian-compass-compass-rest-api-openapi.json
+x-provenance:
+  generated: '2026-09-06'
+  method: generated
+  source: >
+    Enhancements derived from artifacts in this repository - lifecycle/, rate-limits/,
+    errors/, conventions/, authentication/ - and from Atlassian's own published documentation. The
+    underlying OpenAPI is never mutated; this overlay records what we would add.
+  note: >
+    The scorer parses the ORIGINAL specification, so this overlay improves our derived artifacts and
+    a consumer's applied copy, not the raw contract-content score.
+actions:
+- target: $.info
+  description: Add the contact, licence-adjacent terms, documentation link and lifecycle status
+    Atlassian publishes elsewhere but does not carry in the contract.
+  update:
+    contact:
+      name: Atlassian Developer
+      url: https://developer.atlassian.com/cloud/compass/
+    termsOfService: https://www.atlassian.com/legal/cloud-terms-of-service
+    x-status-page: https://status.atlassian.com/
+    x-changelog: https://developer.atlassian.com/cloud/compass/changelog/
+    x-error-registry: https://developer.atlassian.com/cloud/compass/error-handling/error-types/
+    x-product-lifecycle:
+      state: being-phased-out
+      announced: '2026-04-13'
+      successor: DX Fabric
+      announcement: https://www.atlassian.com/blog/announcements/the-next-chapter-for-compass
+      sunset-date: null
+- target: $
+  description: Add the externalDocs block the contract omits.
+  update:
+    externalDocs:
+      description: Compass REST API reference
+      url: https://developer.atlassian.com/cloud/compass/rest/
+- target: $.servers
+  description: Record the second Atlassian-operated base the catalog knows about alongside the
+    per-tenant site gateway the contract declares. Neither entry is removed.
+  update:
+  - url: https://your-domain.atlassian.net/gateway/api
+    description: Per-tenant Atlassian site gateway (the base Atlassian's own cURL examples use)
+    variables: {}
+  - url: https://api.atlassian.com
+    description: Atlassian Cloud edge gateway, used on the OAuth 2.0 3LO path
+- target: $.components.securitySchemes
+  description: Add the OAuth 2.0 3LO scheme that the GraphQL surface and the catalog's other
+    artifacts document, alongside the basicAuth scheme the contract declares.
+  update:
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 (3LO) for Atlassian Cloud
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.atlassian.com/authorize
+          tokenUrl: https://auth.atlassian.com/oauth/token
+          scopes:
+            read:component:compass: Read component data
+            write:component:compass: Write component data
+            write:event:compass: Send events
+            write:metric:compass: Send metric values
+- target: $.paths['/compass/v1/metrics'].post
+  description: Make the documented rate limit machine-readable on the operation that carries it.
+  update:
+    x-rate-limit:
+      limit: 100
+      window: minute
+      scope: per user
+      exhaustion-status: 429
+      headers-published: false
+      source: https://developer.atlassian.com/cloud/compass/swagger.v3.json
+    x-reversible: false
+    x-reversal-note: No delete-metric-value operation exists; a value can only be superseded.
+    x-idempotent: false
+- target: $.paths['/compass/v1/events'].post
+  description: Make the documented rate limit machine-readable and record the caller-side dedupe
+    hint Atlassian exposes but does not guarantee.
+  update:
+    x-rate-limit:
+      limit: 100
+      window: minute
+      scope: per user
+      exhaustion-status: 429
+      headers-published: false
+      source: https://developer.atlassian.com/cloud/compass/swagger.v3.json
+    x-reversible: false
+    x-reversal-note: No delete-event operation exists; an event in a component's activity feed
+      cannot be withdrawn through the API.
+    x-idempotent: false
+    x-dedupe-hint:
+      field: externalEventId
+      guaranteed: false
+      note: Caller-supplied external identifier. Atlassian does not document it as replay protection.
+- target: $.paths['/compass/v1/webhooks/{webhookId}'].post
+  description: Record that this is an inbound receiver, not an agent-callable operation.
+  update:
+    x-direction: inbound
+    x-rate-limit:
+      limit: null
+      exhaustion-status: 429
+      note: A 429 is declared but no numeric ceiling is published.
+- target: $.paths['/compass/v1/component/{componentId}/api_specs'].put
+  description: Bind the reversal operation to the forward one.
+  update:
+    x-reversal:
+      operationId: deleteAPISpec
+      window: not stated
+- target: $.paths['/compass/v1/package_dependencies/lock_file'].put
+  description: Bind the reversal operation to the forward one.
+  update:
+    x-reversal:
+      operationId: deleteLockFile
+      window: not stated
+- target: $.components.schemas.ErrorResponseDto
+  description: Point the error envelope at Atlassian's published stable error-code registry.
+  update:
+    x-error-registry: https://developer.atlassian.com/cloud/compass/error-handling/error-types/
+    x-error-code-count: 75
+    x-rfc9457: false

@@ -1,0 +1,55 @@
+generated: '2026-09-06'
+method: searched
+source: https://developer.atlassian.com/cloud/compass/changelog/
+url: https://developer.atlassian.com/cloud/compass/changelog/
+description: >
+  Atlassian publishes a dated changelog for the Compass developer platform and GraphQL API,
+  describing itself as the place to track new features, upcoming changes and deprecation notices.
+  Entries are tagged by type (Announcement, Added, Changed, Deprecated, Removed, Fixed) and are
+  filterable. Recent window only - this is a pointer to a live page, not a mirror of it.
+scheme: dated entries, newest first, typed by change class
+current_version: REST v1 (contract info.version "1"); GraphQL unversioned
+page_last_updated: '2026-06-18'
+also:
+- name: Forge changelog
+  url: https://developer.atlassian.com/platform/forge/changelog/
+  note: The Compass changelog directs app developers to the Forge changelog for platform changes.
+- name: What's New for Atlassian Cloud
+  note: The Compass changelog directs product users to the Atlassian Cloud What's New blog for
+    product feature announcements.
+entries:
+- date: '2026-06-18'
+  type: Announcement
+  title: Partner Security Incident Response Program
+  breaking: false
+  highlights:
+  - Atlassian can share incident-scoped platform logs and app telemetry with partners during an
+    investigation.
+  - A single reporting path for security incidents through the developer support portal form.
+  - Partners must keep security contact information current in the partner account.
+- date: '2026-05-28'
+  type: Announcement
+  title: Updated Marketplace cloud app security SLOs and new enforcement policy
+  breaking: false
+  highlights:
+  - Cloud app remediation SLOs shortened, enforceable from 2026-09-01 - Critical 10 days, High 4
+    weeks, Medium 12 weeks, Low 25 weeks.
+  - Data Center app SLOs unchanged - Critical 12 weeks, High 12 weeks, Medium 12 weeks, Low 25 weeks.
+  - A consolidated Marketplace Security Enforcement Policy was published covering vulnerability
+    management, OAuth compliance, partner verification, bug bounty participation and incident
+    response.
+- date: '2026-05-25'
+  type: Added
+  title: Tile component available in Preview for Forge UI Kit
+  breaking: false
+  highlights:
+  - Rounded square container for assets such as emojis and objects, sizes 16px to 48px, design-token
+    background colors, optional borders and adjustable padding.
+related_announcements:
+- date: '2026-04-13'
+  title: The Next Chapter for Compass
+  url: https://www.atlassian.com/blog/announcements/the-next-chapter-for-compass
+  note: >
+    Published on the Atlassian company blog rather than the developer changelog. It states Compass
+    is being phased out into DX Fabric. Recorded in full in
+    lifecycle/atlassian-compass-lifecycle.yml.

@@ -1,0 +1,177 @@
+generated: '2026-09-06'
+method: searched
+source: https://developer.atlassian.com/cloud/compass/swagger.v3.json (info narrative + operations),
+  https://developer.atlassian.com/cloud/compass/rest/,
+  https://developer.atlassian.com/cloud/compass/error-handling/error-types/,
+  https://developer.atlassian.com/cloud/compass/graphql/
+description: >
+  Cross-cutting runtime semantics for the Compass API surface, read from Atlassian's published
+  contract and reference docs. Where Atlassian does not publish a convention this file says so
+  rather than supplying a plausible one.
+surfaces:
+  rest:
+    base: https://your-domain.atlassian.net/gateway/api
+    prefix: /compass/v1
+    contract: openapi/atlassian-compass-compass-rest-api-openapi.json
+    note: >
+      The published contract's servers[] names the customer's own site host
+      (https://your-domain.atlassian.net/gateway/api) - a templated per-tenant base, not a shared
+      one. The apis.yml baseURL for the REST entry records https://api.atlassian.com/compass/v1,
+      the OAuth-fronted Atlassian Cloud gateway; both are Atlassian-operated, and the site-gateway
+      form is the one Atlassian's own cURL examples use.
+  graphql:
+    endpoint: https://api.atlassian.com/graphql
+    root_fields:
+      query: compass (CompassCatalogQueryApi, 44 fields)
+      mutation: compass (CompassCatalogMutationApi, 84 fields)
+  mcp:
+    endpoint: https://mcp.atlassian.com/v2/mcp
+authentication:
+  rest:
+    style: HTTP Basic
+    credential: Atlassian account email plus an API token issued at
+      https://id.atlassian.com/manage/api-tokens
+    scheme_in_spec: basicAuth (http/basic)
+    authorization_model: the authenticating user's own permissions; there is no service account or
+      scope negotiation on the REST path
+  oauth:
+    style: OAuth 2.0 3LO (authorization code)
+    authorization_url: https://auth.atlassian.com/authorize
+    token_url: https://auth.atlassian.com/oauth/token
+    discovery: https://auth.atlassian.com/.well-known/openid-configuration
+    scopes: see scopes/atlassian-compass-scopes.yml
+  mcp:
+    style: OAuth 2.1 with dynamic client registration
+  cross_reference: authentication/atlassian-compass-authentication.yml
+idempotency:
+  supported: false
+  coverage: none
+  mechanism: null
+  header: null
+  note: >
+    Atlassian publishes no idempotency mechanism for Compass. There is no Idempotency-Key header in
+    the OpenAPI, no request-key parameter, and no replay-protection language in the REST or GraphQL
+    reference. Two of the eleven REST operations do carry a natural dedupe key that a caller can
+    exploit - createCompassEvent accepts externalEventId, and event sources are uniquely identified
+    by (externalEventSourceId, eventType) - but Atlassian does not document either as an
+    idempotency guarantee, so this is a client-side convention, not a provider commitment. An agent
+    retrying a POST /compass/v1/metrics or /compass/v1/events must assume the write repeats.
+  client_side_dedupe_hints:
+  - field: externalEventId
+    operation: createCompassEvent
+    note: caller-supplied external identifier for the event; not documented as a replay guard
+reversibility:
+  grade: documented
+  note: >
+    Every destructive Compass action has an explicit inverse mutation in the GraphQL API, so an
+    agent can undo what it did. What Atlassian does NOT publish anywhere is a WINDOW - there is no
+    trash, no retention period for a deleted component, and no documented restore-within-N-days
+    path. Deletion is therefore best treated as immediate and permanent. No window is asserted here
+    because none is stated.
+  read_only: false
+  operations:
+  - action: create a component
+    forward: compass.createComponent (GraphQL)
+    reversal: compass.deleteComponent (GraphQL)
+    window: not stated
+    restore_after_delete: none published
+  - action: create a relationship between components
+    forward: compass.createRelationship (GraphQL)
+    reversal: compass.deleteRelationship (GraphQL)
+    window: not stated
+  - action: apply a scorecard to a component
+    forward: compass.applyScorecardToComponent (GraphQL)
+    reversal: compass.removeScorecardFromComponent (GraphQL)
+    window: not stated
+  - action: deactivate a scorecard for a component
+    forward: compass.deactivateScorecardForComponent (GraphQL)
+    reversal: compass.reactivateScorecardForComponent (GraphQL)
+    window: not stated
+    note: the only true activate/deactivate pair in the surface - reversible without data loss
+  - action: attach an event source
+    forward: compass.attachEventSource (GraphQL)
+    reversal: compass.detachEventSource (GraphQL)
+    window: not stated
+  - action: upload a package-dependency lock file
+    forward: uploadLockFile (PUT /compass/v1/package_dependencies/lock_file)
+    reversal: deleteLockFile (DELETE /compass/v1/package_dependencies/lock_file/{componentId}/{sourceId})
+    window: not stated
+  - action: upload an API spec to a component
+    forward: uploadAPISpec (PUT /compass/v1/component/{componentId}/api_specs)
+    reversal: deleteAPISpec (DELETE /compass/v1/component/{componentId}/api_specs)
+    window: not stated
+  - action: upload a Forge app attachment
+    forward: uploadAttachment (PUT .../attachment/{key})
+    reversal: deleteAttachment (DELETE .../attachment/{key})
+    window: not stated
+  irreversible:
+  - action: insertMetricValue (POST /compass/v1/metrics)
+    note: no delete-metric-value operation exists; a wrong value can only be superseded by a later
+      one, and metric history is retained for the tier's retention period
+  - action: createCompassEvent (POST /compass/v1/events)
+    note: no delete-event operation exists; an event written to a component's activity feed cannot
+      be withdrawn through the API
+dry_run_mode:
+  supported: false
+  note: No preview, validate-only or dry-run parameter is published on any Compass operation.
+pagination:
+  rest:
+    supported: false
+    note: No REST operation returns a collection; there is nothing to page.
+  graphql:
+    style: Relay cursor connections
+    params: [first, after]
+    response_fields: [edges, nodes, pageInfo]
+    note: >
+      Verified against the captured introspection document. Collection fields resolve to
+      *Connection types with edges/nodes/pageInfo - attentionItemsConnection takes first/after
+      directly, while searchComponents takes a CompassSearchComponentQuery input object carrying
+      query, first, after, fieldFilters and sort and returns a union of
+      CompassSearchComponentConnection or QueryError. Not every list field is paginated: the
+      components field is an ids-batch lookup returning a plain list.
+    source: graphql/atlassian-compass-introspection.json
+field_selection:
+  rest: none
+  graphql: native GraphQL field selection; no sparse-fieldset or expand parameter on REST
+metadata:
+  mechanism: custom fields and labels on components
+  graphql: compass.createCustomFieldDefinition / customFields on CompassComponent; addComponentLabels
+  external_identity: externalAliases on a component, plus componentByExternalAlias for lookup by a
+    caller's own identifier
+request_tracing:
+  request_id_header: not documented
+  note: Atlassian publishes no request-id or correlation header for Compass.
+versioning:
+  rest: path segment, /compass/v1; contract declares info.version "1"
+  graphql: unversioned, additive; breaking changes announced on the changelog
+  cross_reference: lifecycle/atlassian-compass-lifecycle.yml
+errors:
+  rest_envelope: '{"errors":[{"type","message"}]}'
+  graphql_envelope: QueryError.extensions[] / payload.errors[].extensions with statusCode + errorType
+  stable_codes: true
+  registry: errors/atlassian-compass-error-types.yml
+  problem_types: errors/atlassian-compass-problem-types.yml
+  rfc9457: false
+rate_limiting:
+  documented: true
+  published_limit: 100 requests per user per minute on the metrics and events endpoints
+  exhaustion_status: 429
+  response_headers: none published
+  retry_after: not documented
+  cross_reference: rate-limits/atlassian-compass-rate-limits.yml
+identifiers:
+  scheme: ARI (Atlassian Resource Identifier)
+  form: ari:cloud:compass:<cloudId>:<resource-type>/<id>
+  example_shape: ari:cloud:compass:...:metric-source/.../...
+  source: https://developer.atlassian.com/cloud/compass/components/push-metric-values-using-a-curl-command/
+  note: >
+    ARIs are the primary identifier across both the REST and GraphQL surfaces and across the
+    Teamwork Graph MCP tools. Several published error types exist purely to report a malformed one
+    (COMPONENT_ARI_INVALID, SCORECARD_ARI_INVALID, RELATIONSHIP_START_NODE_ARI_INVALID).
+configuration_as_code:
+  supported: true
+  file: compass.yml
+  docs: https://developer.atlassian.com/cloud/compass/config-as-code/what-is-config-as-code/
+  note: Components can be declared in a compass.yml file in the source repository instead of through
+    the API; a component managed by config as code is read-only through the catalog UI until
+    disconnected.

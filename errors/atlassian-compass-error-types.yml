@@ -1,0 +1,187 @@
+generated: '2026-09-06'
+method: searched
+source: https://developer.atlassian.com/cloud/compass/error-handling/error-types/
+description: >
+  Atlassian's published Compass error-type registry. These are the stable machine-readable codes
+  returned by Compass GraphQL queries and mutations - Atlassian states explicitly that the message
+  text "may change over time" while the errorType "will not change over time", which makes this the
+  code set an agent should branch on. Captured verbatim from the provider's error guide; nothing
+  here is derived or inferred.
+format: vendor-specific
+rfc9457: false
+envelopes:
+- surface: GraphQL query
+  shape: >
+    Errors arrive inside a QueryError object on the requested field, carrying message and an
+    extensions array whose entries hold statusCode (HTTP status) and errorType (stable code).
+  example: |
+    {"data":{"compass":{"component":{"__typename":"QueryError",
+      "message":"Component not found",
+      "extensions":[{"statusCode":404,"errorType":"COMPONENT_NOT_FOUND"}]}}}}
+- surface: GraphQL mutation
+  shape: >
+    Errors arrive in the mutation payload object under success:false and an errors array, each entry
+    carrying message and an extensions object with statusCode and errorType.
+  example: |
+    {"data":{"compass":{"updateComponent":{"success":false,
+      "errors":[{"message":"...","extensions":{"statusCode":400,"errorType":"COMPONENT_ARI_INVALID"}}],
+      "componentDetails":null}}}}
+- surface: REST
+  shape: >
+    Error responses return an errors array of {type, message} objects. The REST contract's own
+    narrative gives the canonical example.
+  example: |
+    {"errors":[{"type":"FORMAT_INVALID","message":"Field [value] is invalid."}]}
+  source: https://developer.atlassian.com/cloud/compass/swagger.v3.json
+error_type_count: 75
+error_types:
+  - code: ARGUMENT_INVALID
+    message: "An invalid argument was provided in a HTTP call"
+  - code: CLOUD_ID_INVALID
+    message: "The cloud ID does not exist"
+  - code: COMPASS_NOT_AVAILABLE
+    message: "Compass is not available on site with cloudId: cloudId"
+  - code: COMPONENT_ARI_INVALID
+    message: "The component’s Atlassian resource identifier (ARI) is invalid. Try again with a valid ARI."
+  - code: COMPONENT_DESCRIPTION_TOO_LONG
+    message: "The component description is too long. It should be below 1000 characters"
+  - code: COMPONENT_FIELD_VALUE_CANNOT_BE_NULL
+    message: "The component field value is null. Provide a field value and try again."
+  - code: COMPONENT_LINKS_MAXIMUM_PER_TYPE_REACHED
+    message: "The maximum number of component links for a link type has been reached"
+  - code: COMPONENT_LINK_DOES_NOT_EXIST
+    message: "Component link with ID [id] does not exist"
+  - code: COMPONENT_LINK_NAME_TOO_LONG
+    message: "The provided component link name is too long"
+  - code: COMPONENT_LINK_URL_NOT_A_VALID_URL
+    message: "The URL format of the component link is invalid. Try again with a link having a valid URL format."
+  - code: COMPONENT_LINK_URL_TOO_LONG
+    message: "The provided component link url is too long"
+  - code: COMPONENT_LINKS_INVALID_OBJECT_ID
+    message: "The object ID field for this link is invalid. Try again with a link having a valid object ID format."
+  - code: COMPONENT_NAME_BLANK
+    message: "The component name is blank. Provide a name and try again."
+  - code: COMPONENT_NAME_TOO_LONG
+    message: "The component name is too long. Try again with a name shorter than 100 characters."
+  - code: COMPONENT_NOT_FOUND
+    message: "The component requested for could not be found."
+  - code: EXTERNAL_ALIAS_COULD_NOT_BE_CREATED
+    message: "We couldn't create the external alias. Either the alias is already associated with a component, or the limit of associated aliases for this component is already reached. Try creating a different alias or reduce the number of aliases associated with this component."
+  - code: RELATIONSHIP_NOT_FOUND
+    message: "We couldn’t find a relationship for those component IDs. Try creating the relationship or use valid component IDs."
+  - code: RELATIONSHIP_START_NODE_NOT_FOUND
+    message: "We couldn’t create this relationship because the component at the start node does not exist. Check for typos or try again with a different component"
+  - code: RELATIONSHIP_END_NODE_NOT_FOUND
+    message: "We couldn’t create this relationship because the component at the end node does not exist. Check for typos or try again with a different component."
+  - code: RELATIONSHIP_ALREADY_EXISTS
+    message: "The relationship between these components already exists. Try creating a different relationship."
+  - code: RELATIONSHIP_START_AND_END_NODES_MUST_BELONG_TO_THE_SAME_SITE
+    message: "We couldn’t create a relationship between these components because they belong to different Compass sites. Try again with components that belong to the same Compass site."
+  - code: RELATIONSHIP_NODES_SELF_REFERENCING_ERROR
+    message: "We couldn't create this relationship because the start node component is the same as the end node component. Try again with different components."
+  - code: RELATIONSHIP_START_NODE_ARI_INVALID
+    message: "The Atlassian resource identifier (ARI) of the component at the start node of this relationship is invalid. Try again with a valid ARI."
+  - code: RELATIONSHIP_END_NODE_ARI_INVALID
+    message: "The Atlassian resource identifier (ARI) of the component at the end node of this relationship is invalid. Try again with a valid ARI."
+  - code: CONSTRAINT_VIOLATION
+    message: "A validation constraint was violated"
+  - code: DUPLICATE_FIELD_DEFINITION_ID
+    message: "Field definition [definitionId] already exists. Try again with a different field definition ID."
+  - code: EXTERNAL_ALIAS_NOT_FOUND
+    message: "We couldn’t find the external alias. Check for typos and try again."
+  - code: FIELDS_NOT_SUPPORTED
+    message: "Currently, fields are supported only for components of the 'Service' type."
+  - code: FIELD_CANNOT_BE_NULL
+    message: "A provided input field cannot be null"
+  - code: FIELD_DEFINITION_DOES_NOT_EXIST
+    message: "Field definition [definitionId] does not exist. Try again with a valid field definition for the component type."
+  - code: FIELD_MISSING
+    message: "Field [fieldName] must not be null"
+  - code: FIELD_VALUE_DOES_NOT_MATCH_FIELD_DEFINITION
+    message: "The field value for field definition [definitionId] does not match its field type. Try again with a valid field value."
+  - code: FIELD_VALUE_ELEMENT_IS_NOT_ALLOWED
+    message: "The field value element for field definition [definitionId] at index [index] is invalid. Try again with a valid field value element."
+  - code: FIELD_VALUE_INVALID_NUMBER_OF_ELEMENTS
+    message: "The field value for field definition [definitionId] has an incorrect number of elements. Try again with the correct number of elements."
+  - code: FORMAT_INVALID
+    message: "Error when parsing JSON"
+  - code: INTERNAL_SERVER_ERROR
+    message: "An internal error has occurred. If this persists, please contact our support."
+  - code: INVALID_COMPASS_SITE_ID
+    message: "Invalid Compass Site ID found in headers. This mutation may only be called from a valid Forge app."
+  - code: INVALID_COMPONENT_OWNER_FORMAT
+    message: "The format of the component owner value is invalid. Try again using the format of a team's Atlassian resource identifier (ARI)."
+  - code: INVALID_ECOSYSTEM_APP_ID
+    message: "Invalid ecosystem app ID found in headers. This mutation may only be called from a valid Forge app."
+  - code: NUMBER_OF_ITEMS_REQUESTED_INVALID_EXCEPTION
+    message: "The number of items requested is invalid, must be between [min] to [max]."
+  - code: MISSING_CLOUD_ID
+    message: "Could not get cloud ID or hostname from request headers"
+  - code: MISSING_CLOUD_ID_AND_HOSTNAME
+    message: "Could not get cloud ID or hostname from request headers"
+  - code: MISSING_ECOSYSTEM_HEADERS
+    message: "Ecosystem headers not found. This mutation may only be called from a valid Forge app."
+  - code: ONE_OF_DIRECTIVE_VALIDATION_ERROR
+    message: "Type is annotated with @oneOf. One and only one of the fields must be provided."
+  - code: PERMISSION_DENIED
+    message: "User does not have permission to perform this action."
+  - code: RELATIONSHIP_LIMIT_REACHED
+    message: "We couldn’t create this relationship. The number of relationships for either the start or end node component has reached its limit. Try creating a different relationship or reduce the number of relationships associated with the component."
+  - code: REQUIRED_FIELD_VALUE_DOES_NOT_EXIST
+    message: "A field value for field definition [definitionId] is required. Provide a field value and try again."
+  - code: SCORECARD_ARI_INVALID
+    message: "This is not a valid scorecard ARI"
+  - code: SCORECARD_COMPONENT_RELATIONSHIP_NOT_FOUND
+    message: "We couldn’t find a relationship for those scorecard and component IDs. Try applying the scorecard to the component or use valid IDs."
+  - code: SCORECARD_CREATION_FAILED
+    message: "We couldn’t create your scorecard. Check your connection and try again."
+  - code: SCORECARD_CRITERIA_ARE_REQUIRED
+    message: "We couldn’t create your scorecard because it doesn’t have any criteria selected. Select at least one criterion and try again."
+  - code: SCORECARD_CRITERIA_NOT_UNIQUE
+    message: "We couldn't create or update your scorecard because a criterion is selected more than once. Select unique criteria and try again."
+  - code: SCORECARD_CRITERIA_WEIGHT_INVALID
+    message: "The scorecard criteria weight is invalid. Try again with a value from 1 through 100, both inclusive."
+  - code: SCORECARD_CRITERIA_WEIGHT_TOTAL_INVALID
+    message: "The scorecard criteria weight values do not add up to 100%. Adjust the weight values so that they add up to 100% and try again."
+  - code: SCORECARD_DESCRIPTION_BLANK
+    message: "The scorecard description is blank. Provide a description and try again."
+  - code: SCORECARD_DESCRIPTION_TOO_LONG
+    message: "The scorecard description is too long. Try again with a description having a length shorter than or equal to 330 characters."
+  - code: SCORECARD_NAME_BLANK
+    message: "The scorecard name is blank. Provide a name and try again."
+  - code: SCORECARD_NAME_NOT_UNIQUE
+    message: "A scorecard with this name already exists. Try again with a different name."
+  - code: SCORECARD_NAME_TOO_LONG
+    message: "The scorecard name is too long. Try again with a name having a length shorter than or equal to 40 characters."
+  - code: SCORECARD_NOT_FOUND
+    message: "We couldn’t find your scorecard. Check for typos or try again with a different scorecard name."
+  - code: SCORECARD_REQUIRED_IMPORTANCE_MUST_HAVE_ADMIN_PERM
+    message: "We couldn’t create or update your scorecard. The owner of a scorecard with ‘Required’ importance must be an administrator. Try again with a different owner."
+  - code: SCORECARD_COMPONENT_RELATIONSHIP_LIMIT_REACHED
+    message: "We couldn’t assign scorecard to component because the scorecard is already assigned to the component. The number of relationships for either the scorecard or component has reached its limit."
+  - code: SCORECARD_COMPONENT_RELATIONSHIP_SCORECARD_NOT_FOUND
+    message: "We couldn’t assign scorecard to component because the scorecard does not exist."
+  - code: SCORECARD_COMPONENT_RELATIONSHIP_COMPONENT_NOT_FOUND
+    message: "We couldn’t assign scorecard to component because the component does not exist."
+  - code: SCORECARD_ALREADY_APPLIED_TO_COMPONENT
+    message: "We couldn’t assign scorecard to component because the scorecard is already assigned to the component."
+  - code: SCORECARD_NOT_ASSIGNABLE_ERROR
+    message: "We couldn’t assign scorecard to component because the scorecard is not assignable. Either it's a required scorecard or the componentType doesn't match the type of component"
+  - code: STORE_CONFLICT_EXCEPTION
+    message: "There was a problem saving your data, please try again some time later."
+  - code: EXTERNAL_ALIAS_ID_CANNOT_BE_EMPTY
+    message: "The external alias ID is null. Provide a value for the ID and try again."
+  - code: EXTERNAL_ALIAS_SOURCE_TOO_LONG
+    message: "External alias source has exceeded the maximum length of 1024"
+  - code: EXTERNAL_ALIAS_ID_TOO_LONG
+    message: "External alias ID has exceeded the maximum length of 1024"
+  - code: COMPONENT_LINK_TYPE_CANNOT_BE_ON_CALL
+    message: "Only Components of type Service can have an On Call link type. Please change your Component type and try again."
+  - code: CAMPAIGN_CREATION_FAILED
+    message: "We couldn’t create your campaign. Check your connection and try again."
+  - code: CAMPAIGN_NOT_FOUND
+    message: "We could not find your campaign. Check for typos or try again with a different campaign Id."
+  - code: CAMPAIGN_UPDATE_FAILED
+    message: "We could not update your campaign. Please try again later."
+  - code: GOAL_APPLIED_TO_COMPONENTS_INVALID_SORT_FIELD
+    message: "Sort field option for components applied to a goal is invalid"

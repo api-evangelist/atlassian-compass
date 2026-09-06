@@ -1,0 +1,59 @@
+generated: '2026-09-06'
+method: searched
+source: https://registry.npmjs.org (unauthenticated metadata endpoints) plus the Compass developer
+  docs at https://developer.atlassian.com/cloud/compass/integrations/graphql-api-toolkit/ and
+  https://developer.atlassian.com/cloud/compass/integrations/get-started-integrating-with-Compass/
+note: >
+  Atlassian publishes no Compass-branded client SDK on any registry. The first-party libraries a
+  Compass integrator actually installs are Forge platform packages that the Compass documentation
+  itself directs you to: the GraphQL API toolkit (@atlassian/forge-graphql), which the Compass docs
+  describe as providing "API methods only for Compass", and the Forge CLI (@forge/cli), which the
+  Compass getting-started guide requires before you can create or deploy a Compass app. Both are
+  published by Atlassian and are marked official on that basis. Probes for @atlassian/compass-cli,
+  compass-cli and @atlassian/compass-common all returned "Not found" on the npm registry.
+registries_probed:
+- npm
+packages:
+- name: '@atlassian/forge-graphql'
+  registry: npm
+  language: javascript
+  official: true
+  version: 16.4.0
+  published: '2025-11-18'
+  url: https://www.npmjs.com/package/@atlassian/forge-graphql
+  repository: https://bitbucket.org/atlassian/forge-graphql-tools
+  role: GraphQL API toolkit - the Compass docs state it "currently provides API methods only for Compass"
+  docs: https://developer.atlassian.com/cloud/compass/integrations/graphql-api-toolkit/
+- name: '@atlassian/forge-graphql-types'
+  registry: npm
+  language: typescript
+  official: true
+  version: 4.3.0
+  published: '2025-11-18'
+  url: https://www.npmjs.com/package/@atlassian/forge-graphql-types
+  role: TypeScript type definitions companion to the GraphQL API toolkit
+- name: '@forge/cli'
+  registry: npm
+  language: javascript
+  official: true
+  version: 13.5.0
+  published: '2026-08-31'
+  url: https://www.npmjs.com/package/@forge/cli
+  role: Forge CLI - required by the Compass getting-started guide to create, deploy and install
+    Compass apps (forge create / forge deploy / forge install)
+  docs: https://developer.atlassian.com/cloud/compass/integrations/get-started-integrating-with-Compass/
+absent:
+- name: '@atlassian/compass-cli'
+  registry: npm
+  status: not found
+- name: compass-cli
+  registry: npm
+  status: not found
+- name: '@atlassian/compass-common'
+  registry: npm
+  status: not found
+currency:
+  note: >
+    The GraphQL API toolkit last shipped 2025-11-18, nine months before this probe, while the Forge
+    CLI it sits alongside shipped 2026-08-31. Read that gap against the 2026-04-13 announcement that
+    Compass is being phased out into DX Fabric (see lifecycle/).

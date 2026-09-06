@@ -1,9 +1,16 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/atlassian-compass-openapi.yml
+generated: '2026-09-06'
+method: searched
+source: openapi/atlassian-compass-events-api-openapi.yml, openapi/atlassian-compass-metrics-api-openapi.yml
 schemes:
 - name: oauth2
-  source: openapi/atlassian-compass-openapi.yml
+  source: openapi/atlassian-compass-events-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://auth.atlassian.com/authorize
+    tokenUrl: https://auth.atlassian.com/oauth/token
+  description: OAuth 2.0 (3LO) for Atlassian Cloud
+- name: oauth2
+  source: openapi/atlassian-compass-metrics-api-openapi.yml
   flows:
   - flow: authorizationCode
     authorizationUrl: https://auth.atlassian.com/authorize
@@ -15,22 +22,46 @@ scopes:
   flows:
   - authorizationCode
   sources:
-  - openapi/atlassian-compass-openapi.yml
+  - openapi/atlassian-compass-events-api-openapi.yml
+  - openapi/atlassian-compass-metrics-api-openapi.yml
 - scope: write:component:compass
   description: Write component data
   flows:
   - authorizationCode
   sources:
-  - openapi/atlassian-compass-openapi.yml
+  - openapi/atlassian-compass-events-api-openapi.yml
+  - openapi/atlassian-compass-metrics-api-openapi.yml
 - scope: write:event:compass
   description: Send events
   flows:
   - authorizationCode
   sources:
-  - openapi/atlassian-compass-openapi.yml
+  - openapi/atlassian-compass-events-api-openapi.yml
+  - openapi/atlassian-compass-metrics-api-openapi.yml
 - scope: write:metric:compass
   description: Send metric values
   flows:
   - authorizationCode
   sources:
-  - openapi/atlassian-compass-openapi.yml
+  - openapi/atlassian-compass-events-api-openapi.yml
+  - openapi/atlassian-compass-metrics-api-openapi.yml
+docs: https://developer.atlassian.com/cloud/compass/rest/
+note: 'The four Compass scopes are declared in Atlassian''s published OpenAPI oauth2 securityScheme. Atlassian
+  does not publish a separate Compass scopes reference page - the contract is the reference. Two further
+  scope namespaces reach Compass data from adjacent surfaces and are recorded below rather than merged
+  into the list, because they are not Compass scopes: the Atlassian Rovo MCP Server grants Compass access
+  through the read_compass and write_compass permission groups, and the Teamwork Graph scopes read:all:twg
+  / write:all:twg reach Compass components through the MCP graph tools.'
+adjacent_scopes:
+- surface: Atlassian Rovo MCP Server
+  permission_groups:
+  - read_compass
+  - write_compass
+  auth: OAuth 2.1 only; API-token authentication is not supported for Compass
+  source: https://github.com/atlassian/atlassian-mcp-server
+- surface: Atlassian Rovo MCP Server - Teamwork Graph
+  scopes:
+  - read:all:twg
+  - write:all:twg
+  note: Atlassian documents "Compass - components" as an entry point for the Teamwork Graph tools
+  source: https://support.atlassian.com/atlassian-rovo-mcp-server/docs/supported-tools/
