@@ -57,34 +57,13 @@ apis:
   - type: Documentation
     url: https://developer.atlassian.com/cloud/compass/graphql/
   - type: Authentication
-    url: https://developer.atlassian.com/cloud/compass/integrations/get-started-integrating-with-Compass/
+    url: >-
+      https://developer.atlassian.com/cloud/compass/integrations/get-started-integrating-with-Compass/
   - type: GettingStarted
-    url: https://developer.atlassian.com/cloud/compass/integrations/get-started-integrating-with-Compass/
+    url: >-
+      https://developer.atlassian.com/cloud/compass/integrations/get-started-integrating-with-Compass/
   - url: graphql/atlassian-compass-graphql.md
     type: GraphQL
-- aid: atlassian-compass:atlassian-compass-rest-api
-  name: Atlassian Compass REST API
-  description: >
-    The Compass REST API v1 provides operations for component management, scorecard configuration, and
-    webhook registration via standard HTTP REST conventions with OAuth 2.0 authentication.
-  humanURL: https://developer.atlassian.com/cloud/compass/rest/
-  baseURL: https://api.atlassian.com/compass/v1
-  tags:
-  - Components
-  - Developer Experience
-  - REST
-  - Software Catalog
-  properties:
-  - type: Documentation
-    url: https://developer.atlassian.com/cloud/compass/rest/
-  - type: Authentication
-    url: https://developer.atlassian.com/cloud/compass/integrations/get-started-integrating-with-Compass/
-  - type: OpenAPI
-    url: openapi/atlassian-compass-compass-rest-api-openapi.json
-  - type: APIReference
-    url: https://developer.atlassian.com/cloud/compass/rest/
-  - type: Overlay
-    url: overlays/atlassian-compass-compass-rest-api-overlay.yaml
 - aid: atlassian-compass:atlassian-compass-events-api
   name: Atlassian Compass Events API
   description: Ingest events into a Compass event source
@@ -107,6 +86,79 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/atlassian-compass-metrics-api-openapi.yml
+- aid: atlassian-compass:atlassian-compass-attachment-rest-controller-api
+  name: Atlassian Compass Attachment Rest Controller API
+  description: >-
+    The attachment-rest-controller API from Atlassian Compass — 2 operation(s) for attachment-rest-controller.
+  humanURL: https://developer.atlassian.com/cloud/compass/graphql/
+  baseURL: https://api.atlassian.com/graphql
+  tags:
+  - attachment-rest-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/atlassian-compass-attachment-rest-controller-api-openapi.yml
+  - type: Documentation
+    url: https://developer.atlassian.com/cloud/compass/rest/
+  - type: Authentication
+    url: >-
+      https://developer.atlassian.com/cloud/compass/integrations/get-started-integrating-with-Compass/
+  - type: APIReference
+    url: https://developer.atlassian.com/cloud/compass/rest/
+- aid: atlassian-compass:atlassian-compass-entitlement-rest-controller-api
+  name: Atlassian Compass Entitlement Rest Controller API
+  description: >-
+    The entitlement-rest-controller API from Atlassian Compass — 1 operation(s) for entitlement-rest-controller.
+  humanURL: https://developer.atlassian.com/cloud/compass/graphql/
+  baseURL: https://api.atlassian.com/graphql
+  tags:
+  - entitlement-rest-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/atlassian-compass-entitlement-rest-controller-api-openapi.yml
+  - type: Documentation
+    url: https://developer.atlassian.com/cloud/compass/rest/
+  - type: Authentication
+    url: >-
+      https://developer.atlassian.com/cloud/compass/integrations/get-started-integrating-with-Compass/
+  - type: APIReference
+    url: https://developer.atlassian.com/cloud/compass/rest/
+- aid: atlassian-compass:atlassian-compass-incoming-webhooks-rest-controller-api
+  name: Atlassian Compass Incoming Webhooks Rest Controller API
+  description: >-
+    The incoming-webhooks-rest-controller API from Atlassian Compass — 1 operation(s) for incoming-webhooks-rest-controller.
+  humanURL: https://developer.atlassian.com/cloud/compass/graphql/
+  baseURL: https://api.atlassian.com/graphql
+  tags:
+  - incoming-webhooks-rest-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/atlassian-compass-incoming-webhooks-rest-controller-api-openapi.yml
+  - type: Documentation
+    url: https://developer.atlassian.com/cloud/compass/rest/
+  - type: Authentication
+    url: >-
+      https://developer.atlassian.com/cloud/compass/integrations/get-started-integrating-with-Compass/
+  - type: APIReference
+    url: https://developer.atlassian.com/cloud/compass/rest/
+- aid: atlassian-compass:atlassian-compass-package-dependencies-api
+  name: Atlassian Compass Package Dependencies API
+  description: >-
+    This resource represents package dependencies. Use this resource to associate package dependencies
+    with a component.
+  humanURL: https://developer.atlassian.com/cloud/compass/graphql/
+  baseURL: https://api.atlassian.com/graphql
+  tags:
+  - Package Dependencies
+  properties:
+  - type: OpenAPI
+    url: openapi/atlassian-compass-package-dependencies-api-openapi.yml
+  - type: Documentation
+    url: https://developer.atlassian.com/cloud/compass/rest/
+  - type: Authentication
+    url: >-
+      https://developer.atlassian.com/cloud/compass/integrations/get-started-integrating-with-Compass/
+  - type: APIReference
+    url: https://developer.atlassian.com/cloud/compass/rest/
 common:
 - type: OpenAPI
   url: openapi/atlassian-compass-compass-rest-api-openapi.json
