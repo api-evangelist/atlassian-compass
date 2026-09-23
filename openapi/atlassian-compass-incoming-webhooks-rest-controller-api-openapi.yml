@@ -1,52 +1,56 @@
 openapi: 3.2.0
 info:
-  title: Compass REST Metrics API
+  title: Compass REST Incoming Webhooks Rest Controller API
   version: '1'
-  description: This resource represents metrics. Use this resource to send metric values into a component's metric source.
 servers:
 - url: https://your-domain.atlassian.net/gateway/api
 security:
 - basicAuth: []
 tags:
-- name: Metrics
-  description: This resource represents metrics. Use this resource to send metric values into a component's metric source.
+- name: incoming-webhooks-rest-controller
 paths:
-  /compass/v1/metrics:
+  /compass/v1/webhooks/{webhookId}:
     post:
       tags:
-      - Metrics
-      summary: Send metric value
-      description: Sends a metric value into a metric source for a component. This API is rate limited. Only 100 requests per user per minute are allowed.
-      operationId: insertMetricValue
+      - incoming-webhooks-rest-controller
+      summary: An invocation of an inbound webhook
+      description: Third parties can call these inbound webhooks to dothings within compass, like create deployment events for webhooks coming from github
+      operationId: handleWebhookInvocation
+      parameters:
+      - name: webhookId
+        in: path
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
             schema:
-              oneOf:
-              - $ref: '#/components/schemas/InsertMetricByMetricDefinitionRequestDto'
-              - $ref: '#/components/schemas/InsertMetricByMetricSourceRequestDto'
+              type: string
         required: true
       responses:
-        '200':
-          description: Returned if the request is successful.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InsertMetricResponseDto'
+        '202':
+          description: Returned if the process of invoking a webhook with a payload has been enqueud.
         '400':
           description: Returned if the request is not valid.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponseDto'
-        '403':
-          description: Returned if the user does not have permission to insert metrics.
+        '401':
+          description: Returned if the request token is invalid
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponseDto'
         '404':
-          description: Returned if the metric source, metric definition or component is not found.
+          description: Returned if the webhook is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+        '405':
+          description: Returned if the request was not a POST
           content:
             application/json:
               schema:
@@ -56,33 +60,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InsertMetricResponseDto'
+                type: string
 components:
   schemas:
-    InsertMetricResponseDto:
-      type: object
-      description: The metric value that was sent into the metric source.
-      properties:
-        metricSourceId:
-          type: string
-          description: The ID of the metric source.
-        value:
-          type: number
-          format: double
-          description: The value of the metric.
-        timestamp:
-          type: string
-          format: date-time
-          description: The time the metric value was collected.
-        annotation:
-          type:
-          - string
-          - 'null'
-          description: The metric value annotation.
-      required:
-      - metricSourceId
-      - timestamp
-      - value
     ErrorResponseDto:
       type: object
       description: A list of errors that occurred.
@@ -94,54 +74,6 @@ components:
           description: A list of errors that occurred.
           items:
             $ref: '#/components/schemas/ErrorDto'
-    InsertMetricByMetricDefinitionRequestDto:
-      allOf:
-      - $ref: '#/components/schemas/InsertMetricRequestDto'
-      - type: object
-        properties:
-          metricDefinitionId:
-            type: string
-            description: The metric definition ID corresponding to the metric source to send the value into.
-          componentId:
-            type: string
-            description: The component ID corresponding to the metric source to send the value into.
-          timestamp:
-            type:
-            - string
-            - 'null'
-            format: date-time
-            description: The time the metric value was collected.
-          annotation:
-            type:
-            - string
-            - 'null'
-            description: The ADF annotation attached to a metric value.
-      required:
-      - componentId
-      - metricDefinitionId
-      - value
-    InsertMetricByMetricSourceRequestDto:
-      allOf:
-      - $ref: '#/components/schemas/InsertMetricRequestDto'
-      - type: object
-        properties:
-          metricSourceId:
-            type: string
-            description: The ID of the metric source to send the value into.
-          timestamp:
-            type:
-            - string
-            - 'null'
-            format: date-time
-            description: The time the metric value was collected.
-          annotation:
-            type:
-            - string
-            - 'null'
-            description: The ADF annotation attached to a metric value.
-      required:
-      - metricSourceId
-      - value
     ErrorDto:
       type: object
       description: An error.
@@ -156,28 +88,6 @@ components:
           - string
           - 'null'
           description: A message describing the error.
-    InsertMetricRequestDto:
-      type: object
-      properties:
-        title:
-          type: string
-          description: The title of the metric value source. The title of the metric source being inserted into will be updated to match this value.If this property is not provided, the existing value on the metric source will not be updated.
-        value:
-          type: number
-          format: double
-          description: The metric value to send.
-        annotation:
-          type: string
-          description: The ADF annotation attached to a metric value.
-        timestamp:
-          type: string
-          format: date-time
-          description: The time the metric value was collected.
-        url:
-          type: string
-          description: The url of the metric value source. The url of the metric source being inserted into will be updated to match this value. If this property is not provided, the existing value on the metric source will not be updated.
-      required:
-      - value
   securitySchemes:
     basicAuth:
       type: http

@@ -1,91 +1,907 @@
 openapi: 3.2.0
 info:
-  title: Atlassian Compass REST Events API
-  version: '2.0'
-  description: 'Atlassian Compass is a developer experience platform with a software
-
-    component catalog, scorecards, metrics, and event ingestion. This
-
-    document describes the public REST API v2 (`/compass/v1`) used to send
-
-    metric values and events. Most Compass operations (querying components,
-
-    scorecards, dependencies, etc.) are exposed via the Compass GraphQL API
-
-    at https://api.atlassian.com/graphql and not enumerated here.
-
-    '
-  contact:
-    name: Atlassian Developer
-    url: https://developer.atlassian.com/cloud/compass/
+  title: Compass REST Events API
+  version: '1'
+  description: This resource represents events. Use this resource to send events into an event source.
 servers:
-- url: https://api.atlassian.com
-  description: Atlassian Cloud edge gateway
+- url: https://your-domain.atlassian.net/gateway/api
+security:
+- basicAuth: []
 tags:
 - name: Events
-  description: Ingest events into a Compass event source
+  description: This resource represents events. Use this resource to send events into an event source.
 paths:
   /compass/v1/events:
     post:
       tags:
       - Events
-      summary: Send an event into an event source
-      description: 'Sends an event into a Compass event source. Returns 202 Accepted
-
-        and processes the event asynchronously. Rate limited to 100 requests
-
-        per user per minute.
-
-        '
-      security:
-      - oauth2:
-        - write:event:compass
+      summary: Send event
+      description: Sends an event into an event source. This API is rate limited. Only 100 requests per user per minute are allowed.
+      operationId: createCompassEvent
       requestBody:
-        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/InsertEventRequest'
+              $ref: '#/components/schemas/CreateStreamlinedEventRequest'
+        required: true
       responses:
         '202':
-          description: Event accepted for processing
+          description: Returned if the process of sending of an event is started.
+        '400':
+          description: Returned if the request is not valid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+        '404':
+          description: Returned if the event source is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
         '429':
-          description: Rate limited
+          description: Returned if the request exceeds the rate limit.
+          content: {}
 components:
   schemas:
-    InsertEventRequest:
+    ErrorResponseDto:
       type: object
-      required:
-      - eventSourceId
-      - payload
+      description: A list of errors that occurred.
       properties:
-        eventSourceId:
-          type: string
-        externalEventId:
-          type: string
+        errors:
+          type:
+          - array
+          - 'null'
+          description: A list of errors that occurred.
+          items:
+            $ref: '#/components/schemas/ErrorDto'
+    CompassCreateBuildEventInputDto:
+      type: object
+      description: A build event.
+      properties:
         displayName:
           type: string
-        description:
-          type: string
-        url:
-          type: string
-          format: uri
+          description: The name of the event.
         lastUpdated:
           type: string
           format: date-time
-        payload:
-          type: object
-          description: Event-specific payload (e.g. deployment, incident, build)
+          description: The last time this event was updated.
+        updateSequenceNumber:
+          type: integer
+          format: int64
+          description: A number specifying the order of the update to the event. Must be incremented to save new events. Otherwise, the request will be ignored.
+        description:
+          type: string
+          description: The description of the event.
+        url:
+          type: string
+          description: The URL of the event.
+        externalEventSourceId:
+          type: string
+          description: The ID of the external event source.
+        buildProperties:
+          $ref: '#/components/schemas/CompassBuildEventPropertiesInputDto'
+          description: The list of properties of the build event.
+      required:
+      - buildProperties
+      - description
+      - displayName
+      - externalEventSourceId
+      - lastUpdated
+      - updateSequenceNumber
+      - url
+    CompassCreateDeploymentEventInputDto:
+      type: object
+      description: A deployment event.
+      properties:
+        displayName:
+          type: string
+          description: The name of the deployment event.
+        updateSequenceNumber:
+          type: integer
+          format: int64
+          description: A number specifying the order of the update to the event. Must be incremented to save new events. Otherwise, the request will be ignored.
+        url:
+          type: string
+          description: The URL of the deployment event.
+        description:
+          type: string
+          description: The description of the deployment event.
+        lastUpdated:
+          type: string
+          format: date-time
+          description: The last time this event was updated.
+        externalEventSourceId:
+          type: string
+          description: The ID of the external event source.
+        deploymentProperties:
+          $ref: '#/components/schemas/CompassCreateDeploymentEventPropertiesInputDto'
+          description: The list of properties of the deployment event.
+      required:
+      - deploymentProperties
+      - description
+      - displayName
+      - externalEventSourceId
+      - lastUpdated
+      - updateSequenceNumber
+      - url
+    CompassBuildEventPipelineInputDto:
+      type: object
+      description: The build event pipeline.
+      properties:
+        pipelineId:
+          type: string
+          description: The ID of the build event pipeline should be unique per build event. Otherwise, any existing event with a matching value will be overwritten.
+        url:
+          type:
+          - string
+          - 'null'
+          description: The URL to the build event pipeline.
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: The name of the build event pipeline.
+      required:
+      - pipelineId
+    CompassCreateDeploymentEventPropertiesInputDto:
+      type: object
+      description: The list of properties of the deployment event.
+      properties:
+        sequenceNumber:
+          type: integer
+          format: int64
+          description: The sequence number for the deployment.
+        state:
+          type: string
+          description: The state of the deployment.
+          enum:
+          - PENDING
+          - IN_PROGRESS
+          - SUCCESSFUL
+          - CANCELLED
+          - FAILED
+          - ROLLED_BACK
+          - UNKNOWN
+        pipeline:
+          $ref: '#/components/schemas/CompassDeploymentEventPipelineInputDto'
+          description: The deployment event pipeline.
+        environment:
+          $ref: '#/components/schemas/CompassDeploymentEventEnvironmentInputDto'
+          description: The environment where the deployment event has occurred.
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The time this deployment was started at.
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The time this deployment was completed at.
+      required:
+      - environment
+      - pipeline
+      - sequenceNumber
+      - state
+    CompassBuildEventPropertiesInputDto:
+      type: object
+      description: The list of properties of the build event.
+      properties:
+        state:
+          type: string
+          description: The state of the build.
+          enum:
+          - IN_PROGRESS
+          - SUCCESSFUL
+          - CANCELLED
+          - FAILED
+          - ERROR
+          - TIMED_OUT
+          - UNKNOWN
+        pipeline:
+          $ref: '#/components/schemas/CompassBuildEventPipelineInputDto'
+          description: The build event pipeline.
+        startedAt:
+          type: string
+          format: date-time
+          description: The time the build started.
+        completedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The time the build completed.
+      required:
+      - pipeline
+      - startedAt
+      - state
+    CompassPushEventInputPropertiesDto:
+      type: object
+      description: The list of properties of the push event.
+      properties:
+        id:
+          type: string
+          description: The ID of the push to event.
+        branchName:
+          type: string
+          description: The name of the branch being pushed to.
+        author:
+          description: The author who made the push.
+          oneOf:
+          - $ref: '#/components/schemas/CompassPushEventAuthorInputDto'
+          - type: 'null'
+      required:
+      - branchName
+      - id
+    CompassCreateFlagEventPropertiesInputDto:
+      type: object
+      description: The list of properties of the flag event.
+      properties:
+        id:
+          type: string
+          description: The ID of the flag.
+        status:
+          type:
+          - string
+          - 'null'
+          description: The flag's status. The recognized values (case-insensitive) are on, off, created, archived, deleted, and targeting_updated. Any other value, although acceptable, will be displayed as unknown on the activity feed.
+      required:
+      - id
+    CompassCreateIncidentEventPropertiesInputDto:
+      type: object
+      description: The list of properties of the incident event.
+      properties:
+        id:
+          type: string
+          description: The ID of the incident.
+        state:
+          type: string
+          description: The state of the incident.
+          enum:
+          - OPEN
+          - RESOLVED
+          - DELETED
+        severity:
+          description: The severity of the incident
+          oneOf:
+          - $ref: '#/components/schemas/CompassIncidentEventSeverityInputDto'
+          - type: 'null'
+        startTime:
+          type: string
+          format: date-time
+          description: The time when the incident started
+        endTime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The time when the incident ended
+      required:
+      - id
+      - startTime
+      - state
+    CompassCreateVulnerabilityEventInputDto:
+      type: object
+      description: A vulnerability event.
+      properties:
+        displayName:
+          type: string
+          description: The name of the event.
+        lastUpdated:
+          type: string
+          format: date-time
+          description: The last time this event was updated.
+        updateSequenceNumber:
+          type: integer
+          format: int64
+          description: A number specifying the order of the update to the event. Must be incremented to save new events. Otherwise, the request will be ignored.
+        description:
+          type: string
+          description: The description of the event.
+        url:
+          type: string
+          description: The URL of the event.
+        externalEventSourceId:
+          type: string
+          description: The ID of the external event source.
+        vulnerabilityProperties:
+          $ref: '#/components/schemas/CompassCreateVulnerabilityEventPropertiesInputDto'
+          description: The list of properties of the vulnerability event.
+      required:
+      - description
+      - displayName
+      - externalEventSourceId
+      - lastUpdated
+      - updateSequenceNumber
+      - url
+      - vulnerabilityProperties
+    CompassCreatePullRequestEventInputDto:
+      type: object
+      description: 'A pull request event. Warning: This option is currently only usable by Forge apps and does not add events to the Activity Feed.'
+      properties:
+        lastUpdated:
+          type: string
+          format: date-time
+          description: The last time this event was updated.
+        cloudId:
+          type:
+          - string
+          - 'null'
+          description: The cloud ID of the event.
+        pullRequestProperties:
+          $ref: '#/components/schemas/CompassPullRequestInputPropertiesDto'
+          description: The list of properties of the pull request event.
+      required:
+      - lastUpdated
+      - pullRequestProperties
+    CompassEventInputDto:
+      type: object
+      description: The type of event. One and only one of the fields in this input type must be provided.
+      properties:
+        deployment:
+          oneOf:
+          - $ref: '#/components/schemas/CompassCreateDeploymentEventInputDto'
+          - type: 'null'
+        build:
+          oneOf:
+          - $ref: '#/components/schemas/CompassCreateBuildEventInputDto'
+          - type: 'null'
+        incident:
+          oneOf:
+          - $ref: '#/components/schemas/CompassCreateIncidentEventInputDto'
+          - type: 'null'
+        flag:
+          oneOf:
+          - $ref: '#/components/schemas/CompassCreateFlagEventInputDto'
+          - type: 'null'
+        alert:
+          oneOf:
+          - $ref: '#/components/schemas/CompassCreateAlertEventInputDto'
+          - type: 'null'
+        lifecycle:
+          oneOf:
+          - $ref: '#/components/schemas/CompassCreateLifecycleEventInputDto'
+          - type: 'null'
+        custom:
+          oneOf:
+          - $ref: '#/components/schemas/CompassCreateCustomEventInputDto'
+          - type: 'null'
+        push:
+          oneOf:
+          - $ref: '#/components/schemas/CompassCreatePushEventInputDto'
+          - type: 'null'
+        pullRequest:
+          oneOf:
+          - $ref: '#/components/schemas/CompassCreatePullRequestEventInputDto'
+          - type: 'null'
+        vulnerability:
+          oneOf:
+          - $ref: '#/components/schemas/CompassCreateVulnerabilityEventInputDto'
+          - type: 'null'
+    CompassCreateLifecycleEventInputDto:
+      type: object
+      description: A lifecycle event.
+      properties:
+        displayName:
+          type: string
+          description: The name of the event.
+        lastUpdated:
+          type: string
+          format: date-time
+          description: The last time this event was updated.
+        updateSequenceNumber:
+          type: integer
+          format: int64
+          description: A number specifying the order of the update to the event. Must be incremented to save new events. Otherwise, the request will be ignored.
+        description:
+          type: string
+          description: The description of the event.
+        url:
+          type: string
+          description: The URL of the event.
+        externalEventSourceId:
+          type: string
+          description: The ID of the external event source.
+        lifecycleProperties:
+          $ref: '#/components/schemas/CompassLifecycleEventInputPropertiesDto'
+          description: The list of properties of the lifecycle event.
+      required:
+      - description
+      - displayName
+      - externalEventSourceId
+      - lastUpdated
+      - lifecycleProperties
+      - updateSequenceNumber
+      - url
+    CompassCreateIncidentEventInputDto:
+      type: object
+      description: An incident event.
+      properties:
+        displayName:
+          type: string
+          description: The name of the event.
+        lastUpdated:
+          type: string
+          format: date-time
+          description: The last time this event was updated.
+        updateSequenceNumber:
+          type: integer
+          format: int64
+          description: A number specifying the order of the update to the event. Must be incremented to save new events. Otherwise, the request will be ignored.
+        description:
+          type: string
+          description: The description of the event.
+        url:
+          type: string
+          description: The URL of the event.
+        externalEventSourceId:
+          type: string
+          description: The ID of the external event source.
+        incidentProperties:
+          $ref: '#/components/schemas/CompassCreateIncidentEventPropertiesInputDto'
+          description: The list of properties of the incident event.
+      required:
+      - description
+      - displayName
+      - externalEventSourceId
+      - incidentProperties
+      - lastUpdated
+      - updateSequenceNumber
+      - url
+    CompassDeploymentEventPipelineInputDto:
+      type: object
+      description: The deployment event pipeline.
+      properties:
+        pipelineId:
+          type: string
+          description: The ID of the deployment event pipeline.
+        url:
+          type: string
+          description: The URL of the deployment event pipeline.
+        displayName:
+          type: string
+          description: The name of the deployment event pipeline.
+      required:
+      - displayName
+      - pipelineId
+      - url
+    CompassVulnerabilityEventSeverityInputDto:
+      type: object
+      description: The severity of a vulnerability
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+          description: The label to use for displaying the severity
+        level:
+          type: string
+          description: The severity level of the vulnerability
+          enum:
+          - CRITICAL
+          - HIGH
+          - MEDIUM
+          - LOW
+      required:
+      - level
+    CompassCreateCustomEventInputDto:
+      type: object
+      description: A custom event.
+      properties:
+        displayName:
+          type: string
+          description: The name of the event.
+        lastUpdated:
+          type: string
+          format: date-time
+          description: The last time this event was updated.
+        updateSequenceNumber:
+          type: integer
+          format: int64
+          description: A number specifying the order of the update to the event. Must be incremented to save new events. Otherwise, the request will be ignored.
+        description:
+          type: string
+          description: The description of the event.
+        url:
+          type: string
+          description: The URL of the event.
+        externalEventSourceId:
+          type: string
+          description: The ID of the external event source.
+        customEventProperties:
+          $ref: '#/components/schemas/CompassCustomEventPropertiesInputDto'
+          description: The list of properties of the custom event.
+      required:
+      - customEventProperties
+      - description
+      - displayName
+      - externalEventSourceId
+      - lastUpdated
+      - updateSequenceNumber
+      - url
+    CreateStreamlinedEventRequest:
+      type: object
+      properties:
+        cloudId:
+          type: string
+        event:
+          $ref: '#/components/schemas/CompassEventInputDto'
+        componentId:
+          type:
+          - string
+          - 'null'
+      required:
+      - cloudId
+      - event
+    CompassCreateVulnerabilityEventPropertiesInputDto:
+      type: object
+      description: The list of properties of the vulnerability event.
+      properties:
+        id:
+          type: string
+          description: The ID of the vulnerability.
+        state:
+          type: string
+          description: The state of the vulnerability.
+          enum:
+          - OPEN
+          - REMEDIATED
+          - DECLINED
+        severity:
+          $ref: '#/components/schemas/CompassVulnerabilityEventSeverityInputDto'
+          description: The severity of the vulnerability
+        score:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: The CVSS score of the vulnerability (0-10).
+        discoverySource:
+          type:
+          - string
+          - 'null'
+          description: The source or tool that discovered the vulnerability.
+        vulnerableTarget:
+          type:
+          - string
+          - 'null'
+          description: The target system or component that is vulnerable.
+        vulnerabilityStartTime:
+          type: string
+          format: date-time
+          description: The time when the vulnerability started.
+        remediationTime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The time when the vulnerability was remediated.
+      required:
+      - id
+      - severity
+      - state
+      - vulnerabilityStartTime
+    CompassCreateFlagEventInputDto:
+      type: object
+      description: A flag event.
+      properties:
+        displayName:
+          type: string
+          description: The name of the event.
+        lastUpdated:
+          type: string
+          format: date-time
+          description: The last time this event was updated.
+        updateSequenceNumber:
+          type: integer
+          format: int64
+          description: A number specifying the order of the update to the event. Must be incremented to save new events. Otherwise, the request will be ignored.
+        description:
+          type: string
+          description: The description of the event.
+        url:
+          type: string
+          description: The URL of the event.
+        externalEventSourceId:
+          type: string
+          description: The ID of the external event source.
+        flagProperties:
+          $ref: '#/components/schemas/CompassCreateFlagEventPropertiesInputDto'
+          description: The list of properties of the flag event.
+      required:
+      - description
+      - displayName
+      - externalEventSourceId
+      - flagProperties
+      - lastUpdated
+      - updateSequenceNumber
+      - url
+    CompassPullRequestInputPropertiesDto:
+      type: object
+      description: The list of properties of the pull event.
+      properties:
+        id:
+          type: string
+          description: The ID of the pull request event.
+        repoUrl:
+          type: string
+          description: The URL of the repository of the pull request.
+        pullRequestUrl:
+          type: string
+          description: The URL of the pull request.
+        status:
+          type: string
+          description: The status of the pull request.
+          enum:
+          - CREATED
+          - IN_REVIEW
+          - MERGED
+          - REJECTED
+      required:
+      - id
+      - pullRequestUrl
+      - repoUrl
+      - status
+    CompassAlertEventPropertiesInputDto:
+      type: object
+      description: The list of properties of the alert event.
+      properties:
+        id:
+          type: string
+          description: The ID of the alert.
+        status:
+          type:
+          - string
+          - 'null'
+          description: Status of the alert.
+          enum:
+          - OPENED
+          - ACKNOWLEDGED
+          - SNOOZED
+          - CLOSED
+        priority:
+          type:
+          - string
+          - 'null'
+          description: Priority of the alert.
+          enum:
+          - P1
+          - P2
+          - P3
+          - P4
+          - P5
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp for when the alert was created, when status is set to OPENED.
+        acknowledgedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The last time the alert status changed to ACKNOWLEDGED.
+        snoozedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The last time the alert status changed to SNOOZED.
+        closedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The last time the alert status changed to CLOSED.
+      required:
+      - id
+    CompassIncidentEventSeverityInputDto:
+      type: object
+      description: The severity of an incident
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+          description: The label to use for displaying the severity of the incident
+        level:
+          type:
+          - string
+          - 'null'
+          description: The severity level. A severity level of 'ONE' is the most severe, and a level of 'FIVE' is the least severe.
+          enum:
+          - ONE
+          - TWO
+          - THREE
+          - FOUR
+          - FIVE
+    CompassCreatePushEventInputDto:
+      type: object
+      description: A push event.
+      properties:
+        displayName:
+          type: string
+          description: The name of the event.
+        lastUpdated:
+          type: string
+          format: date-time
+          description: The last time this event was updated.
+        updateSequenceNumber:
+          type: integer
+          format: int64
+          description: A number specifying the order of the update to the event. Must be incremented to save new events. Otherwise, the request will be ignored.
+        description:
+          type: string
+          description: The description of the event.
+        url:
+          type: string
+          description: The URL of the event.
+        externalEventSourceId:
+          type: string
+          description: The ID of the external event source.
+        pushEventProperties:
+          $ref: '#/components/schemas/CompassPushEventInputPropertiesDto'
+          description: The list of properties of the push event.
+      required:
+      - description
+      - displayName
+      - externalEventSourceId
+      - lastUpdated
+      - pushEventProperties
+      - updateSequenceNumber
+      - url
+    CompassCreateAlertEventInputDto:
+      type: object
+      description: An alert event.
+      properties:
+        displayName:
+          type: string
+          description: The name of the event.
+        lastUpdated:
+          type: string
+          format: date-time
+          description: The last time this event was updated.
+        updateSequenceNumber:
+          type: integer
+          format: int64
+          description: A number specifying the order of the update to the event. Must be incremented to save new events. Otherwise, the request will be ignored.
+        description:
+          type: string
+          description: The description of the event.
+        url:
+          type: string
+          description: The URL of the event.
+        externalEventSourceId:
+          type: string
+          description: The ID of the external event source.
+        alertProperties:
+          $ref: '#/components/schemas/CompassAlertEventPropertiesInputDto'
+          description: The list of properties of the alert event.
+      required:
+      - alertProperties
+      - description
+      - displayName
+      - externalEventSourceId
+      - lastUpdated
+      - updateSequenceNumber
+      - url
+    CompassLifecycleEventInputPropertiesDto:
+      type: object
+      description: The list of properties of the lifecycle event.
+      properties:
+        id:
+          type: string
+          description: The ID of the lifecycle.
+        stage:
+          type: string
+          description: The stage of the lifecycle event.
+          enum:
+          - PRE_RELEASE
+          - PRODUCTION
+          - DEPRECATION
+          - END_OF_LIFE
+      required:
+      - id
+      - stage
+    CompassCustomEventPropertiesInputDto:
+      type: object
+      description: The list of properties of the custom event.
+      properties:
+        id:
+          type: string
+          description: The ID of the custom event.
+        icon:
+          type: string
+          description: The icon for the custom event.
+          enum:
+          - INFO
+          - WARNING
+          - CHECKPOINT
+      required:
+      - icon
+      - id
+    CompassPushEventAuthorInputDto:
+      type: object
+      description: The author who made the push
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: The name of the author.
+        email:
+          type:
+          - string
+          - 'null'
+          description: The email of the author.
+    ErrorDto:
+      type: object
+      description: An error.
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+          description: A code representing the type of error.
+        message:
+          type:
+          - string
+          - 'null'
+          description: A message describing the error.
+    CompassDeploymentEventEnvironmentInputDto:
+      type: object
+      description: The environment where the deployment event has occurred.
+      properties:
+        category:
+          type: string
+          description: The type of environment where the deployment event occurred.
+          enum:
+          - PRODUCTION
+          - STAGING
+          - TESTING
+          - DEVELOPMENT
+          - UNMAPPED
+        displayName:
+          type: string
+          description: The display name of the environment where the deployment event occurred.
+        environmentId:
+          type: string
+          description: The ID of the environment where the deployment event occurred.
+      required:
+      - category
+      - displayName
+      - environmentId
   securitySchemes:
-    oauth2:
-      type: oauth2
-      description: OAuth 2.0 (3LO) for Atlassian Cloud
-      flows:
-        authorizationCode:
-          authorizationUrl: https://auth.atlassian.com/authorize
-          tokenUrl: https://auth.atlassian.com/oauth/token
-          scopes:
-            write:metric:compass: Send metric values
-            write:event:compass: Send events
-            read:component:compass: Read component data
-            write:component:compass: Write component data
+    basicAuth:
+      type: http
+      scheme: basic
+x-atlassian-narrative:
+  documents:
+  - title: About
+    anchor: about
+    body: 'This is the reference for the Compass REST API.
+
+      The REST API enables you to interact with [Compass](/cloud/compass/overview/what-is-compass/) programmatically.
+
+      Use this API for scripting interactions with Compass and sending data from external tools.
+
+      This page documents the REST resources available in Compass, including the HTTP response codes and example requests and responses.
+
+
+      In addition to the Compass REST API, you can use our [Atlassian platform GraphQL API](/cloud/compass/graphql/) to use many more Compass features.'
+  - title: Version
+    anchor: version
+    body: This documentation is for version 1 of the Compass REST API.
+  - title: Authentication
+    anchor: authentication
+    body: "The REST API supports basic auth.\n\n### Get an API token\nBasic auth requires API tokens. You generate an API token for your Atlassian account and use it to authenticate anywhere where you would have used a password. This authentication enhances security because:\n\n* you're not saving your primary account password outside of where you authenticate\n* you can quickly revoke individual API tokens on a per-use basis\n* API tokens allow you to authenticate even if your Atlassian Cloud organization has two-factor authentication or SAML enabled\n\nSee the Atlassian Cloud Support [API tokens](https://confluence.atlassian.com/x/Vo71Nw) article to discover how to generate an API token.\n\n### Simple example\nMost client software provides a simple mechanism for supplying a user name (in our case, the email address) and API token that the client uses to build the required authentication headers. For example, you can specify the `--user` argument in cURL as follows:\n\n```\ncurl --request POST \\\n  --url 'https://your-domain.atlassian.net/gateway/api/compass/v1/metrics' \\\n  --user 'email@example.com:<api_token>' \\\n  --header 'Accept: application/json' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"metricSourceId\": \"<string>\",\n  \"value\": 32,\n  \"timestamp\": \"<string>\"\n}'\n```\n\n### Supply basic auth headers\nYou can construct and send basic auth headers, including a base64-encoded string that contains your Atlassian account email and API token.\n\nTo use basic auth headers, perform the following steps:\n\n1. Generate an API Token for your Atlassian Account: https://id.atlassian.com/manage/api-tokens\n1. Build a string of the form `your_email@domain.com:your_user_api_token`\n1. You need to encode your authorization credentials to base64. There are online tools (such as, https://www.base64encode.net/) that you can use to create your base64 encoded string. For example, `your_email@domain.com:your_user_api_token` base64 encoded is `eW91cl9lbWFpbEBkb21haW4uY29tOnlvdXJfdXNlcl9hcGlfdG9rZW4=`\n1. Supply an `Authorization` header with content `Basic` followed by the encoded string. Example: `Authorization: Basic eW91cl9lbWFpbEBkb21haW4uY29tOnlvdXJfdXNlcl9hcGlfdG9rZW4=`"
+  - title: Authorization
+    anchor: authorization
+    body: If you are making calls directly against the REST API, authorization is based on the user used in the authentication process.
+  - title: Status codes
+    anchor: status-code
+    body: "The Compass REST API uses the [standard HTTP status codes](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html).\n\nResponses that return an error status code also return a response body, similar to this:\n```json\n{\n  \"errors\": [\n    {\n      \"type\": \"FORMAT_INVALID\",\n      \"message\": \"Field [value] is invalid.\"\n    }\n  ]\n}\n```"

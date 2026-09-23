@@ -1,88 +1,42 @@
 openapi: 3.2.0
 info:
-  title: Compass REST Metrics API
+  title: Compass REST Entitlement Rest Controller API
   version: '1'
-  description: This resource represents metrics. Use this resource to send metric values into a component's metric source.
 servers:
 - url: https://your-domain.atlassian.net/gateway/api
 security:
 - basicAuth: []
 tags:
-- name: Metrics
-  description: This resource represents metrics. Use this resource to send metric values into a component's metric source.
+- name: entitlement-rest-controller
 paths:
-  /compass/v1/metrics:
+  /compass/v1/entitlements:
     post:
       tags:
-      - Metrics
-      summary: Send metric value
-      description: Sends a metric value into a metric source for a component. This API is rate limited. Only 100 requests per user per minute are allowed.
-      operationId: insertMetricValue
+      - entitlement-rest-controller
+      summary: Get Entitlement Results
+      description: Get entitlement results for a given user and site
+      operationId: evaluateEntitlements
       requestBody:
         content:
           application/json:
             schema:
-              oneOf:
-              - $ref: '#/components/schemas/InsertMetricByMetricDefinitionRequestDto'
-              - $ref: '#/components/schemas/InsertMetricByMetricSourceRequestDto'
+              $ref: '#/components/schemas/EntitlementRequestDto'
         required: true
       responses:
         '200':
-          description: Returned if the request is successful.
+          description: Returned if the file upload is successful.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InsertMetricResponseDto'
-        '400':
-          description: Returned if the request is not valid.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
-        '403':
-          description: Returned if the user does not have permission to insert metrics.
+                $ref: '#/components/schemas/EntitlementResponseDto'
+        '401':
+          description: Returned if the user is not authenticated
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponseDto'
-        '404':
-          description: Returned if the metric source, metric definition or component is not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
-        '429':
-          description: Returned if the request exceeds the rate limit.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InsertMetricResponseDto'
 components:
   schemas:
-    InsertMetricResponseDto:
-      type: object
-      description: The metric value that was sent into the metric source.
-      properties:
-        metricSourceId:
-          type: string
-          description: The ID of the metric source.
-        value:
-          type: number
-          format: double
-          description: The value of the metric.
-        timestamp:
-          type: string
-          format: date-time
-          description: The time the metric value was collected.
-        annotation:
-          type:
-          - string
-          - 'null'
-          description: The metric value annotation.
-      required:
-      - metricSourceId
-      - timestamp
-      - value
     ErrorResponseDto:
       type: object
       description: A list of errors that occurred.
@@ -94,54 +48,14 @@ components:
           description: A list of errors that occurred.
           items:
             $ref: '#/components/schemas/ErrorDto'
-    InsertMetricByMetricDefinitionRequestDto:
-      allOf:
-      - $ref: '#/components/schemas/InsertMetricRequestDto'
-      - type: object
-        properties:
-          metricDefinitionId:
-            type: string
-            description: The metric definition ID corresponding to the metric source to send the value into.
-          componentId:
-            type: string
-            description: The component ID corresponding to the metric source to send the value into.
-          timestamp:
-            type:
-            - string
-            - 'null'
-            format: date-time
-            description: The time the metric value was collected.
-          annotation:
-            type:
-            - string
-            - 'null'
-            description: The ADF annotation attached to a metric value.
+    EntitlementResultDto:
+      discriminator:
+        propertyName: '@class'
+      properties:
+        '@class':
+          type: string
       required:
-      - componentId
-      - metricDefinitionId
-      - value
-    InsertMetricByMetricSourceRequestDto:
-      allOf:
-      - $ref: '#/components/schemas/InsertMetricRequestDto'
-      - type: object
-        properties:
-          metricSourceId:
-            type: string
-            description: The ID of the metric source to send the value into.
-          timestamp:
-            type:
-            - string
-            - 'null'
-            format: date-time
-            description: The time the metric value was collected.
-          annotation:
-            type:
-            - string
-            - 'null'
-            description: The ADF annotation attached to a metric value.
-      required:
-      - metricSourceId
-      - value
+      - '@class'
     ErrorDto:
       type: object
       description: An error.
@@ -156,28 +70,27 @@ components:
           - string
           - 'null'
           description: A message describing the error.
-    InsertMetricRequestDto:
+    EntitlementResponseDto:
       type: object
       properties:
-        title:
-          type: string
-          description: The title of the metric value source. The title of the metric source being inserted into will be updated to match this value.If this property is not provided, the existing value on the metric source will not be updated.
-        value:
-          type: number
-          format: double
-          description: The metric value to send.
-        annotation:
-          type: string
-          description: The ADF annotation attached to a metric value.
-        timestamp:
-          type: string
-          format: date-time
-          description: The time the metric value was collected.
-        url:
-          type: string
-          description: The url of the metric value source. The url of the metric source being inserted into will be updated to match this value. If this property is not provided, the existing value on the metric source will not be updated.
+        entitlements:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/EntitlementResultDto'
+          description: A map of entitlements to the result given a user and site
       required:
-      - value
+      - entitlements
+    EntitlementRequestDto:
+      type: object
+      properties:
+        entitlements:
+          type: array
+          description: The entitlements to evaluate for the given user and site
+          items:
+            type: string
+          uniqueItems: true
+      required:
+      - entitlements
   securitySchemes:
     basicAuth:
       type: http

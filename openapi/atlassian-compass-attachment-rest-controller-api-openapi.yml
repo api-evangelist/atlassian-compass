@@ -1,0 +1,368 @@
+openapi: 3.2.0
+info:
+  title: Compass REST Attachment Rest Controller API
+  version: '1'
+servers:
+- url: https://your-domain.atlassian.net/gateway/api
+security:
+- basicAuth: []
+tags:
+- name: attachment-rest-controller
+paths:
+  /compass/v1/component/{componentId}/app/{forgeAppId}/attachment/{key}:
+    get:
+      tags:
+      - attachment-rest-controller
+      summary: Get Forge App attachment
+      description: Get a file attached to a component. If you need to have attachment upload enabled for your Compass Forge app, contact Atlassian support.
+      operationId: getAttachment
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: forgeAppId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: key
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returned if the file exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+        '400':
+          description: Returned if the request is not valid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+        '403':
+          description: Returned if the Forge app does not have attachment upload enabled. If your Compass Forge app needs this functionality enabled, contact Atlassian support.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+        '404':
+          description: Returned if the component or attachment is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+    put:
+      tags:
+      - attachment-rest-controller
+      summary: Upload Forge App attachment
+      description: 'Attach a file to a component. If you need to have attachment upload enabled for your Compass Forge app, contact Atlassian support.
+
+
+        The request body should be a file.
+
+
+        Example: This curl command attaches a file to a component.
+
+        ```bash
+
+        curl --request PUT \
+
+        --url ''https://your-domain.atlassian.net/gateway/api/compass/v1/component/{componentId}/app/{forgeAppId}/attachment/{key}'' \
+
+        --user ''email@example.com:'' \
+
+        --header ''Content-Type: multipart/form-data'' \
+
+        --form file=@/path/to/attachment.txt
+
+        ```'
+      operationId: uploadAttachment
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: forgeAppId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: key
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+      responses:
+        '200':
+          description: Returned if the file upload is successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+        '400':
+          description: Returned if the request is not valid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+        '403':
+          description: Returned if the Forge app does not have attachment upload enabled. If your Compass Forge app needs this functionality enabled, contact Atlassian support.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+        '404':
+          description: Returned if the component is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+        '422':
+          description: Returned if the uploaded file type is not accepted and/or file content cannot be parsed. Accepted file types include JSON, YAML, and XML.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+        '500':
+          description: Returned if the file upload to Optic fails for an unexpected reason.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+    delete:
+      tags:
+      - attachment-rest-controller
+      summary: Delete Forge App attachment
+      description: Delete file attached to a component. If you need to have attachment upload enabled for your Compass Forge app, contact Atlassian support.
+      operationId: deleteAttachment
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: forgeAppId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: key
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returned if the file delete is successful.
+        '400':
+          description: Returned if the request is not valid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+        '403':
+          description: Returned if the Forge app does not have attachment upload enabled. If your Compass Forge app needs this functionality enabled, contact Atlassian support.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+        '404':
+          description: Returned if the component is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+  /compass/v1/component/{componentId}/api_specs:
+    put:
+      tags:
+      - attachment-rest-controller
+      summary: Upload Component API Spec
+      description: 'Upload api specs for a component.
+
+
+        The request body should be a file with the api-spec content.
+
+
+        Example: This curl command uploads a spec file (swagger.yaml) for the component.
+
+        ```bash
+
+        curl --request PUT \
+
+        --url ''https://your-domain.atlassian.net/gateway/api/compass/v1/component/{componentId}/api_specs'' \
+
+        --user ''email@example.com:'' \
+
+        --header ''Content-Type: multipart/form-data'' \
+
+        --form file=@/path/to/file/swagger.yaml
+
+        ```'
+      operationId: uploadAPISpec
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+      responses:
+        '200':
+          description: Returned if the file upload is successful.
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Returned if the api spec file is not valid.
+          content:
+            application/json:
+              schema:
+                type: string
+        '403':
+          description: Returned if the user is not authorized to upload API specs.
+          content:
+            application/json:
+              schema:
+                type: string
+        '422':
+          description: Returned if the uploaded file type is not accepted and/or file content cannot be parsed. Accepted file types are JSON and YML.
+          content:
+            application/json:
+              schema:
+                type: string
+    delete:
+      tags:
+      - attachment-rest-controller
+      summary: Delete API spec for a component
+      description: Delete the API spec file for a component.
+      operationId: deleteAPISpec
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Returned if the API spec deletion is successful.
+          content:
+            application/json:
+              schema:
+                type: string
+        '403':
+          description: Returned if the user is not authorized to delete API specs.
+          content:
+            application/json:
+              schema:
+                type: string
+        '404':
+          description: Returned if the component is not found.
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  schemas:
+    ErrorResponseDto:
+      type: object
+      description: A list of errors that occurred.
+      properties:
+        errors:
+          type:
+          - array
+          - 'null'
+          description: A list of errors that occurred.
+          items:
+            $ref: '#/components/schemas/ErrorDto'
+    ErrorDto:
+      type: object
+      description: An error.
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+          description: A code representing the type of error.
+        message:
+          type:
+          - string
+          - 'null'
+          description: A message describing the error.
+    Attachment:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+        lastModifiedAt:
+          type: string
+          format: date-time
+      required:
+      - lastModifiedAt
+      - name
+      - url
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+x-atlassian-narrative:
+  documents:
+  - title: About
+    anchor: about
+    body: 'This is the reference for the Compass REST API.
+
+      The REST API enables you to interact with [Compass](/cloud/compass/overview/what-is-compass/) programmatically.
+
+      Use this API for scripting interactions with Compass and sending data from external tools.
+
+      This page documents the REST resources available in Compass, including the HTTP response codes and example requests and responses.
+
+
+      In addition to the Compass REST API, you can use our [Atlassian platform GraphQL API](/cloud/compass/graphql/) to use many more Compass features.'
+  - title: Version
+    anchor: version
+    body: This documentation is for version 1 of the Compass REST API.
+  - title: Authentication
+    anchor: authentication
+    body: "The REST API supports basic auth.\n\n### Get an API token\nBasic auth requires API tokens. You generate an API token for your Atlassian account and use it to authenticate anywhere where you would have used a password. This authentication enhances security because:\n\n* you're not saving your primary account password outside of where you authenticate\n* you can quickly revoke individual API tokens on a per-use basis\n* API tokens allow you to authenticate even if your Atlassian Cloud organization has two-factor authentication or SAML enabled\n\nSee the Atlassian Cloud Support [API tokens](https://confluence.atlassian.com/x/Vo71Nw) article to discover how to generate an API token.\n\n### Simple example\nMost client software provides a simple mechanism for supplying a user name (in our case, the email address) and API token that the client uses to build the required authentication headers. For example, you can specify the `--user` argument in cURL as follows:\n\n```\ncurl --request POST \\\n  --url 'https://your-domain.atlassian.net/gateway/api/compass/v1/metrics' \\\n  --user 'email@example.com:<api_token>' \\\n  --header 'Accept: application/json' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"metricSourceId\": \"<string>\",\n  \"value\": 32,\n  \"timestamp\": \"<string>\"\n}'\n```\n\n### Supply basic auth headers\nYou can construct and send basic auth headers, including a base64-encoded string that contains your Atlassian account email and API token.\n\nTo use basic auth headers, perform the following steps:\n\n1. Generate an API Token for your Atlassian Account: https://id.atlassian.com/manage/api-tokens\n1. Build a string of the form `your_email@domain.com:your_user_api_token`\n1. You need to encode your authorization credentials to base64. There are online tools (such as, https://www.base64encode.net/) that you can use to create your base64 encoded string. For example, `your_email@domain.com:your_user_api_token` base64 encoded is `eW91cl9lbWFpbEBkb21haW4uY29tOnlvdXJfdXNlcl9hcGlfdG9rZW4=`\n1. Supply an `Authorization` header with content `Basic` followed by the encoded string. Example: `Authorization: Basic eW91cl9lbWFpbEBkb21haW4uY29tOnlvdXJfdXNlcl9hcGlfdG9rZW4=`"
+  - title: Authorization
+    anchor: authorization
+    body: If you are making calls directly against the REST API, authorization is based on the user used in the authentication process.
+  - title: Status codes
+    anchor: status-code
+    body: "The Compass REST API uses the [standard HTTP status codes](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html).\n\nResponses that return an error status code also return a response body, similar to this:\n```json\n{\n  \"errors\": [\n    {\n      \"type\": \"FORMAT_INVALID\",\n      \"message\": \"Field [value] is invalid.\"\n    }\n  ]\n}\n```"

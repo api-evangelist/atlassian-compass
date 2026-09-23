@@ -1,20 +1,35 @@
 {
   "provider": "atlassian-compass",
   "sources": [
-    "atlassian-compass-events-api-openapi.yml",
-    "atlassian-compass-metrics-api-openapi.yml"
+    "_original/atlassian-compass-compass-rest-api.json"
   ],
   "outputs": [
     "atlassian-compass-events-api-openapi.yml",
-    "atlassian-compass-metrics-api-openapi.yml"
+    "atlassian-compass-metrics-api-openapi.yml",
+    "atlassian-compass-package-dependencies-api-openapi.yml",
+    "atlassian-compass-attachment-rest-controller-api-openapi.yml",
+    "atlassian-compass-entitlement-rest-controller-api-openapi.yml",
+    "atlassian-compass-incoming-webhooks-rest-controller-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
-    "atlassian-compass-events-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "atlassian-compass-metrics-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "atlassian-compass-compass-rest-api.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "atlassian-compass-compass-rest-api.json: declared missing tag: attachment-rest-controller",
+    "atlassian-compass-compass-rest-api.json: declared missing tag: entitlement-rest-controller",
+    "atlassian-compass-compass-rest-api.json: declared missing tag: incoming-webhooks-rest-controller",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "_original/atlassian-compass-openapi.yml: archived document superseded by a larger archived document",
+    "atlassian-compass-attachment-rest-controller-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "atlassian-compass-entitlement-rest-controller-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "atlassian-compass-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "atlassian-compass-incoming-webhooks-rest-controller-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "atlassian-compass-metrics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "atlassian-compass-package-dependencies-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

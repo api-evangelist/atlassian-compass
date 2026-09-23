@@ -1,0 +1,34 @@
+# Front Door AI Index — atlassian-compass — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: atlassian-compass
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.atlassian.com
+  final_host: www.atlassian.com
+  ownership: shared
+  owner: atlassian
+  shares_host_with:
+  - atlassian
+  - confluence
+  - hipchat
+  - jira
+  - opsgenie
+  - statuspage
+  inherited_from: null
+  verdict: scored
+  score: null
+  host_score: 21
+  density: null
+  words: 1173
+  tiers:
+    agentic: 4
+    core: 17
+    model: 0
+  ambiguous: 7
+  top_terms:
+    AI: 17
+    agent: 7
+    AI agent: 3
+    agentic: 1

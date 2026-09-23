@@ -1,17 +1,23 @@
-generated: '2026-09-06'
+generated: '2026-09-19'
 method: probed
-source: live HTTPS probes of every host this record knows (registrable domain + www, each apis.yml
-  baseURL host, every OpenAPI servers[] host, the docs host, the auth host named by the OpenAPI
-  securityScheme tokenUrl, and the MCP host named in the Atlassian Rovo MCP Server documentation)
-note: >
-  Atlassian serves a PGP-signed RFC 9116 security.txt from every host probed, including the API
-  gateway and the MCP host. auth.atlassian.com (the tokenUrl/authorizationUrl host declared in the
-  Compass OpenAPI oauth2 securityScheme) serves both OpenID Connect discovery and RFC 8414 OAuth
-  authorization-server metadata. mcp.atlassian.com (the official Atlassian Rovo MCP Server, which
-  documents Compass as a supported product) serves RFC 8414 authorization-server metadata with a
-  dynamic client registration endpoint, and RFC 9728 protected-resource metadata at the
-  path-scoped location /.well-known/oauth-protected-resource/v2/mcp. No /.well-known/api-catalog,
-  ai-plugin.json, or A2A agent card is served on any host - every probe returned 404.
+source: live HTTPS probes of every host this record knows (registrable domain + www, each apis.yml baseURL
+  host, every OpenAPI servers[] host, the docs host, the auth host named by the OpenAPI securityScheme
+  tokenUrl, and the MCP host named in the Atlassian Rovo MCP Server documentation)
+note: 'Atlassian serves a PGP-signed RFC 9116 security.txt from every host probed, including the API gateway
+  and the MCP host. auth.atlassian.com (the tokenUrl/authorizationUrl host declared in the Compass OpenAPI
+  oauth2 securityScheme) serves both OpenID Connect discovery and RFC 8414 OAuth authorization-server
+  metadata. mcp.atlassian.com (the official Atlassian Rovo MCP Server, which documents Compass as a supported
+  product) serves RFC 8414 authorization-server metadata with a dynamic client registration endpoint,
+  and RFC 9728 protected-resource metadata at the path-scoped location /.well-known/oauth-protected-resource/v2/mcp.
+  No /.well-known/api-catalog, ai-plugin.json, or A2A agent card is served on any host - every probe returned
+  404.
+
+
+
+  MCP-host OAuth discovery added 2026-09-19 (roadmap#321/#337): the harvest visits a provider''s primary
+  hosts, and RFC 9728 protected-resource metadata lives on the MCP host, so these documents existed and
+  were invisible to the scorer. Fetched live and validated on `resource`/`issuer`; one negative control
+  per host.'
 hosts:
 - host: www.atlassian.com
   documents:
@@ -101,6 +107,11 @@ hosts:
     status: 404
   - path: /.well-known/agent.json
     status: 404
+  - path: /VCeDsk8ZHncYF1g234fKtc4lNipbBhu3/.well-known/oauth-authorization-server
+    status: 200
+    file: atlassian-compass-auth-oauth-authorization-server.json
+    bytes: 969
+  path_echo_control: passed
 - host: mcp.atlassian.com
   note: official Atlassian Rovo MCP Server host; its README lists Compass as a supported product
   documents:
@@ -117,6 +128,11 @@ hosts:
     status: 404
   - path: /.well-known/agent-card.json
     status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: atlassian-compass-mcp-oauth-protected-resource.json
+    bytes: 1244
+  path_echo_control: passed
 findings:
   security_txt: served
   security_txt_signed: true
@@ -131,3 +147,15 @@ findings:
   api_catalog: not served
   ai_plugin: not served
   agent_card: not served
+x-mcp-probe:
+  probed: '2026-09-19'
+  issue: roadmap#321, roadmap#337
+  documents:
+  - host: https://mcp.atlassian.com
+    path: /.well-known/oauth-protected-resource
+    file: atlassian-compass-mcp-oauth-protected-resource.json
+  - host: https://auth.atlassian.com
+    path: /VCeDsk8ZHncYF1g234fKtc4lNipbBhu3/.well-known/oauth-authorization-server
+    file: atlassian-compass-auth-oauth-authorization-server.json
+  validated_on: resource (RFC 9728) / issuer (RFC 8414, OIDC)
+  negative_control: one per host; a 2xx JSON object at an impossible path discards the host
