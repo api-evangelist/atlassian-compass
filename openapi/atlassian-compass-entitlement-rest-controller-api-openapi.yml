@@ -48,14 +48,17 @@ components:
           description: A list of errors that occurred.
           items:
             $ref: '#/components/schemas/ErrorDto'
-    EntitlementResultDto:
-      discriminator:
-        propertyName: '@class'
+    EntitlementRequestDto:
+      type: object
       properties:
-        '@class':
-          type: string
+        entitlements:
+          type: array
+          description: The entitlements to evaluate for the given user and site
+          items:
+            type: string
+          uniqueItems: true
       required:
-      - '@class'
+      - entitlements
     ErrorDto:
       type: object
       description: An error.
@@ -70,6 +73,14 @@ components:
           - string
           - 'null'
           description: A message describing the error.
+    EntitlementResultDto:
+      discriminator:
+        propertyName: '@class'
+      properties:
+        '@class':
+          type: string
+      required:
+      - '@class'
     EntitlementResponseDto:
       type: object
       properties:
@@ -78,17 +89,6 @@ components:
           additionalProperties:
             $ref: '#/components/schemas/EntitlementResultDto'
           description: A map of entitlements to the result given a user and site
-      required:
-      - entitlements
-    EntitlementRequestDto:
-      type: object
-      properties:
-        entitlements:
-          type: array
-          description: The entitlements to evaluate for the given user and site
-          items:
-            type: string
-          uniqueItems: true
       required:
       - entitlements
   securitySchemes:
