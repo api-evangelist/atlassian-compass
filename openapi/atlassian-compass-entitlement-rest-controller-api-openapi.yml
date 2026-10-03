@@ -37,17 +37,16 @@ paths:
                 $ref: '#/components/schemas/ErrorResponseDto'
 components:
   schemas:
-    ErrorResponseDto:
+    EntitlementResponseDto:
       type: object
-      description: A list of errors that occurred.
       properties:
-        errors:
-          type:
-          - array
-          - 'null'
-          description: A list of errors that occurred.
-          items:
-            $ref: '#/components/schemas/ErrorDto'
+        entitlements:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/EntitlementResultDto'
+          description: A map of entitlements to the result given a user and site
+      required:
+      - entitlements
     EntitlementRequestDto:
       type: object
       properties:
@@ -59,6 +58,17 @@ components:
           uniqueItems: true
       required:
       - entitlements
+    ErrorResponseDto:
+      type: object
+      description: A list of errors that occurred.
+      properties:
+        errors:
+          type:
+          - array
+          - 'null'
+          description: A list of errors that occurred.
+          items:
+            $ref: '#/components/schemas/ErrorDto'
     ErrorDto:
       type: object
       description: An error.
@@ -81,16 +91,6 @@ components:
           type: string
       required:
       - '@class'
-    EntitlementResponseDto:
-      type: object
-      properties:
-        entitlements:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/EntitlementResultDto'
-          description: A map of entitlements to the result given a user and site
-      required:
-      - entitlements
   securitySchemes:
     basicAuth:
       type: http

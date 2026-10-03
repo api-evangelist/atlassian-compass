@@ -59,17 +59,28 @@ paths:
                 $ref: '#/components/schemas/InsertMetricResponseDto'
 components:
   schemas:
-    ErrorResponseDto:
-      type: object
-      description: A list of errors that occurred.
-      properties:
-        errors:
-          type:
-          - array
-          - 'null'
-          description: A list of errors that occurred.
-          items:
-            $ref: '#/components/schemas/ErrorDto'
+    InsertMetricByMetricSourceRequestDto:
+      allOf:
+      - $ref: '#/components/schemas/InsertMetricRequestDto'
+      - type: object
+        properties:
+          metricSourceId:
+            type: string
+            description: The ID of the metric source to send the value into.
+          timestamp:
+            type:
+            - string
+            - 'null'
+            format: date-time
+            description: The time the metric value was collected.
+          annotation:
+            type:
+            - string
+            - 'null'
+            description: The ADF annotation attached to a metric value.
+      required:
+      - metricSourceId
+      - value
     InsertMetricByMetricDefinitionRequestDto:
       allOf:
       - $ref: '#/components/schemas/InsertMetricRequestDto'
@@ -96,28 +107,41 @@ components:
       - componentId
       - metricDefinitionId
       - value
-    InsertMetricByMetricSourceRequestDto:
-      allOf:
-      - $ref: '#/components/schemas/InsertMetricRequestDto'
-      - type: object
-        properties:
-          metricSourceId:
-            type: string
-            description: The ID of the metric source to send the value into.
-          timestamp:
-            type:
-            - string
-            - 'null'
-            format: date-time
-            description: The time the metric value was collected.
-          annotation:
-            type:
-            - string
-            - 'null'
-            description: The ADF annotation attached to a metric value.
+    InsertMetricResponseDto:
+      type: object
+      description: The metric value that was sent into the metric source.
+      properties:
+        metricSourceId:
+          type: string
+          description: The ID of the metric source.
+        value:
+          type: number
+          format: double
+          description: The value of the metric.
+        timestamp:
+          type: string
+          format: date-time
+          description: The time the metric value was collected.
+        annotation:
+          type:
+          - string
+          - 'null'
+          description: The metric value annotation.
       required:
       - metricSourceId
+      - timestamp
       - value
+    ErrorResponseDto:
+      type: object
+      description: A list of errors that occurred.
+      properties:
+        errors:
+          type:
+          - array
+          - 'null'
+          description: A list of errors that occurred.
+          items:
+            $ref: '#/components/schemas/ErrorDto'
     ErrorDto:
       type: object
       description: An error.
@@ -153,30 +177,6 @@ components:
           type: string
           description: The url of the metric value source. The url of the metric source being inserted into will be updated to match this value. If this property is not provided, the existing value on the metric source will not be updated.
       required:
-      - value
-    InsertMetricResponseDto:
-      type: object
-      description: The metric value that was sent into the metric source.
-      properties:
-        metricSourceId:
-          type: string
-          description: The ID of the metric source.
-        value:
-          type: number
-          format: double
-          description: The value of the metric.
-        timestamp:
-          type: string
-          format: date-time
-          description: The time the metric value was collected.
-        annotation:
-          type:
-          - string
-          - 'null'
-          description: The metric value annotation.
-      required:
-      - metricSourceId
-      - timestamp
       - value
   securitySchemes:
     basicAuth:
