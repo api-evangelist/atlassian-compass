@@ -297,31 +297,6 @@ paths:
                 type: string
 components:
   schemas:
-    ErrorResponseDto:
-      type: object
-      description: A list of errors that occurred.
-      properties:
-        errors:
-          type:
-          - array
-          - 'null'
-          description: A list of errors that occurred.
-          items:
-            $ref: '#/components/schemas/ErrorDto'
-    ErrorDto:
-      type: object
-      description: An error.
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-          description: A code representing the type of error.
-        message:
-          type:
-          - string
-          - 'null'
-          description: A message describing the error.
     Attachment:
       type: object
       properties:
@@ -336,6 +311,31 @@ components:
       - lastModifiedAt
       - name
       - url
+    ErrorDto:
+      type: object
+      description: An error.
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+          description: A code representing the type of error.
+        message:
+          type:
+          - string
+          - 'null'
+          description: A message describing the error.
+    ErrorResponseDto:
+      type: object
+      description: A list of errors that occurred.
+      properties:
+        errors:
+          type:
+          - array
+          - 'null'
+          description: A list of errors that occurred.
+          items:
+            $ref: '#/components/schemas/ErrorDto'
   securitySchemes:
     basicAuth:
       type: http

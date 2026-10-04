@@ -37,27 +37,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponseDto'
 components:
   schemas:
-    EntitlementResponseDto:
-      type: object
-      properties:
-        entitlements:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/EntitlementResultDto'
-          description: A map of entitlements to the result given a user and site
-      required:
-      - entitlements
-    EntitlementRequestDto:
-      type: object
-      properties:
-        entitlements:
-          type: array
-          description: The entitlements to evaluate for the given user and site
-          items:
-            type: string
-          uniqueItems: true
-      required:
-      - entitlements
     ErrorResponseDto:
       type: object
       description: A list of errors that occurred.
@@ -69,6 +48,16 @@ components:
           description: A list of errors that occurred.
           items:
             $ref: '#/components/schemas/ErrorDto'
+    EntitlementResponseDto:
+      type: object
+      properties:
+        entitlements:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/EntitlementResultDto'
+          description: A map of entitlements to the result given a user and site
+      required:
+      - entitlements
     ErrorDto:
       type: object
       description: An error.
@@ -83,6 +72,17 @@ components:
           - string
           - 'null'
           description: A message describing the error.
+    EntitlementRequestDto:
+      type: object
+      properties:
+        entitlements:
+          type: array
+          description: The entitlements to evaluate for the given user and site
+          items:
+            type: string
+          uniqueItems: true
+      required:
+      - entitlements
     EntitlementResultDto:
       discriminator:
         propertyName: '@class'
