@@ -1,0 +1,12 @@
+{
+ "url": "https://developer.atlassian.com/cloud/compass/swagger.v3.json",
+ "requested_url": "https://developer.atlassian.com/cloud/compass/swagger.v3.json",
+ "status": 200,
+ "content_type": "text/plain; charset=utf-8",
+ "bytes": 43434,
+ "sha256": "179407abeb30a4acfa0d1eb1c46e58ef22dbbb0022a60b436a8a90729afb19a8",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
