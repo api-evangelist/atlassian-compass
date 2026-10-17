@@ -297,20 +297,6 @@ paths:
                 type: string
 components:
   schemas:
-    Attachment:
-      type: object
-      properties:
-        name:
-          type: string
-        url:
-          type: string
-        lastModifiedAt:
-          type: string
-          format: date-time
-      required:
-      - lastModifiedAt
-      - name
-      - url
     ErrorDto:
       type: object
       description: An error.
@@ -336,6 +322,20 @@ components:
           description: A list of errors that occurred.
           items:
             $ref: '#/components/schemas/ErrorDto'
+    Attachment:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+        lastModifiedAt:
+          type: string
+          format: date-time
+      required:
+      - lastModifiedAt
+      - name
+      - url
   securitySchemes:
     basicAuth:
       type: http
