@@ -27,5 +27,5 @@
     - connectors/applications/atlassian-compass
     vendor_link: https://www.atlassian.com/software/compass
     builder: Fivetran
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
