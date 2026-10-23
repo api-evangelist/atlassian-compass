@@ -121,3 +121,9 @@ x-atlassian-narrative:
   - title: Status codes
     anchor: status-code
     body: "The Compass REST API uses the [standard HTTP status codes](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html).\n\nResponses that return an error status code also return a response body, similar to this:\n```json\n{\n  \"errors\": [\n    {\n      \"type\": \"FORMAT_INVALID\",\n      \"message\": \"Field [value] is invalid.\"\n    }\n  ]\n}\n```"
+x-provenance:
+  method: harvested
+  publisher: Atlassian Compass
+  source: https://developer.atlassian.com/cloud/compass/swagger.v3.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
