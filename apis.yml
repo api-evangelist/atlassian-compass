@@ -164,6 +164,8 @@ apis:
   - type: APIReference
     url: https://developer.atlassian.com/cloud/compass/rest/
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/atlassian-compass/overview
 - type: OpenAPI
   url: openapi/atlassian-compass-compass-rest-api-openapi.json
 - type: Overlay
