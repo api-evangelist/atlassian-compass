@@ -1,0 +1,501 @@
+{
+  "info": {
+    "_postman_id": "bc0c838f-ded0-4094-854d-c291a34cb726",
+    "name": "Compass REST Incoming Webhooks Rest Controller API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:33:19.000Z",
+    "updatedAt": "2026-10-22T01:33:19.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-bc0c838f-ded0-4094-854d-c291a34cb726"
+  },
+  "item": [
+    {
+      "name": "compass",
+      "item": [
+        {
+          "name": "v1",
+          "item": [
+            {
+              "name": "webhooks",
+              "item": [
+                {
+                  "name": "{webhookId}",
+                  "item": [
+                    {
+                      "name": "An invocation of an inbound webhook",
+                      "id": "869af80e-e039-496a-ad92-0a6ca3b8d0ca",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "<string>",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/compass/v1/webhooks/:webhookId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "compass",
+                            "v1",
+                            "webhooks",
+                            ":webhookId"
+                          ],
+                          "variable": [
+                            {
+                              "id": "d9762359-b9ce-43af-b34c-343fb3177965",
+                              "key": "webhookId",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        },
+                        "description": "Third parties can call these inbound webhooks to dothings within compass, like create deployment events for webhooks coming from github"
+                      },
+                      "response": [
+                        {
+                          "id": "7762a11c-ea31-443b-9944-d74ed2514c67",
+                          "name": "Returned if the process of invoking a webhook with a payload has been enqueud.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "<string>",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/compass/v1/webhooks/:webhookId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "compass",
+                                "v1",
+                                "webhooks",
+                                ":webhookId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "webhookId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Accepted",
+                          "code": 202,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-10-22T01:33:19.000Z",
+                          "updatedAt": "2026-10-22T01:33:19.000Z",
+                          "uid": "35240-7762a11c-ea31-443b-9944-d74ed2514c67"
+                        },
+                        {
+                          "id": "ef431ee1-8f75-49d4-b7a6-dce522fc343e",
+                          "name": "Returned if the request is not valid.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "<string>",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/compass/v1/webhooks/:webhookId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "compass",
+                                "v1",
+                                "webhooks",
+                                ":webhookId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "webhookId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": \"<array,null>\"\n}",
+                          "createdAt": "2026-10-22T01:33:19.000Z",
+                          "updatedAt": "2026-10-22T01:33:19.000Z",
+                          "uid": "35240-ef431ee1-8f75-49d4-b7a6-dce522fc343e"
+                        },
+                        {
+                          "id": "7862fd97-b330-4f74-b01a-e77adaf7d220",
+                          "name": "Returned if the request token is invalid",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "<string>",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/compass/v1/webhooks/:webhookId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "compass",
+                                "v1",
+                                "webhooks",
+                                ":webhookId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "webhookId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": \"<array,null>\"\n}",
+                          "createdAt": "2026-10-22T01:33:19.000Z",
+                          "updatedAt": "2026-10-22T01:33:19.000Z",
+                          "uid": "35240-7862fd97-b330-4f74-b01a-e77adaf7d220"
+                        },
+                        {
+                          "id": "b3b56ecf-b7fc-4d72-805b-16e44fc465f6",
+                          "name": "Returned if the webhook is not found.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "<string>",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/compass/v1/webhooks/:webhookId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "compass",
+                                "v1",
+                                "webhooks",
+                                ":webhookId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "webhookId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": \"<array,null>\"\n}",
+                          "createdAt": "2026-10-22T01:33:19.000Z",
+                          "updatedAt": "2026-10-22T01:33:19.000Z",
+                          "uid": "35240-b3b56ecf-b7fc-4d72-805b-16e44fc465f6"
+                        },
+                        {
+                          "id": "caba5f75-810e-47f7-96fc-6a5e1ee50a19",
+                          "name": "Returned if the request was not a POST",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "<string>",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/compass/v1/webhooks/:webhookId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "compass",
+                                "v1",
+                                "webhooks",
+                                ":webhookId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "webhookId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Method Not Allowed",
+                          "code": 405,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": \"<array,null>\"\n}",
+                          "createdAt": "2026-10-22T01:33:19.000Z",
+                          "updatedAt": "2026-10-22T01:33:19.000Z",
+                          "uid": "35240-caba5f75-810e-47f7-96fc-6a5e1ee50a19"
+                        },
+                        {
+                          "id": "0a15f461-26e0-4184-811b-89f8f58cd2fb",
+                          "name": "Returned if the request exceeds the rate limit.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "<string>",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/compass/v1/webhooks/:webhookId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "compass",
+                                "v1",
+                                "webhooks",
+                                ":webhookId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "webhookId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Too Many Requests",
+                          "code": 429,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "<string>",
+                          "createdAt": "2026-10-22T01:33:19.000Z",
+                          "updatedAt": "2026-10-22T01:33:19.000Z",
+                          "uid": "35240-0a15f461-26e0-4184-811b-89f8f58cd2fb"
+                        }
+                      ],
+                      "createdAt": "2026-10-22T01:33:19.000Z",
+                      "updatedAt": "2026-10-22T01:33:19.000Z",
+                      "uid": "35240-869af80e-e039-496a-ad92-0a6ca3b8d0ca"
+                    }
+                  ],
+                  "id": "33a6b046-7e29-4564-ae69-b6508bd2c68d",
+                  "createdAt": "2026-10-22T01:33:19.000Z",
+                  "updatedAt": "2026-10-22T01:33:19.000Z",
+                  "uid": "35240-33a6b046-7e29-4564-ae69-b6508bd2c68d"
+                }
+              ],
+              "id": "5e4c7fb0-f758-4d86-a31b-f2efc988e9ba",
+              "createdAt": "2026-10-22T01:33:19.000Z",
+              "updatedAt": "2026-10-22T01:33:19.000Z",
+              "uid": "35240-5e4c7fb0-f758-4d86-a31b-f2efc988e9ba"
+            }
+          ],
+          "id": "fa47c2a0-0df8-4a81-9bc5-e206fcf2a324",
+          "createdAt": "2026-10-22T01:33:19.000Z",
+          "updatedAt": "2026-10-22T01:33:19.000Z",
+          "uid": "35240-fa47c2a0-0df8-4a81-9bc5-e206fcf2a324"
+        }
+      ],
+      "id": "0bca29d4-07d5-44ec-8592-dfe6467a471f",
+      "createdAt": "2026-10-22T01:33:19.000Z",
+      "updatedAt": "2026-10-22T01:33:19.000Z",
+      "uid": "35240-0bca29d4-07d5-44ec-8592-dfe6467a471f"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://your-domain.atlassian.net/gateway/api"
+    }
+  ]
+}

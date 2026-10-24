@@ -1,196 +1,323 @@
 {
+  "info": {
+    "_postman_id": "0c96bb7c-3f34-4ee4-8bec-6f6c24273aab",
+    "name": "Compass REST Events API",
+    "description": "This resource represents events. Use this resource to send events into an event source.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:32:56.000Z",
+    "updatedAt": "2026-10-22T01:32:56.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-0c96bb7c-3f34-4ee4-8bec-6f6c24273aab"
+  },
   "item": [
     {
-      "id": "caf05f95-6dae-4fd6-b638-9d05c2c3e2e8",
-      "name": "Events",
-      "description": {
-        "content": "Ingest events into a Compass event source",
-        "type": "text/plain"
-      },
+      "name": "compass",
       "item": [
         {
-          "id": "7fa32adc-2d29-4f2d-9ad7-89a47ac87950",
-          "name": "Send an event into an event source",
-          "request": {
-            "name": "Send an event into an event source",
-            "description": {
-              "content": "Sends an event into a Compass event source. Returns 202 Accepted\nand processes the event asynchronously. Rate limited to 100 requests\nper user per minute.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "compass",
-                "v1",
-                "events"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": {
-              "type": "oauth2",
-              "oauth2": [
-                {
-                  "key": "scope",
-                  "value": "write:metric:compass write:event:compass read:component:compass write:component:compass"
-                },
-                {
-                  "key": "accessTokenUrl",
-                  "value": "https://auth.atlassian.com/oauth/token"
-                },
-                {
-                  "key": "authUrl",
-                  "value": "https://auth.atlassian.com/authorize"
-                },
-                {
-                  "key": "grant_type",
-                  "value": "authorization_code"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"eventSourceId\": \"<string>\",\n  \"payload\": \"<object>\",\n  \"externalEventId\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"lastUpdated\": \"<dateTime>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
+          "name": "v1",
+          "item": [
             {
-              "id": "390ed76c-5183-46e4-bb56-b45a85dbb955",
-              "name": "Event accepted for processing",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "compass",
-                    "v1",
-                    "events"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: oauth2",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<token>"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"eventSourceId\": \"<string>\",\n  \"payload\": \"<object>\",\n  \"externalEventId\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"lastUpdated\": \"<dateTime>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Accepted",
-              "code": 202,
-              "header": [
+              "name": "events",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "text/plain"
+                  "name": "Send event",
+                  "id": "3238d351-df5a-47c7-837b-c6a9889fffac",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"cloudId\": \"<string>\",\n  \"event\": {\n    \"deployment\": {\n      \"deploymentProperties\": {\n        \"environment\": {\n          \"category\": \"TESTING\",\n          \"displayName\": \"<string>\",\n          \"environmentId\": \"<string>\"\n        },\n        \"pipeline\": {\n          \"displayName\": \"<string>\",\n          \"pipelineId\": \"<string>\",\n          \"url\": \"<string>\"\n        },\n        \"sequenceNumber\": \"<long>\",\n        \"state\": \"IN_PROGRESS\",\n        \"startedAt\": \"<string,null-date-time>\",\n        \"completedAt\": \"<string,null-date-time>\"\n      },\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"build\": {\n      \"buildProperties\": {\n        \"pipeline\": {\n          \"pipelineId\": \"<string>\",\n          \"url\": \"<string,null>\",\n          \"displayName\": \"<string,null>\"\n        },\n        \"startedAt\": \"<dateTime>\",\n        \"state\": \"FAILED\",\n        \"completedAt\": \"<string,null-date-time>\"\n      },\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"incident\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"incidentProperties\": {\n        \"id\": \"<string>\",\n        \"startTime\": \"<dateTime>\",\n        \"state\": \"RESOLVED\",\n        \"severity\": {\n          \"label\": \"<string,null>\",\n          \"level\": \"THREE\"\n        },\n        \"endTime\": \"<string,null-date-time>\"\n      },\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"flag\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"flagProperties\": {\n        \"id\": \"<string>\",\n        \"status\": \"<string,null>\"\n      },\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"alert\": {\n      \"alertProperties\": {\n        \"id\": \"<string>\",\n        \"status\": \"ACKNOWLEDGED\",\n        \"priority\": \"P3\",\n        \"createdAt\": \"<string,null-date-time>\",\n        \"acknowledgedAt\": \"<string,null-date-time>\",\n        \"snoozedAt\": \"<string,null-date-time>\",\n        \"closedAt\": \"<string,null-date-time>\"\n      },\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"lifecycle\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"lifecycleProperties\": {\n        \"id\": \"<string>\",\n        \"stage\": \"END_OF_LIFE\"\n      },\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"custom\": {\n      \"customEventProperties\": {\n        \"icon\": \"CHECKPOINT\",\n        \"id\": \"<string>\"\n      },\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"push\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"pushEventProperties\": {\n        \"branchName\": \"<string>\",\n        \"id\": \"<string>\",\n        \"author\": {\n          \"name\": \"<string,null>\",\n          \"email\": \"<string,null>\"\n        }\n      },\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"pullRequest\": {\n      \"lastUpdated\": \"<dateTime>\",\n      \"pullRequestProperties\": {\n        \"id\": \"<string>\",\n        \"pullRequestUrl\": \"<string>\",\n        \"repoUrl\": \"<string>\",\n        \"status\": \"MERGED\"\n      },\n      \"cloudId\": \"<string,null>\"\n    },\n    \"vulnerability\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\",\n      \"vulnerabilityProperties\": {\n        \"id\": \"<string>\",\n        \"severity\": {\n          \"level\": \"HIGH\",\n          \"label\": \"<string,null>\"\n        },\n        \"state\": \"DECLINED\",\n        \"vulnerabilityStartTime\": \"<dateTime>\",\n        \"score\": \"<number,null-double>\",\n        \"discoverySource\": \"<string,null>\",\n        \"vulnerableTarget\": \"<string,null>\",\n        \"remediationTime\": \"<string,null-date-time>\"\n      }\n    }\n  },\n  \"componentId\": \"<string,null>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/compass/v1/events",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "compass",
+                        "v1",
+                        "events"
+                      ]
+                    },
+                    "description": "Sends an event into an event source. This API is rate limited. Only 100 requests per user per minute are allowed."
+                  },
+                  "response": [
+                    {
+                      "id": "3fd53a97-fc1e-4754-8205-b3ce72661feb",
+                      "name": "Returned if the process of sending of an event is started.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"cloudId\": \"<string>\",\n  \"event\": {\n    \"deployment\": {\n      \"deploymentProperties\": {\n        \"environment\": {\n          \"category\": \"TESTING\",\n          \"displayName\": \"<string>\",\n          \"environmentId\": \"<string>\"\n        },\n        \"pipeline\": {\n          \"displayName\": \"<string>\",\n          \"pipelineId\": \"<string>\",\n          \"url\": \"<string>\"\n        },\n        \"sequenceNumber\": \"<long>\",\n        \"state\": \"IN_PROGRESS\",\n        \"startedAt\": \"<string,null-date-time>\",\n        \"completedAt\": \"<string,null-date-time>\"\n      },\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"build\": {\n      \"buildProperties\": {\n        \"pipeline\": {\n          \"pipelineId\": \"<string>\",\n          \"url\": \"<string,null>\",\n          \"displayName\": \"<string,null>\"\n        },\n        \"startedAt\": \"<dateTime>\",\n        \"state\": \"FAILED\",\n        \"completedAt\": \"<string,null-date-time>\"\n      },\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"incident\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"incidentProperties\": {\n        \"id\": \"<string>\",\n        \"startTime\": \"<dateTime>\",\n        \"state\": \"RESOLVED\",\n        \"severity\": {\n          \"label\": \"<string,null>\",\n          \"level\": \"THREE\"\n        },\n        \"endTime\": \"<string,null-date-time>\"\n      },\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"flag\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"flagProperties\": {\n        \"id\": \"<string>\",\n        \"status\": \"<string,null>\"\n      },\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"alert\": {\n      \"alertProperties\": {\n        \"id\": \"<string>\",\n        \"status\": \"ACKNOWLEDGED\",\n        \"priority\": \"P3\",\n        \"createdAt\": \"<string,null-date-time>\",\n        \"acknowledgedAt\": \"<string,null-date-time>\",\n        \"snoozedAt\": \"<string,null-date-time>\",\n        \"closedAt\": \"<string,null-date-time>\"\n      },\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"lifecycle\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"lifecycleProperties\": {\n        \"id\": \"<string>\",\n        \"stage\": \"END_OF_LIFE\"\n      },\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"custom\": {\n      \"customEventProperties\": {\n        \"icon\": \"CHECKPOINT\",\n        \"id\": \"<string>\"\n      },\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"push\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"pushEventProperties\": {\n        \"branchName\": \"<string>\",\n        \"id\": \"<string>\",\n        \"author\": {\n          \"name\": \"<string,null>\",\n          \"email\": \"<string,null>\"\n        }\n      },\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"pullRequest\": {\n      \"lastUpdated\": \"<dateTime>\",\n      \"pullRequestProperties\": {\n        \"id\": \"<string>\",\n        \"pullRequestUrl\": \"<string>\",\n        \"repoUrl\": \"<string>\",\n        \"status\": \"MERGED\"\n      },\n      \"cloudId\": \"<string,null>\"\n    },\n    \"vulnerability\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\",\n      \"vulnerabilityProperties\": {\n        \"id\": \"<string>\",\n        \"severity\": {\n          \"level\": \"HIGH\",\n          \"label\": \"<string,null>\"\n        },\n        \"state\": \"DECLINED\",\n        \"vulnerabilityStartTime\": \"<dateTime>\",\n        \"score\": \"<number,null-double>\",\n        \"discoverySource\": \"<string,null>\",\n        \"vulnerableTarget\": \"<string,null>\",\n        \"remediationTime\": \"<string,null-date-time>\"\n      }\n    }\n  },\n  \"componentId\": \"<string,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/compass/v1/events",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "compass",
+                            "v1",
+                            "events"
+                          ]
+                        }
+                      },
+                      "status": "Accepted",
+                      "code": 202,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-22T01:32:56.000Z",
+                      "updatedAt": "2026-10-22T01:32:56.000Z",
+                      "uid": "35240-3fd53a97-fc1e-4754-8205-b3ce72661feb"
+                    },
+                    {
+                      "id": "8559cada-6bb8-44c2-9e74-af729f8da9ba",
+                      "name": "Returned if the request is not valid.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"cloudId\": \"<string>\",\n  \"event\": {\n    \"deployment\": {\n      \"deploymentProperties\": {\n        \"environment\": {\n          \"category\": \"TESTING\",\n          \"displayName\": \"<string>\",\n          \"environmentId\": \"<string>\"\n        },\n        \"pipeline\": {\n          \"displayName\": \"<string>\",\n          \"pipelineId\": \"<string>\",\n          \"url\": \"<string>\"\n        },\n        \"sequenceNumber\": \"<long>\",\n        \"state\": \"IN_PROGRESS\",\n        \"startedAt\": \"<string,null-date-time>\",\n        \"completedAt\": \"<string,null-date-time>\"\n      },\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"build\": {\n      \"buildProperties\": {\n        \"pipeline\": {\n          \"pipelineId\": \"<string>\",\n          \"url\": \"<string,null>\",\n          \"displayName\": \"<string,null>\"\n        },\n        \"startedAt\": \"<dateTime>\",\n        \"state\": \"FAILED\",\n        \"completedAt\": \"<string,null-date-time>\"\n      },\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"incident\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"incidentProperties\": {\n        \"id\": \"<string>\",\n        \"startTime\": \"<dateTime>\",\n        \"state\": \"RESOLVED\",\n        \"severity\": {\n          \"label\": \"<string,null>\",\n          \"level\": \"THREE\"\n        },\n        \"endTime\": \"<string,null-date-time>\"\n      },\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"flag\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"flagProperties\": {\n        \"id\": \"<string>\",\n        \"status\": \"<string,null>\"\n      },\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"alert\": {\n      \"alertProperties\": {\n        \"id\": \"<string>\",\n        \"status\": \"ACKNOWLEDGED\",\n        \"priority\": \"P3\",\n        \"createdAt\": \"<string,null-date-time>\",\n        \"acknowledgedAt\": \"<string,null-date-time>\",\n        \"snoozedAt\": \"<string,null-date-time>\",\n        \"closedAt\": \"<string,null-date-time>\"\n      },\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"lifecycle\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"lifecycleProperties\": {\n        \"id\": \"<string>\",\n        \"stage\": \"END_OF_LIFE\"\n      },\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"custom\": {\n      \"customEventProperties\": {\n        \"icon\": \"CHECKPOINT\",\n        \"id\": \"<string>\"\n      },\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"push\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"pushEventProperties\": {\n        \"branchName\": \"<string>\",\n        \"id\": \"<string>\",\n        \"author\": {\n          \"name\": \"<string,null>\",\n          \"email\": \"<string,null>\"\n        }\n      },\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"pullRequest\": {\n      \"lastUpdated\": \"<dateTime>\",\n      \"pullRequestProperties\": {\n        \"id\": \"<string>\",\n        \"pullRequestUrl\": \"<string>\",\n        \"repoUrl\": \"<string>\",\n        \"status\": \"MERGED\"\n      },\n      \"cloudId\": \"<string,null>\"\n    },\n    \"vulnerability\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\",\n      \"vulnerabilityProperties\": {\n        \"id\": \"<string>\",\n        \"severity\": {\n          \"level\": \"HIGH\",\n          \"label\": \"<string,null>\"\n        },\n        \"state\": \"DECLINED\",\n        \"vulnerabilityStartTime\": \"<dateTime>\",\n        \"score\": \"<number,null-double>\",\n        \"discoverySource\": \"<string,null>\",\n        \"vulnerableTarget\": \"<string,null>\",\n        \"remediationTime\": \"<string,null-date-time>\"\n      }\n    }\n  },\n  \"componentId\": \"<string,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/compass/v1/events",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "compass",
+                            "v1",
+                            "events"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": \"<array,null>\"\n}",
+                      "createdAt": "2026-10-22T01:32:56.000Z",
+                      "updatedAt": "2026-10-22T01:32:56.000Z",
+                      "uid": "35240-8559cada-6bb8-44c2-9e74-af729f8da9ba"
+                    },
+                    {
+                      "id": "d68b33c0-1fda-4bc5-b284-ff8a5e95cc2f",
+                      "name": "Returned if the event source is not found.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"cloudId\": \"<string>\",\n  \"event\": {\n    \"deployment\": {\n      \"deploymentProperties\": {\n        \"environment\": {\n          \"category\": \"TESTING\",\n          \"displayName\": \"<string>\",\n          \"environmentId\": \"<string>\"\n        },\n        \"pipeline\": {\n          \"displayName\": \"<string>\",\n          \"pipelineId\": \"<string>\",\n          \"url\": \"<string>\"\n        },\n        \"sequenceNumber\": \"<long>\",\n        \"state\": \"IN_PROGRESS\",\n        \"startedAt\": \"<string,null-date-time>\",\n        \"completedAt\": \"<string,null-date-time>\"\n      },\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"build\": {\n      \"buildProperties\": {\n        \"pipeline\": {\n          \"pipelineId\": \"<string>\",\n          \"url\": \"<string,null>\",\n          \"displayName\": \"<string,null>\"\n        },\n        \"startedAt\": \"<dateTime>\",\n        \"state\": \"FAILED\",\n        \"completedAt\": \"<string,null-date-time>\"\n      },\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"incident\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"incidentProperties\": {\n        \"id\": \"<string>\",\n        \"startTime\": \"<dateTime>\",\n        \"state\": \"RESOLVED\",\n        \"severity\": {\n          \"label\": \"<string,null>\",\n          \"level\": \"THREE\"\n        },\n        \"endTime\": \"<string,null-date-time>\"\n      },\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"flag\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"flagProperties\": {\n        \"id\": \"<string>\",\n        \"status\": \"<string,null>\"\n      },\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"alert\": {\n      \"alertProperties\": {\n        \"id\": \"<string>\",\n        \"status\": \"ACKNOWLEDGED\",\n        \"priority\": \"P3\",\n        \"createdAt\": \"<string,null-date-time>\",\n        \"acknowledgedAt\": \"<string,null-date-time>\",\n        \"snoozedAt\": \"<string,null-date-time>\",\n        \"closedAt\": \"<string,null-date-time>\"\n      },\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"lifecycle\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"lifecycleProperties\": {\n        \"id\": \"<string>\",\n        \"stage\": \"END_OF_LIFE\"\n      },\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"custom\": {\n      \"customEventProperties\": {\n        \"icon\": \"CHECKPOINT\",\n        \"id\": \"<string>\"\n      },\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"push\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"pushEventProperties\": {\n        \"branchName\": \"<string>\",\n        \"id\": \"<string>\",\n        \"author\": {\n          \"name\": \"<string,null>\",\n          \"email\": \"<string,null>\"\n        }\n      },\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"pullRequest\": {\n      \"lastUpdated\": \"<dateTime>\",\n      \"pullRequestProperties\": {\n        \"id\": \"<string>\",\n        \"pullRequestUrl\": \"<string>\",\n        \"repoUrl\": \"<string>\",\n        \"status\": \"MERGED\"\n      },\n      \"cloudId\": \"<string,null>\"\n    },\n    \"vulnerability\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\",\n      \"vulnerabilityProperties\": {\n        \"id\": \"<string>\",\n        \"severity\": {\n          \"level\": \"HIGH\",\n          \"label\": \"<string,null>\"\n        },\n        \"state\": \"DECLINED\",\n        \"vulnerabilityStartTime\": \"<dateTime>\",\n        \"score\": \"<number,null-double>\",\n        \"discoverySource\": \"<string,null>\",\n        \"vulnerableTarget\": \"<string,null>\",\n        \"remediationTime\": \"<string,null-date-time>\"\n      }\n    }\n  },\n  \"componentId\": \"<string,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/compass/v1/events",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "compass",
+                            "v1",
+                            "events"
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": \"<array,null>\"\n}",
+                      "createdAt": "2026-10-22T01:32:56.000Z",
+                      "updatedAt": "2026-10-22T01:32:56.000Z",
+                      "uid": "35240-d68b33c0-1fda-4bc5-b284-ff8a5e95cc2f"
+                    },
+                    {
+                      "id": "feae0275-6850-417f-87ad-7373a870cd0d",
+                      "name": "Returned if the request exceeds the rate limit.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"cloudId\": \"<string>\",\n  \"event\": {\n    \"deployment\": {\n      \"deploymentProperties\": {\n        \"environment\": {\n          \"category\": \"TESTING\",\n          \"displayName\": \"<string>\",\n          \"environmentId\": \"<string>\"\n        },\n        \"pipeline\": {\n          \"displayName\": \"<string>\",\n          \"pipelineId\": \"<string>\",\n          \"url\": \"<string>\"\n        },\n        \"sequenceNumber\": \"<long>\",\n        \"state\": \"IN_PROGRESS\",\n        \"startedAt\": \"<string,null-date-time>\",\n        \"completedAt\": \"<string,null-date-time>\"\n      },\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"build\": {\n      \"buildProperties\": {\n        \"pipeline\": {\n          \"pipelineId\": \"<string>\",\n          \"url\": \"<string,null>\",\n          \"displayName\": \"<string,null>\"\n        },\n        \"startedAt\": \"<dateTime>\",\n        \"state\": \"FAILED\",\n        \"completedAt\": \"<string,null-date-time>\"\n      },\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"incident\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"incidentProperties\": {\n        \"id\": \"<string>\",\n        \"startTime\": \"<dateTime>\",\n        \"state\": \"RESOLVED\",\n        \"severity\": {\n          \"label\": \"<string,null>\",\n          \"level\": \"THREE\"\n        },\n        \"endTime\": \"<string,null-date-time>\"\n      },\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"flag\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"flagProperties\": {\n        \"id\": \"<string>\",\n        \"status\": \"<string,null>\"\n      },\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"alert\": {\n      \"alertProperties\": {\n        \"id\": \"<string>\",\n        \"status\": \"ACKNOWLEDGED\",\n        \"priority\": \"P3\",\n        \"createdAt\": \"<string,null-date-time>\",\n        \"acknowledgedAt\": \"<string,null-date-time>\",\n        \"snoozedAt\": \"<string,null-date-time>\",\n        \"closedAt\": \"<string,null-date-time>\"\n      },\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"lifecycle\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"lifecycleProperties\": {\n        \"id\": \"<string>\",\n        \"stage\": \"END_OF_LIFE\"\n      },\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"custom\": {\n      \"customEventProperties\": {\n        \"icon\": \"CHECKPOINT\",\n        \"id\": \"<string>\"\n      },\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"push\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"pushEventProperties\": {\n        \"branchName\": \"<string>\",\n        \"id\": \"<string>\",\n        \"author\": {\n          \"name\": \"<string,null>\",\n          \"email\": \"<string,null>\"\n        }\n      },\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\"\n    },\n    \"pullRequest\": {\n      \"lastUpdated\": \"<dateTime>\",\n      \"pullRequestProperties\": {\n        \"id\": \"<string>\",\n        \"pullRequestUrl\": \"<string>\",\n        \"repoUrl\": \"<string>\",\n        \"status\": \"MERGED\"\n      },\n      \"cloudId\": \"<string,null>\"\n    },\n    \"vulnerability\": {\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"externalEventSourceId\": \"<string>\",\n      \"lastUpdated\": \"<dateTime>\",\n      \"updateSequenceNumber\": \"<long>\",\n      \"url\": \"<string>\",\n      \"vulnerabilityProperties\": {\n        \"id\": \"<string>\",\n        \"severity\": {\n          \"level\": \"HIGH\",\n          \"label\": \"<string,null>\"\n        },\n        \"state\": \"DECLINED\",\n        \"vulnerabilityStartTime\": \"<dateTime>\",\n        \"score\": \"<number,null-double>\",\n        \"discoverySource\": \"<string,null>\",\n        \"vulnerableTarget\": \"<string,null>\",\n        \"remediationTime\": \"<string,null-date-time>\"\n      }\n    }\n  },\n  \"componentId\": \"<string,null>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/compass/v1/events",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "compass",
+                            "v1",
+                            "events"
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-22T01:32:56.000Z",
+                      "updatedAt": "2026-10-22T01:32:56.000Z",
+                      "uid": "35240-feae0275-6850-417f-87ad-7373a870cd0d"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T01:32:56.000Z",
+                  "updatedAt": "2026-10-22T01:32:56.000Z",
+                  "uid": "35240-3238d351-df5a-47c7-837b-c6a9889fffac"
                 }
               ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "1764912f-1d56-4f3b-9fd2-e471d910181f",
-              "name": "Rate limited",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "compass",
-                    "v1",
-                    "events"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: oauth2",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<token>"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"eventSourceId\": \"<string>\",\n  \"payload\": \"<object>\",\n  \"externalEventId\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"lastUpdated\": \"<dateTime>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
+              "id": "e628bf7f-d899-4072-b71f-260e849f761c",
+              "createdAt": "2026-10-22T01:32:56.000Z",
+              "updatedAt": "2026-10-22T01:32:56.000Z",
+              "uid": "35240-e628bf7f-d899-4072-b71f-260e849f761c"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "effc5d41-cffb-4f1e-bfd9-1495f0d37fe2",
+          "createdAt": "2026-10-22T01:32:56.000Z",
+          "updatedAt": "2026-10-22T01:32:56.000Z",
+          "uid": "35240-effc5d41-cffb-4f1e-bfd9-1495f0d37fe2"
         }
       ],
-      "event": []
+      "id": "1c842c3f-df96-414c-9361-0ecba48319e9",
+      "createdAt": "2026-10-22T01:32:56.000Z",
+      "updatedAt": "2026-10-22T01:32:56.000Z",
+      "uid": "35240-1c842c3f-df96-414c-9361-0ecba48319e9"
     }
   ],
-  "event": [],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.atlassian.com",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://your-domain.atlassian.net/gateway/api"
     }
-  ],
-  "info": {
-    "_postman_id": "87ad1833-8e56-40da-ae69-ac539752a28c",
-    "name": "Atlassian Compass REST Events API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "Atlassian Compass is a developer experience platform with a software\ncomponent catalog, scorecards, metrics, and event ingestion. This\ndocument describes the public REST API v2 (`/compass/v1`) used to send\nmetric values and events. Most Compass operations (querying components,\nscorecards, dependencies, etc.) are exposed via the Compass GraphQL API\nat https://api.atlassian.com/graphql and not enumerated here.\n\n\nContact Support:\n Name: Atlassian Developer",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

@@ -1,0 +1,805 @@
+{
+  "info": {
+    "_postman_id": "9cf1af50-d114-4b98-9113-c7ec95484ac9",
+    "name": "Compass REST Package Dependencies API",
+    "description": "This resource represents package dependencies. Use this resource to associate package dependencies with a component.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:33:25.000Z",
+    "updatedAt": "2026-10-22T01:33:26.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-9cf1af50-d114-4b98-9113-c7ec95484ac9"
+  },
+  "item": [
+    {
+      "name": "compass",
+      "item": [
+        {
+          "name": "v1",
+          "item": [
+            {
+              "name": "package_dependencies",
+              "item": [
+                {
+                  "name": "lock_file",
+                  "item": [
+                    {
+                      "name": "{componentId}",
+                      "item": [
+                        {
+                          "name": "{sourceId}",
+                          "item": [
+                            {
+                              "name": "Delete Package Dependencies given a Source",
+                              "id": "91acda28-42a4-40e9-8c45-f9b4a7666471",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "*/*"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/compass/v1/package_dependencies/lock_file/:componentId/:sourceId",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "compass",
+                                    "v1",
+                                    "package_dependencies",
+                                    "lock_file",
+                                    ":componentId",
+                                    ":sourceId"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "0d577e18-290d-4342-8a1c-eee666771189",
+                                      "key": "componentId",
+                                      "value": "<string>",
+                                      "description": "(Required) "
+                                    },
+                                    {
+                                      "id": "abf0b1d0-7dd7-4a7a-86ad-2d673356e461",
+                                      "key": "sourceId",
+                                      "value": "<string>",
+                                      "description": "(Required) "
+                                    }
+                                  ]
+                                },
+                                "description": "Delete all the package dependencies associated with a particular source.The `sourceId` parameter needs to be Base64 encoded."
+                              },
+                              "response": [
+                                {
+                                  "id": "e8e1ed15-e7f0-4562-bd19-95da0c18c949",
+                                  "name": "Returned if the file upload is successful.",
+                                  "originalRequest": {
+                                    "method": "DELETE",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "*/*"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: basic",
+                                        "key": "Authorization",
+                                        "value": "Basic <credentials>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/compass/v1/package_dependencies/lock_file/:componentId/:sourceId",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "compass",
+                                        "v1",
+                                        "package_dependencies",
+                                        "lock_file",
+                                        ":componentId",
+                                        ":sourceId"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "componentId"
+                                        },
+                                        {
+                                          "key": "sourceId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "text",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "*/*"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "<string>",
+                                  "createdAt": "2026-10-22T01:33:26.000Z",
+                                  "updatedAt": "2026-10-22T01:33:26.000Z",
+                                  "uid": "35240-e8e1ed15-e7f0-4562-bd19-95da0c18c949"
+                                },
+                                {
+                                  "id": "9bfce1d4-23db-4305-be1a-5f347a471ac6",
+                                  "name": "Returned if the request is not valid.",
+                                  "originalRequest": {
+                                    "method": "DELETE",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "*/*"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: basic",
+                                        "key": "Authorization",
+                                        "value": "Basic <credentials>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/compass/v1/package_dependencies/lock_file/:componentId/:sourceId",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "compass",
+                                        "v1",
+                                        "package_dependencies",
+                                        "lock_file",
+                                        ":componentId",
+                                        ":sourceId"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "componentId"
+                                        },
+                                        {
+                                          "key": "sourceId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Bad Request",
+                                  "code": 400,
+                                  "_postman_previewlanguage": "text",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "*/*"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "<string>",
+                                  "createdAt": "2026-10-22T01:33:26.000Z",
+                                  "updatedAt": "2026-10-22T01:33:26.000Z",
+                                  "uid": "35240-9bfce1d4-23db-4305-be1a-5f347a471ac6"
+                                },
+                                {
+                                  "id": "1e928262-3f91-49e9-ad6c-656fd8c0d0a6",
+                                  "name": "Returned if the user is not permitted to modify the given component.",
+                                  "originalRequest": {
+                                    "method": "DELETE",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "*/*"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: basic",
+                                        "key": "Authorization",
+                                        "value": "Basic <credentials>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/compass/v1/package_dependencies/lock_file/:componentId/:sourceId",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "compass",
+                                        "v1",
+                                        "package_dependencies",
+                                        "lock_file",
+                                        ":componentId",
+                                        ":sourceId"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "componentId"
+                                        },
+                                        {
+                                          "key": "sourceId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Forbidden",
+                                  "code": 403,
+                                  "_postman_previewlanguage": "text",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "*/*"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "<string>",
+                                  "createdAt": "2026-10-22T01:33:26.000Z",
+                                  "updatedAt": "2026-10-22T01:33:26.000Z",
+                                  "uid": "35240-1e928262-3f91-49e9-ad6c-656fd8c0d0a6"
+                                },
+                                {
+                                  "id": "fc04344e-cd6a-45dc-b9a2-2b4c2da937f2",
+                                  "name": "Returned if the component is not found.",
+                                  "originalRequest": {
+                                    "method": "DELETE",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "*/*"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: basic",
+                                        "key": "Authorization",
+                                        "value": "Basic <credentials>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/compass/v1/package_dependencies/lock_file/:componentId/:sourceId",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "compass",
+                                        "v1",
+                                        "package_dependencies",
+                                        "lock_file",
+                                        ":componentId",
+                                        ":sourceId"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "componentId"
+                                        },
+                                        {
+                                          "key": "sourceId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Not Found",
+                                  "code": 404,
+                                  "_postman_previewlanguage": "text",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "*/*"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "<string>",
+                                  "createdAt": "2026-10-22T01:33:26.000Z",
+                                  "updatedAt": "2026-10-22T01:33:26.000Z",
+                                  "uid": "35240-fc04344e-cd6a-45dc-b9a2-2b4c2da937f2"
+                                }
+                              ],
+                              "createdAt": "2026-10-22T01:33:26.000Z",
+                              "updatedAt": "2026-10-22T01:33:26.000Z",
+                              "uid": "35240-91acda28-42a4-40e9-8c45-f9b4a7666471"
+                            }
+                          ],
+                          "id": "1d28c5d0-0dc2-4ab0-b71f-36171737a428",
+                          "createdAt": "2026-10-22T01:33:26.000Z",
+                          "updatedAt": "2026-10-22T01:33:26.000Z",
+                          "uid": "35240-1d28c5d0-0dc2-4ab0-b71f-36171737a428"
+                        }
+                      ],
+                      "id": "a5312e34-3e73-4f41-bf0d-027096800929",
+                      "createdAt": "2026-10-22T01:33:26.000Z",
+                      "updatedAt": "2026-10-22T01:33:26.000Z",
+                      "uid": "35240-a5312e34-3e73-4f41-bf0d-027096800929"
+                    },
+                    {
+                      "name": "Upload Package Dependencies via Lock File",
+                      "id": "acfac414-8bda-4e1a-af90-9b2d4c9bbd8e",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) ",
+                              "key": "file",
+                              "type": "file",
+                              "value": null
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/compass/v1/package_dependencies/lock_file?sourceId=<string>&baseSourceUrl=<string>&componentId=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "compass",
+                            "v1",
+                            "package_dependencies",
+                            "lock_file"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ",
+                              "key": "sourceId",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) ",
+                              "key": "baseSourceUrl",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) ",
+                              "key": "componentId",
+                              "value": "<string>"
+                            }
+                          ]
+                        },
+                        "description": "Upload package dependencies for a component.\n\nThe file with package dependency information. Currently, we only accept package-lock.json files that are below 2MB. \\\n\\\nThe baseSourceUrl should be a url link to your lock file, ideally with \"#lines-\" appended at the end, if from Bitbucket, or \"#L\" appended if a GitHub link. This will let link to specific lines in your lock file where dependencies were found. \\\n\\\nThe sourceId should be a string that uniquely identifies the given lock file. We recommend using the filepath to the lock file, with the \"/\" characters replaced with \"_\" characters.\n\nExample: This curl command uploads a lock file to populate package dependencies for the component.\n```bash\ncurl --request PUT \\\n--url 'https://your-domain.atlassian.net/gateway/api/compass/v1/package_dependencies/lock_file' \\\n--user 'email@example.com:' \\\n--header 'Content-Type: multipart/form-data' \\\n--form file=@/path/to/file/package-lock.json;type=application/json\n--form componentId=\n--form baseSourceUrl=\n--form sourceId=\n```"
+                      },
+                      "response": [
+                        {
+                          "id": "748e4200-407a-4ea4-8c18-d576a625bfa2",
+                          "name": "Returned if the file upload is successful.",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "multipart/form-data"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "formdata",
+                              "formdata": [
+                                {
+                                  "description": "(Required) ",
+                                  "key": "file",
+                                  "type": "file"
+                                }
+                              ]
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/compass/v1/package_dependencies/lock_file?sourceId=<string>&baseSourceUrl=<string>&componentId=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "compass",
+                                "v1",
+                                "package_dependencies",
+                                "lock_file"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) ",
+                                  "key": "sourceId",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "(Required) ",
+                                  "key": "baseSourceUrl",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "(Required) ",
+                                  "key": "componentId",
+                                  "value": "<string>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "<string>",
+                          "createdAt": "2026-10-22T01:33:26.000Z",
+                          "updatedAt": "2026-10-22T01:33:26.000Z",
+                          "uid": "35240-748e4200-407a-4ea4-8c18-d576a625bfa2"
+                        },
+                        {
+                          "id": "886062ae-d531-4df5-8b58-3fd2f7219c86",
+                          "name": "Returned if the request is not valid.",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "multipart/form-data"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "formdata",
+                              "formdata": [
+                                {
+                                  "description": "(Required) ",
+                                  "key": "file",
+                                  "type": "file"
+                                }
+                              ]
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/compass/v1/package_dependencies/lock_file?sourceId=<string>&baseSourceUrl=<string>&componentId=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "compass",
+                                "v1",
+                                "package_dependencies",
+                                "lock_file"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) ",
+                                  "key": "sourceId",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "(Required) ",
+                                  "key": "baseSourceUrl",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "(Required) ",
+                                  "key": "componentId",
+                                  "value": "<string>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "<string>",
+                          "createdAt": "2026-10-22T01:33:26.000Z",
+                          "updatedAt": "2026-10-22T01:33:26.000Z",
+                          "uid": "35240-886062ae-d531-4df5-8b58-3fd2f7219c86"
+                        },
+                        {
+                          "id": "861006ff-0883-49e6-8fed-3d7b9c50fd52",
+                          "name": "Returned if the user is not permitted to modify the given component.",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "multipart/form-data"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "formdata",
+                              "formdata": [
+                                {
+                                  "description": "(Required) ",
+                                  "key": "file",
+                                  "type": "file"
+                                }
+                              ]
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/compass/v1/package_dependencies/lock_file?sourceId=<string>&baseSourceUrl=<string>&componentId=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "compass",
+                                "v1",
+                                "package_dependencies",
+                                "lock_file"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) ",
+                                  "key": "sourceId",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "(Required) ",
+                                  "key": "baseSourceUrl",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "(Required) ",
+                                  "key": "componentId",
+                                  "value": "<string>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Forbidden",
+                          "code": 403,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "<string>",
+                          "createdAt": "2026-10-22T01:33:26.000Z",
+                          "updatedAt": "2026-10-22T01:33:26.000Z",
+                          "uid": "35240-861006ff-0883-49e6-8fed-3d7b9c50fd52"
+                        },
+                        {
+                          "id": "fd15ac56-b3ab-43df-b3dc-507e3a5ea015",
+                          "name": "Returned if the component is not found.",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "multipart/form-data"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "formdata",
+                              "formdata": [
+                                {
+                                  "description": "(Required) ",
+                                  "key": "file",
+                                  "type": "file"
+                                }
+                              ]
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/compass/v1/package_dependencies/lock_file?sourceId=<string>&baseSourceUrl=<string>&componentId=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "compass",
+                                "v1",
+                                "package_dependencies",
+                                "lock_file"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) ",
+                                  "key": "sourceId",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "(Required) ",
+                                  "key": "baseSourceUrl",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "(Required) ",
+                                  "key": "componentId",
+                                  "value": "<string>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "<string>",
+                          "createdAt": "2026-10-22T01:33:26.000Z",
+                          "updatedAt": "2026-10-22T01:33:26.000Z",
+                          "uid": "35240-fd15ac56-b3ab-43df-b3dc-507e3a5ea015"
+                        },
+                        {
+                          "id": "83f71f76-0a23-443a-9f32-ba83b6ec7a2e",
+                          "name": "Returned if the uploaded file type is not accepted and/or file content cannot be parsed.",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "multipart/form-data"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "formdata",
+                              "formdata": [
+                                {
+                                  "description": "(Required) ",
+                                  "key": "file",
+                                  "type": "file"
+                                }
+                              ]
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/compass/v1/package_dependencies/lock_file?sourceId=<string>&baseSourceUrl=<string>&componentId=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "compass",
+                                "v1",
+                                "package_dependencies",
+                                "lock_file"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) ",
+                                  "key": "sourceId",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "(Required) ",
+                                  "key": "baseSourceUrl",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "(Required) ",
+                                  "key": "componentId",
+                                  "value": "<string>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "<string>",
+                          "createdAt": "2026-10-22T01:33:26.000Z",
+                          "updatedAt": "2026-10-22T01:33:26.000Z",
+                          "uid": "35240-83f71f76-0a23-443a-9f32-ba83b6ec7a2e"
+                        }
+                      ],
+                      "createdAt": "2026-10-22T01:33:26.000Z",
+                      "updatedAt": "2026-10-22T01:33:26.000Z",
+                      "uid": "35240-acfac414-8bda-4e1a-af90-9b2d4c9bbd8e"
+                    }
+                  ],
+                  "id": "686c1824-e9ac-451c-bbe8-6a6f3e784f6f",
+                  "createdAt": "2026-10-22T01:33:26.000Z",
+                  "updatedAt": "2026-10-22T01:33:26.000Z",
+                  "uid": "35240-686c1824-e9ac-451c-bbe8-6a6f3e784f6f"
+                }
+              ],
+              "id": "1af903f2-e62c-4798-85e4-9df7a206fe13",
+              "createdAt": "2026-10-22T01:33:26.000Z",
+              "updatedAt": "2026-10-22T01:33:26.000Z",
+              "uid": "35240-1af903f2-e62c-4798-85e4-9df7a206fe13"
+            }
+          ],
+          "id": "41fd76a7-dd52-46c4-9608-8cfb64e7cde8",
+          "createdAt": "2026-10-22T01:33:26.000Z",
+          "updatedAt": "2026-10-22T01:33:26.000Z",
+          "uid": "35240-41fd76a7-dd52-46c4-9608-8cfb64e7cde8"
+        }
+      ],
+      "id": "8202c5f7-2d49-4798-b93e-031c5c3950c9",
+      "createdAt": "2026-10-22T01:33:26.000Z",
+      "updatedAt": "2026-10-22T01:33:26.000Z",
+      "uid": "35240-8202c5f7-2d49-4798-b93e-031c5c3950c9"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://your-domain.atlassian.net/gateway/api"
+    }
+  ]
+}

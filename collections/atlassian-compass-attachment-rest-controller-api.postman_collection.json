@@ -1,0 +1,1733 @@
+{
+  "info": {
+    "_postman_id": "1ba99730-2191-41cc-a474-1b901b08ef7d",
+    "name": "Compass REST Attachment Rest Controller API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:33:08.000Z",
+    "updatedAt": "2026-10-22T01:33:09.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-1ba99730-2191-41cc-a474-1b901b08ef7d"
+  },
+  "item": [
+    {
+      "name": "compass",
+      "item": [
+        {
+          "name": "v1",
+          "item": [
+            {
+              "name": "component",
+              "item": [
+                {
+                  "name": "{componentId}",
+                  "item": [
+                    {
+                      "name": "app",
+                      "item": [
+                        {
+                          "name": "{forgeAppId}",
+                          "item": [
+                            {
+                              "name": "attachment",
+                              "item": [
+                                {
+                                  "name": "{key}",
+                                  "item": [
+                                    {
+                                      "name": "Get Forge App attachment",
+                                      "id": "9582bae6-d29b-4f53-ac7a-26d1d48d8147",
+                                      "protocolProfileBehavior": {
+                                        "disableBodyPruning": true
+                                      },
+                                      "request": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/compass/v1/component/:componentId/app/:forgeAppId/attachment/:key",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "compass",
+                                            "v1",
+                                            "component",
+                                            ":componentId",
+                                            "app",
+                                            ":forgeAppId",
+                                            "attachment",
+                                            ":key"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "id": "54065fb2-48de-45e1-8c06-0836df4be2ae",
+                                              "key": "componentId",
+                                              "value": "<uuid>",
+                                              "description": "(Required) "
+                                            },
+                                            {
+                                              "id": "2e5964e6-8aaa-41ae-aac8-305a75f9aa5c",
+                                              "key": "forgeAppId",
+                                              "value": "<string>",
+                                              "description": "(Required) "
+                                            },
+                                            {
+                                              "id": "13d14054-d041-4dd5-9ac4-24e50b9986d9",
+                                              "key": "key",
+                                              "value": "<string>",
+                                              "description": "(Required) "
+                                            }
+                                          ]
+                                        },
+                                        "description": "Get a file attached to a component. If you need to have attachment upload enabled for your Compass Forge app, contact Atlassian support."
+                                      },
+                                      "response": [
+                                        {
+                                          "id": "ec5a30b1-5e64-40fa-90bc-708e491762cd",
+                                          "name": "Returned if the file exists.",
+                                          "originalRequest": {
+                                            "method": "GET",
+                                            "header": [
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "description": "Added as a part of security scheme: basic",
+                                                "key": "Authorization",
+                                                "value": "Basic <credentials>"
+                                              }
+                                            ],
+                                            "url": {
+                                              "raw": "{{baseUrl}}/compass/v1/component/:componentId/app/:forgeAppId/attachment/:key",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "compass",
+                                                "v1",
+                                                "component",
+                                                ":componentId",
+                                                "app",
+                                                ":forgeAppId",
+                                                "attachment",
+                                                ":key"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "componentId"
+                                                },
+                                                {
+                                                  "key": "forgeAppId"
+                                                },
+                                                {
+                                                  "key": "key"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "OK",
+                                          "code": 200,
+                                          "_postman_previewlanguage": "json",
+                                          "header": [
+                                            {
+                                              "key": "Content-Type",
+                                              "value": "application/json"
+                                            }
+                                          ],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": "{\n  \"lastModifiedAt\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"url\": \"<string>\"\n}",
+                                          "createdAt": "2026-10-22T01:33:09.000Z",
+                                          "updatedAt": "2026-10-22T01:33:09.000Z",
+                                          "uid": "35240-ec5a30b1-5e64-40fa-90bc-708e491762cd"
+                                        },
+                                        {
+                                          "id": "4ad8bb8a-d84e-468a-b3b2-1804b81e6ea0",
+                                          "name": "Returned if the request is not valid.",
+                                          "originalRequest": {
+                                            "method": "GET",
+                                            "header": [
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "description": "Added as a part of security scheme: basic",
+                                                "key": "Authorization",
+                                                "value": "Basic <credentials>"
+                                              }
+                                            ],
+                                            "url": {
+                                              "raw": "{{baseUrl}}/compass/v1/component/:componentId/app/:forgeAppId/attachment/:key",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "compass",
+                                                "v1",
+                                                "component",
+                                                ":componentId",
+                                                "app",
+                                                ":forgeAppId",
+                                                "attachment",
+                                                ":key"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "componentId"
+                                                },
+                                                {
+                                                  "key": "forgeAppId"
+                                                },
+                                                {
+                                                  "key": "key"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "Bad Request",
+                                          "code": 400,
+                                          "_postman_previewlanguage": "json",
+                                          "header": [
+                                            {
+                                              "key": "Content-Type",
+                                              "value": "application/json"
+                                            }
+                                          ],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": "{\n  \"errors\": \"<array,null>\"\n}",
+                                          "createdAt": "2026-10-22T01:33:09.000Z",
+                                          "updatedAt": "2026-10-22T01:33:09.000Z",
+                                          "uid": "35240-4ad8bb8a-d84e-468a-b3b2-1804b81e6ea0"
+                                        },
+                                        {
+                                          "id": "7833a477-df24-4fc3-82d2-b9517004086a",
+                                          "name": "Returned if the Forge app does not have attachment upload enabled. If your Compass Forge app needs this functionality enabled, contact Atlassian support.",
+                                          "originalRequest": {
+                                            "method": "GET",
+                                            "header": [
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "description": "Added as a part of security scheme: basic",
+                                                "key": "Authorization",
+                                                "value": "Basic <credentials>"
+                                              }
+                                            ],
+                                            "url": {
+                                              "raw": "{{baseUrl}}/compass/v1/component/:componentId/app/:forgeAppId/attachment/:key",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "compass",
+                                                "v1",
+                                                "component",
+                                                ":componentId",
+                                                "app",
+                                                ":forgeAppId",
+                                                "attachment",
+                                                ":key"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "componentId"
+                                                },
+                                                {
+                                                  "key": "forgeAppId"
+                                                },
+                                                {
+                                                  "key": "key"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "Forbidden",
+                                          "code": 403,
+                                          "_postman_previewlanguage": "json",
+                                          "header": [
+                                            {
+                                              "key": "Content-Type",
+                                              "value": "application/json"
+                                            }
+                                          ],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": "{\n  \"errors\": \"<array,null>\"\n}",
+                                          "createdAt": "2026-10-22T01:33:09.000Z",
+                                          "updatedAt": "2026-10-22T01:33:09.000Z",
+                                          "uid": "35240-7833a477-df24-4fc3-82d2-b9517004086a"
+                                        },
+                                        {
+                                          "id": "31466ee1-2b69-4097-ad05-dfcb3c014aaf",
+                                          "name": "Returned if the component or attachment is not found.",
+                                          "originalRequest": {
+                                            "method": "GET",
+                                            "header": [
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "description": "Added as a part of security scheme: basic",
+                                                "key": "Authorization",
+                                                "value": "Basic <credentials>"
+                                              }
+                                            ],
+                                            "url": {
+                                              "raw": "{{baseUrl}}/compass/v1/component/:componentId/app/:forgeAppId/attachment/:key",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "compass",
+                                                "v1",
+                                                "component",
+                                                ":componentId",
+                                                "app",
+                                                ":forgeAppId",
+                                                "attachment",
+                                                ":key"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "componentId"
+                                                },
+                                                {
+                                                  "key": "forgeAppId"
+                                                },
+                                                {
+                                                  "key": "key"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "Not Found",
+                                          "code": 404,
+                                          "_postman_previewlanguage": "json",
+                                          "header": [
+                                            {
+                                              "key": "Content-Type",
+                                              "value": "application/json"
+                                            }
+                                          ],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": "{\n  \"errors\": \"<array,null>\"\n}",
+                                          "createdAt": "2026-10-22T01:33:09.000Z",
+                                          "updatedAt": "2026-10-22T01:33:09.000Z",
+                                          "uid": "35240-31466ee1-2b69-4097-ad05-dfcb3c014aaf"
+                                        }
+                                      ],
+                                      "createdAt": "2026-10-22T01:33:09.000Z",
+                                      "updatedAt": "2026-10-22T01:33:09.000Z",
+                                      "uid": "35240-9582bae6-d29b-4f53-ac7a-26d1d48d8147"
+                                    },
+                                    {
+                                      "name": "Upload Forge App attachment",
+                                      "id": "b45bafe1-3445-4ce2-8ab1-3ea2841ccf25",
+                                      "protocolProfileBehavior": {
+                                        "disableBodyPruning": true
+                                      },
+                                      "request": {
+                                        "method": "PUT",
+                                        "header": [
+                                          {
+                                            "key": "Content-Type",
+                                            "value": "multipart/form-data"
+                                          },
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          }
+                                        ],
+                                        "body": {
+                                          "mode": "formdata",
+                                          "formdata": [
+                                            {
+                                              "description": "(Required) ",
+                                              "key": "file",
+                                              "type": "file",
+                                              "value": null
+                                            }
+                                          ]
+                                        },
+                                        "url": {
+                                          "raw": "{{baseUrl}}/compass/v1/component/:componentId/app/:forgeAppId/attachment/:key",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "compass",
+                                            "v1",
+                                            "component",
+                                            ":componentId",
+                                            "app",
+                                            ":forgeAppId",
+                                            "attachment",
+                                            ":key"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "id": "ba8d3fd1-5d00-4bf8-b101-f75f93847512",
+                                              "key": "componentId",
+                                              "value": "<uuid>",
+                                              "description": "(Required) "
+                                            },
+                                            {
+                                              "id": "b367ee59-b433-4d9b-8b35-428ffe0a0169",
+                                              "key": "forgeAppId",
+                                              "value": "<string>",
+                                              "description": "(Required) "
+                                            },
+                                            {
+                                              "id": "579f3c7a-fc41-45dd-a25b-3a5c066634fd",
+                                              "key": "key",
+                                              "value": "<string>",
+                                              "description": "(Required) "
+                                            }
+                                          ]
+                                        },
+                                        "description": "Attach a file to a component. If you need to have attachment upload enabled for your Compass Forge app, contact Atlassian support.\n\nThe request body should be a file.\n\nExample: This curl command attaches a file to a component.\n```bash\ncurl --request PUT \\\n--url 'https://your-domain.atlassian.net/gateway/api/compass/v1/component/{componentId}/app/{forgeAppId}/attachment/{key}' \\\n--user 'email@example.com:' \\\n--header 'Content-Type: multipart/form-data' \\\n--form file=@/path/to/attachment.txt\n```"
+                                      },
+                                      "response": [
+                                        {
+                                          "id": "e4022217-3a0e-4750-a199-aa561f2e88e7",
+                                          "name": "Returned if the file upload is successful.",
+                                          "originalRequest": {
+                                            "method": "PUT",
+                                            "header": [
+                                              {
+                                                "key": "Content-Type",
+                                                "value": "multipart/form-data"
+                                              },
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "description": "Added as a part of security scheme: basic",
+                                                "key": "Authorization",
+                                                "value": "Basic <credentials>"
+                                              }
+                                            ],
+                                            "body": {
+                                              "mode": "formdata",
+                                              "formdata": [
+                                                {
+                                                  "description": "(Required) ",
+                                                  "key": "file",
+                                                  "type": "file"
+                                                }
+                                              ]
+                                            },
+                                            "url": {
+                                              "raw": "{{baseUrl}}/compass/v1/component/:componentId/app/:forgeAppId/attachment/:key",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "compass",
+                                                "v1",
+                                                "component",
+                                                ":componentId",
+                                                "app",
+                                                ":forgeAppId",
+                                                "attachment",
+                                                ":key"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "componentId"
+                                                },
+                                                {
+                                                  "key": "forgeAppId"
+                                                },
+                                                {
+                                                  "key": "key"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "OK",
+                                          "code": 200,
+                                          "_postman_previewlanguage": "json",
+                                          "header": [
+                                            {
+                                              "key": "Content-Type",
+                                              "value": "application/json"
+                                            }
+                                          ],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": "{\n  \"lastModifiedAt\": \"<dateTime>\",\n  \"name\": \"<string>\",\n  \"url\": \"<string>\"\n}",
+                                          "createdAt": "2026-10-22T01:33:09.000Z",
+                                          "updatedAt": "2026-10-22T01:33:09.000Z",
+                                          "uid": "35240-e4022217-3a0e-4750-a199-aa561f2e88e7"
+                                        },
+                                        {
+                                          "id": "34ad155a-77d3-46da-8fc2-b7ca9153f602",
+                                          "name": "Returned if the request is not valid.",
+                                          "originalRequest": {
+                                            "method": "PUT",
+                                            "header": [
+                                              {
+                                                "key": "Content-Type",
+                                                "value": "multipart/form-data"
+                                              },
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "description": "Added as a part of security scheme: basic",
+                                                "key": "Authorization",
+                                                "value": "Basic <credentials>"
+                                              }
+                                            ],
+                                            "body": {
+                                              "mode": "formdata",
+                                              "formdata": [
+                                                {
+                                                  "description": "(Required) ",
+                                                  "key": "file",
+                                                  "type": "file"
+                                                }
+                                              ]
+                                            },
+                                            "url": {
+                                              "raw": "{{baseUrl}}/compass/v1/component/:componentId/app/:forgeAppId/attachment/:key",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "compass",
+                                                "v1",
+                                                "component",
+                                                ":componentId",
+                                                "app",
+                                                ":forgeAppId",
+                                                "attachment",
+                                                ":key"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "componentId"
+                                                },
+                                                {
+                                                  "key": "forgeAppId"
+                                                },
+                                                {
+                                                  "key": "key"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "Bad Request",
+                                          "code": 400,
+                                          "_postman_previewlanguage": "json",
+                                          "header": [
+                                            {
+                                              "key": "Content-Type",
+                                              "value": "application/json"
+                                            }
+                                          ],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": "{\n  \"errors\": \"<array,null>\"\n}",
+                                          "createdAt": "2026-10-22T01:33:09.000Z",
+                                          "updatedAt": "2026-10-22T01:33:09.000Z",
+                                          "uid": "35240-34ad155a-77d3-46da-8fc2-b7ca9153f602"
+                                        },
+                                        {
+                                          "id": "e28f257a-9aeb-489d-9138-a51c10b02fa6",
+                                          "name": "Returned if the Forge app does not have attachment upload enabled. If your Compass Forge app needs this functionality enabled, contact Atlassian support.",
+                                          "originalRequest": {
+                                            "method": "PUT",
+                                            "header": [
+                                              {
+                                                "key": "Content-Type",
+                                                "value": "multipart/form-data"
+                                              },
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "description": "Added as a part of security scheme: basic",
+                                                "key": "Authorization",
+                                                "value": "Basic <credentials>"
+                                              }
+                                            ],
+                                            "body": {
+                                              "mode": "formdata",
+                                              "formdata": [
+                                                {
+                                                  "description": "(Required) ",
+                                                  "key": "file",
+                                                  "type": "file"
+                                                }
+                                              ]
+                                            },
+                                            "url": {
+                                              "raw": "{{baseUrl}}/compass/v1/component/:componentId/app/:forgeAppId/attachment/:key",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "compass",
+                                                "v1",
+                                                "component",
+                                                ":componentId",
+                                                "app",
+                                                ":forgeAppId",
+                                                "attachment",
+                                                ":key"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "componentId"
+                                                },
+                                                {
+                                                  "key": "forgeAppId"
+                                                },
+                                                {
+                                                  "key": "key"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "Forbidden",
+                                          "code": 403,
+                                          "_postman_previewlanguage": "json",
+                                          "header": [
+                                            {
+                                              "key": "Content-Type",
+                                              "value": "application/json"
+                                            }
+                                          ],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": "{\n  \"errors\": \"<array,null>\"\n}",
+                                          "createdAt": "2026-10-22T01:33:09.000Z",
+                                          "updatedAt": "2026-10-22T01:33:09.000Z",
+                                          "uid": "35240-e28f257a-9aeb-489d-9138-a51c10b02fa6"
+                                        },
+                                        {
+                                          "id": "86b3553c-08be-4a9b-8461-43836273e3df",
+                                          "name": "Returned if the component is not found.",
+                                          "originalRequest": {
+                                            "method": "PUT",
+                                            "header": [
+                                              {
+                                                "key": "Content-Type",
+                                                "value": "multipart/form-data"
+                                              },
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "description": "Added as a part of security scheme: basic",
+                                                "key": "Authorization",
+                                                "value": "Basic <credentials>"
+                                              }
+                                            ],
+                                            "body": {
+                                              "mode": "formdata",
+                                              "formdata": [
+                                                {
+                                                  "description": "(Required) ",
+                                                  "key": "file",
+                                                  "type": "file"
+                                                }
+                                              ]
+                                            },
+                                            "url": {
+                                              "raw": "{{baseUrl}}/compass/v1/component/:componentId/app/:forgeAppId/attachment/:key",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "compass",
+                                                "v1",
+                                                "component",
+                                                ":componentId",
+                                                "app",
+                                                ":forgeAppId",
+                                                "attachment",
+                                                ":key"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "componentId"
+                                                },
+                                                {
+                                                  "key": "forgeAppId"
+                                                },
+                                                {
+                                                  "key": "key"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "Not Found",
+                                          "code": 404,
+                                          "_postman_previewlanguage": "json",
+                                          "header": [
+                                            {
+                                              "key": "Content-Type",
+                                              "value": "application/json"
+                                            }
+                                          ],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": "{\n  \"errors\": \"<array,null>\"\n}",
+                                          "createdAt": "2026-10-22T01:33:09.000Z",
+                                          "updatedAt": "2026-10-22T01:33:09.000Z",
+                                          "uid": "35240-86b3553c-08be-4a9b-8461-43836273e3df"
+                                        },
+                                        {
+                                          "id": "10238661-07a1-4477-8c63-d40dc6c0e645",
+                                          "name": "Returned if the uploaded file type is not accepted and/or file content cannot be parsed. Accepted file types include JSON, YAML, and XML.",
+                                          "originalRequest": {
+                                            "method": "PUT",
+                                            "header": [
+                                              {
+                                                "key": "Content-Type",
+                                                "value": "multipart/form-data"
+                                              },
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "description": "Added as a part of security scheme: basic",
+                                                "key": "Authorization",
+                                                "value": "Basic <credentials>"
+                                              }
+                                            ],
+                                            "body": {
+                                              "mode": "formdata",
+                                              "formdata": [
+                                                {
+                                                  "description": "(Required) ",
+                                                  "key": "file",
+                                                  "type": "file"
+                                                }
+                                              ]
+                                            },
+                                            "url": {
+                                              "raw": "{{baseUrl}}/compass/v1/component/:componentId/app/:forgeAppId/attachment/:key",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "compass",
+                                                "v1",
+                                                "component",
+                                                ":componentId",
+                                                "app",
+                                                ":forgeAppId",
+                                                "attachment",
+                                                ":key"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "componentId"
+                                                },
+                                                {
+                                                  "key": "forgeAppId"
+                                                },
+                                                {
+                                                  "key": "key"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                                          "code": 422,
+                                          "_postman_previewlanguage": "json",
+                                          "header": [
+                                            {
+                                              "key": "Content-Type",
+                                              "value": "application/json"
+                                            }
+                                          ],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": "{\n  \"errors\": \"<array,null>\"\n}",
+                                          "createdAt": "2026-10-22T01:33:09.000Z",
+                                          "updatedAt": "2026-10-22T01:33:09.000Z",
+                                          "uid": "35240-10238661-07a1-4477-8c63-d40dc6c0e645"
+                                        },
+                                        {
+                                          "id": "c3416170-af3b-4737-bee4-bf6c6052f6db",
+                                          "name": "Returned if the file upload to Optic fails for an unexpected reason.",
+                                          "originalRequest": {
+                                            "method": "PUT",
+                                            "header": [
+                                              {
+                                                "key": "Content-Type",
+                                                "value": "multipart/form-data"
+                                              },
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "description": "Added as a part of security scheme: basic",
+                                                "key": "Authorization",
+                                                "value": "Basic <credentials>"
+                                              }
+                                            ],
+                                            "body": {
+                                              "mode": "formdata",
+                                              "formdata": [
+                                                {
+                                                  "description": "(Required) ",
+                                                  "key": "file",
+                                                  "type": "file"
+                                                }
+                                              ]
+                                            },
+                                            "url": {
+                                              "raw": "{{baseUrl}}/compass/v1/component/:componentId/app/:forgeAppId/attachment/:key",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "compass",
+                                                "v1",
+                                                "component",
+                                                ":componentId",
+                                                "app",
+                                                ":forgeAppId",
+                                                "attachment",
+                                                ":key"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "componentId"
+                                                },
+                                                {
+                                                  "key": "forgeAppId"
+                                                },
+                                                {
+                                                  "key": "key"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "Internal Server Error",
+                                          "code": 500,
+                                          "_postman_previewlanguage": "json",
+                                          "header": [
+                                            {
+                                              "key": "Content-Type",
+                                              "value": "application/json"
+                                            }
+                                          ],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": "{\n  \"errors\": \"<array,null>\"\n}",
+                                          "createdAt": "2026-10-22T01:33:09.000Z",
+                                          "updatedAt": "2026-10-22T01:33:09.000Z",
+                                          "uid": "35240-c3416170-af3b-4737-bee4-bf6c6052f6db"
+                                        }
+                                      ],
+                                      "createdAt": "2026-10-22T01:33:09.000Z",
+                                      "updatedAt": "2026-10-22T01:33:09.000Z",
+                                      "uid": "35240-b45bafe1-3445-4ce2-8ab1-3ea2841ccf25"
+                                    },
+                                    {
+                                      "name": "Delete Forge App attachment",
+                                      "id": "5b80e15d-4ce1-4b39-9a49-0a31cf7c9489",
+                                      "protocolProfileBehavior": {
+                                        "disableBodyPruning": true
+                                      },
+                                      "request": {
+                                        "method": "DELETE",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/compass/v1/component/:componentId/app/:forgeAppId/attachment/:key",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "compass",
+                                            "v1",
+                                            "component",
+                                            ":componentId",
+                                            "app",
+                                            ":forgeAppId",
+                                            "attachment",
+                                            ":key"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "id": "cfd9c5e8-0ef7-46e3-b97c-43a18fdaa018",
+                                              "key": "componentId",
+                                              "value": "<uuid>",
+                                              "description": "(Required) "
+                                            },
+                                            {
+                                              "id": "22149bc9-8bf5-4a80-bd24-b188cd7d9ce3",
+                                              "key": "forgeAppId",
+                                              "value": "<string>",
+                                              "description": "(Required) "
+                                            },
+                                            {
+                                              "id": "fd7f0737-cbca-4c93-9d2a-eaf230bfbc47",
+                                              "key": "key",
+                                              "value": "<string>",
+                                              "description": "(Required) "
+                                            }
+                                          ]
+                                        },
+                                        "description": "Delete file attached to a component. If you need to have attachment upload enabled for your Compass Forge app, contact Atlassian support."
+                                      },
+                                      "response": [
+                                        {
+                                          "id": "f7843110-b5e6-4e50-8a7e-7e814ecc75f5",
+                                          "name": "Returned if the file delete is successful.",
+                                          "originalRequest": {
+                                            "method": "DELETE",
+                                            "header": [
+                                              {
+                                                "description": "Added as a part of security scheme: basic",
+                                                "key": "Authorization",
+                                                "value": "Basic <credentials>"
+                                              }
+                                            ],
+                                            "url": {
+                                              "raw": "{{baseUrl}}/compass/v1/component/:componentId/app/:forgeAppId/attachment/:key",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "compass",
+                                                "v1",
+                                                "component",
+                                                ":componentId",
+                                                "app",
+                                                ":forgeAppId",
+                                                "attachment",
+                                                ":key"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "componentId"
+                                                },
+                                                {
+                                                  "key": "forgeAppId"
+                                                },
+                                                {
+                                                  "key": "key"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "OK",
+                                          "code": 200,
+                                          "_postman_previewlanguage": "text",
+                                          "header": [],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": null,
+                                          "createdAt": "2026-10-22T01:33:09.000Z",
+                                          "updatedAt": "2026-10-22T01:33:09.000Z",
+                                          "uid": "35240-f7843110-b5e6-4e50-8a7e-7e814ecc75f5"
+                                        },
+                                        {
+                                          "id": "38d8ca3d-aa0a-44da-aa8a-b88962f813c7",
+                                          "name": "Returned if the request is not valid.",
+                                          "originalRequest": {
+                                            "method": "DELETE",
+                                            "header": [
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "description": "Added as a part of security scheme: basic",
+                                                "key": "Authorization",
+                                                "value": "Basic <credentials>"
+                                              }
+                                            ],
+                                            "url": {
+                                              "raw": "{{baseUrl}}/compass/v1/component/:componentId/app/:forgeAppId/attachment/:key",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "compass",
+                                                "v1",
+                                                "component",
+                                                ":componentId",
+                                                "app",
+                                                ":forgeAppId",
+                                                "attachment",
+                                                ":key"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "componentId"
+                                                },
+                                                {
+                                                  "key": "forgeAppId"
+                                                },
+                                                {
+                                                  "key": "key"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "Bad Request",
+                                          "code": 400,
+                                          "_postman_previewlanguage": "json",
+                                          "header": [
+                                            {
+                                              "key": "Content-Type",
+                                              "value": "application/json"
+                                            }
+                                          ],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": "{\n  \"errors\": \"<array,null>\"\n}",
+                                          "createdAt": "2026-10-22T01:33:09.000Z",
+                                          "updatedAt": "2026-10-22T01:33:09.000Z",
+                                          "uid": "35240-38d8ca3d-aa0a-44da-aa8a-b88962f813c7"
+                                        },
+                                        {
+                                          "id": "b8a74a21-f8b9-4f9b-bc1b-eb30340b6595",
+                                          "name": "Returned if the Forge app does not have attachment upload enabled. If your Compass Forge app needs this functionality enabled, contact Atlassian support.",
+                                          "originalRequest": {
+                                            "method": "DELETE",
+                                            "header": [
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "description": "Added as a part of security scheme: basic",
+                                                "key": "Authorization",
+                                                "value": "Basic <credentials>"
+                                              }
+                                            ],
+                                            "url": {
+                                              "raw": "{{baseUrl}}/compass/v1/component/:componentId/app/:forgeAppId/attachment/:key",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "compass",
+                                                "v1",
+                                                "component",
+                                                ":componentId",
+                                                "app",
+                                                ":forgeAppId",
+                                                "attachment",
+                                                ":key"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "componentId"
+                                                },
+                                                {
+                                                  "key": "forgeAppId"
+                                                },
+                                                {
+                                                  "key": "key"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "Forbidden",
+                                          "code": 403,
+                                          "_postman_previewlanguage": "json",
+                                          "header": [
+                                            {
+                                              "key": "Content-Type",
+                                              "value": "application/json"
+                                            }
+                                          ],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": "{\n  \"errors\": \"<array,null>\"\n}",
+                                          "createdAt": "2026-10-22T01:33:09.000Z",
+                                          "updatedAt": "2026-10-22T01:33:09.000Z",
+                                          "uid": "35240-b8a74a21-f8b9-4f9b-bc1b-eb30340b6595"
+                                        },
+                                        {
+                                          "id": "7596379c-2b19-45b5-a5a5-70cbb0243efa",
+                                          "name": "Returned if the component is not found.",
+                                          "originalRequest": {
+                                            "method": "DELETE",
+                                            "header": [
+                                              {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                              },
+                                              {
+                                                "description": "Added as a part of security scheme: basic",
+                                                "key": "Authorization",
+                                                "value": "Basic <credentials>"
+                                              }
+                                            ],
+                                            "url": {
+                                              "raw": "{{baseUrl}}/compass/v1/component/:componentId/app/:forgeAppId/attachment/:key",
+                                              "host": [
+                                                "{{baseUrl}}"
+                                              ],
+                                              "path": [
+                                                "compass",
+                                                "v1",
+                                                "component",
+                                                ":componentId",
+                                                "app",
+                                                ":forgeAppId",
+                                                "attachment",
+                                                ":key"
+                                              ],
+                                              "variable": [
+                                                {
+                                                  "key": "componentId"
+                                                },
+                                                {
+                                                  "key": "forgeAppId"
+                                                },
+                                                {
+                                                  "key": "key"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "status": "Not Found",
+                                          "code": 404,
+                                          "_postman_previewlanguage": "json",
+                                          "header": [
+                                            {
+                                              "key": "Content-Type",
+                                              "value": "application/json"
+                                            }
+                                          ],
+                                          "cookie": [],
+                                          "responseTime": null,
+                                          "body": "{\n  \"errors\": \"<array,null>\"\n}",
+                                          "createdAt": "2026-10-22T01:33:09.000Z",
+                                          "updatedAt": "2026-10-22T01:33:09.000Z",
+                                          "uid": "35240-7596379c-2b19-45b5-a5a5-70cbb0243efa"
+                                        }
+                                      ],
+                                      "createdAt": "2026-10-22T01:33:09.000Z",
+                                      "updatedAt": "2026-10-22T01:33:09.000Z",
+                                      "uid": "35240-5b80e15d-4ce1-4b39-9a49-0a31cf7c9489"
+                                    }
+                                  ],
+                                  "id": "f6c5b39f-73d4-4c48-b895-cb9868091bc9",
+                                  "createdAt": "2026-10-22T01:33:09.000Z",
+                                  "updatedAt": "2026-10-22T01:33:09.000Z",
+                                  "uid": "35240-f6c5b39f-73d4-4c48-b895-cb9868091bc9"
+                                }
+                              ],
+                              "id": "328301b5-9dc4-4ac3-a643-b22b74e86eb3",
+                              "createdAt": "2026-10-22T01:33:09.000Z",
+                              "updatedAt": "2026-10-22T01:33:09.000Z",
+                              "uid": "35240-328301b5-9dc4-4ac3-a643-b22b74e86eb3"
+                            }
+                          ],
+                          "id": "3a067fe1-eaff-4772-a92e-01b3b3ecbcb3",
+                          "createdAt": "2026-10-22T01:33:09.000Z",
+                          "updatedAt": "2026-10-22T01:33:09.000Z",
+                          "uid": "35240-3a067fe1-eaff-4772-a92e-01b3b3ecbcb3"
+                        }
+                      ],
+                      "id": "207f27ce-794b-48e8-996f-a19c7f24cd70",
+                      "createdAt": "2026-10-22T01:33:09.000Z",
+                      "updatedAt": "2026-10-22T01:33:09.000Z",
+                      "uid": "35240-207f27ce-794b-48e8-996f-a19c7f24cd70"
+                    },
+                    {
+                      "name": "api_specs",
+                      "item": [
+                        {
+                          "name": "Upload Component API Spec",
+                          "id": "442acbbf-cc5f-4400-a46e-1d4838e7d65e",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "multipart/form-data"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "formdata",
+                              "formdata": [
+                                {
+                                  "description": "(Required) ",
+                                  "key": "file",
+                                  "type": "file",
+                                  "value": null
+                                }
+                              ]
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/compass/v1/component/:componentId/api_specs",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "compass",
+                                "v1",
+                                "component",
+                                ":componentId",
+                                "api_specs"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "dfbca1be-b211-407b-a943-52b4a7236464",
+                                  "key": "componentId",
+                                  "value": "<uuid>",
+                                  "description": "(Required) "
+                                }
+                              ]
+                            },
+                            "description": "Upload api specs for a component.\n\nThe request body should be a file with the api-spec content.\n\nExample: This curl command uploads a spec file (swagger.yaml) for the component.\n```bash\ncurl --request PUT \\\n--url 'https://your-domain.atlassian.net/gateway/api/compass/v1/component/{componentId}/api_specs' \\\n--user 'email@example.com:' \\\n--header 'Content-Type: multipart/form-data' \\\n--form file=@/path/to/file/swagger.yaml\n```"
+                          },
+                          "response": [
+                            {
+                              "id": "e27e186f-fffa-4bf0-994d-285c995c2d6e",
+                              "name": "Returned if the file upload is successful.",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "multipart/form-data"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "formdata",
+                                  "formdata": [
+                                    {
+                                      "description": "(Required) ",
+                                      "key": "file",
+                                      "type": "file"
+                                    }
+                                  ]
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/compass/v1/component/:componentId/api_specs",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "compass",
+                                    "v1",
+                                    "component",
+                                    ":componentId",
+                                    "api_specs"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "componentId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "<string>",
+                              "createdAt": "2026-10-22T01:33:09.000Z",
+                              "updatedAt": "2026-10-22T01:33:09.000Z",
+                              "uid": "35240-e27e186f-fffa-4bf0-994d-285c995c2d6e"
+                            },
+                            {
+                              "id": "564acc89-71cd-4db4-a7e2-4a5188e1eea3",
+                              "name": "Returned if the api spec file is not valid.",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "multipart/form-data"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "formdata",
+                                  "formdata": [
+                                    {
+                                      "description": "(Required) ",
+                                      "key": "file",
+                                      "type": "file"
+                                    }
+                                  ]
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/compass/v1/component/:componentId/api_specs",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "compass",
+                                    "v1",
+                                    "component",
+                                    ":componentId",
+                                    "api_specs"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "componentId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "<string>",
+                              "createdAt": "2026-10-22T01:33:09.000Z",
+                              "updatedAt": "2026-10-22T01:33:09.000Z",
+                              "uid": "35240-564acc89-71cd-4db4-a7e2-4a5188e1eea3"
+                            },
+                            {
+                              "id": "4965ef2f-3e4b-4f6d-b8f8-67dca9e93e6a",
+                              "name": "Returned if the user is not authorized to upload API specs.",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "multipart/form-data"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "formdata",
+                                  "formdata": [
+                                    {
+                                      "description": "(Required) ",
+                                      "key": "file",
+                                      "type": "file"
+                                    }
+                                  ]
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/compass/v1/component/:componentId/api_specs",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "compass",
+                                    "v1",
+                                    "component",
+                                    ":componentId",
+                                    "api_specs"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "componentId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Forbidden",
+                              "code": 403,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "<string>",
+                              "createdAt": "2026-10-22T01:33:09.000Z",
+                              "updatedAt": "2026-10-22T01:33:09.000Z",
+                              "uid": "35240-4965ef2f-3e4b-4f6d-b8f8-67dca9e93e6a"
+                            },
+                            {
+                              "id": "1d5621b3-d44f-4b23-a0af-218a3851c399",
+                              "name": "Returned if the uploaded file type is not accepted and/or file content cannot be parsed. Accepted file types are JSON and YML.",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "multipart/form-data"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "formdata",
+                                  "formdata": [
+                                    {
+                                      "description": "(Required) ",
+                                      "key": "file",
+                                      "type": "file"
+                                    }
+                                  ]
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/compass/v1/component/:componentId/api_specs",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "compass",
+                                    "v1",
+                                    "component",
+                                    ":componentId",
+                                    "api_specs"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "componentId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                              "code": 422,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "<string>",
+                              "createdAt": "2026-10-22T01:33:09.000Z",
+                              "updatedAt": "2026-10-22T01:33:09.000Z",
+                              "uid": "35240-1d5621b3-d44f-4b23-a0af-218a3851c399"
+                            }
+                          ],
+                          "createdAt": "2026-10-22T01:33:09.000Z",
+                          "updatedAt": "2026-10-22T01:33:09.000Z",
+                          "uid": "35240-442acbbf-cc5f-4400-a46e-1d4838e7d65e"
+                        },
+                        {
+                          "name": "Delete API spec for a component",
+                          "id": "a871b731-b9eb-4526-ae88-5f1a5e2d7ef0",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/compass/v1/component/:componentId/api_specs",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "compass",
+                                "v1",
+                                "component",
+                                ":componentId",
+                                "api_specs"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "a623487c-04ef-445f-bfa9-07b37e69ec09",
+                                  "key": "componentId",
+                                  "value": "<uuid>",
+                                  "description": "(Required) "
+                                }
+                              ]
+                            },
+                            "description": "Delete the API spec file for a component."
+                          },
+                          "response": [
+                            {
+                              "id": "cfeebcc6-491c-4c3a-8a3a-54bb04c4a10c",
+                              "name": "Returned if the API spec deletion is successful.",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/compass/v1/component/:componentId/api_specs",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "compass",
+                                    "v1",
+                                    "component",
+                                    ":componentId",
+                                    "api_specs"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "componentId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "<string>",
+                              "createdAt": "2026-10-22T01:33:09.000Z",
+                              "updatedAt": "2026-10-22T01:33:09.000Z",
+                              "uid": "35240-cfeebcc6-491c-4c3a-8a3a-54bb04c4a10c"
+                            },
+                            {
+                              "id": "f0d63a06-6894-4b5a-b46b-1529fc9683af",
+                              "name": "Returned if the user is not authorized to delete API specs.",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/compass/v1/component/:componentId/api_specs",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "compass",
+                                    "v1",
+                                    "component",
+                                    ":componentId",
+                                    "api_specs"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "componentId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Forbidden",
+                              "code": 403,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "<string>",
+                              "createdAt": "2026-10-22T01:33:09.000Z",
+                              "updatedAt": "2026-10-22T01:33:09.000Z",
+                              "uid": "35240-f0d63a06-6894-4b5a-b46b-1529fc9683af"
+                            },
+                            {
+                              "id": "92b09c6a-862c-4d1b-bb1f-45c738605f4c",
+                              "name": "Returned if the component is not found.",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: basic",
+                                    "key": "Authorization",
+                                    "value": "Basic <credentials>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/compass/v1/component/:componentId/api_specs",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "compass",
+                                    "v1",
+                                    "component",
+                                    ":componentId",
+                                    "api_specs"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "componentId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "<string>",
+                              "createdAt": "2026-10-22T01:33:09.000Z",
+                              "updatedAt": "2026-10-22T01:33:09.000Z",
+                              "uid": "35240-92b09c6a-862c-4d1b-bb1f-45c738605f4c"
+                            }
+                          ],
+                          "createdAt": "2026-10-22T01:33:09.000Z",
+                          "updatedAt": "2026-10-22T01:33:09.000Z",
+                          "uid": "35240-a871b731-b9eb-4526-ae88-5f1a5e2d7ef0"
+                        }
+                      ],
+                      "id": "61a640cc-b182-4fa3-8985-b2064a5c6638",
+                      "createdAt": "2026-10-22T01:33:09.000Z",
+                      "updatedAt": "2026-10-22T01:33:09.000Z",
+                      "uid": "35240-61a640cc-b182-4fa3-8985-b2064a5c6638"
+                    }
+                  ],
+                  "id": "e457a30e-1902-47da-91e8-700fad679785",
+                  "createdAt": "2026-10-22T01:33:09.000Z",
+                  "updatedAt": "2026-10-22T01:33:09.000Z",
+                  "uid": "35240-e457a30e-1902-47da-91e8-700fad679785"
+                }
+              ],
+              "id": "14c9d9e8-954c-4a35-9daa-51ac347d8c9a",
+              "createdAt": "2026-10-22T01:33:09.000Z",
+              "updatedAt": "2026-10-22T01:33:09.000Z",
+              "uid": "35240-14c9d9e8-954c-4a35-9daa-51ac347d8c9a"
+            }
+          ],
+          "id": "b5511a3d-ee05-467e-82cd-0f5d37d907b4",
+          "createdAt": "2026-10-22T01:33:09.000Z",
+          "updatedAt": "2026-10-22T01:33:09.000Z",
+          "uid": "35240-b5511a3d-ee05-467e-82cd-0f5d37d907b4"
+        }
+      ],
+      "id": "23758927-0181-4409-8585-ada70c9f821c",
+      "createdAt": "2026-10-22T01:33:09.000Z",
+      "updatedAt": "2026-10-22T01:33:09.000Z",
+      "uid": "35240-23758927-0181-4409-8585-ada70c9f821c"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://your-domain.atlassian.net/gateway/api"
+    }
+  ]
+}

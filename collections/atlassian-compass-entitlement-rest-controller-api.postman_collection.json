@@ -1,0 +1,224 @@
+{
+  "info": {
+    "_postman_id": "8843a417-e8cd-4362-b6b8-e01c834c7047",
+    "name": "Compass REST Entitlement Rest Controller API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:33:15.000Z",
+    "updatedAt": "2026-10-22T01:33:15.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-8843a417-e8cd-4362-b6b8-e01c834c7047"
+  },
+  "item": [
+    {
+      "name": "compass",
+      "item": [
+        {
+          "name": "v1",
+          "item": [
+            {
+              "name": "entitlements",
+              "item": [
+                {
+                  "name": "Get Entitlement Results",
+                  "id": "858f3acc-449b-4848-8838-64efe89519bb",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"entitlements\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/compass/v1/entitlements",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "compass",
+                        "v1",
+                        "entitlements"
+                      ]
+                    },
+                    "description": "Get entitlement results for a given user and site"
+                  },
+                  "response": [
+                    {
+                      "id": "511b0fcb-6bd2-4fc9-a8ce-3d6003359ba9",
+                      "name": "Returned if the file upload is successful.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"entitlements\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/compass/v1/entitlements",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "compass",
+                            "v1",
+                            "entitlements"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"entitlements\": {\n    \"cupidatatb37\": {\n      \"@class\": \"<string>\"\n    },\n    \"dolore_86e\": {\n      \"@class\": \"<string>\"\n    }\n  }\n}",
+                      "createdAt": "2026-10-22T01:33:15.000Z",
+                      "updatedAt": "2026-10-22T01:33:15.000Z",
+                      "uid": "35240-511b0fcb-6bd2-4fc9-a8ce-3d6003359ba9"
+                    },
+                    {
+                      "id": "5285e55d-8dc4-454d-877c-56b4cd2ce680",
+                      "name": "Returned if the user is not authenticated",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"entitlements\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/compass/v1/entitlements",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "compass",
+                            "v1",
+                            "entitlements"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": \"<array,null>\"\n}",
+                      "createdAt": "2026-10-22T01:33:15.000Z",
+                      "updatedAt": "2026-10-22T01:33:15.000Z",
+                      "uid": "35240-5285e55d-8dc4-454d-877c-56b4cd2ce680"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T01:33:15.000Z",
+                  "updatedAt": "2026-10-22T01:33:15.000Z",
+                  "uid": "35240-858f3acc-449b-4848-8838-64efe89519bb"
+                }
+              ],
+              "id": "08301a13-98f3-4af2-a406-974b6e7ceeb2",
+              "createdAt": "2026-10-22T01:33:15.000Z",
+              "updatedAt": "2026-10-22T01:33:15.000Z",
+              "uid": "35240-08301a13-98f3-4af2-a406-974b6e7ceeb2"
+            }
+          ],
+          "id": "043325ad-7afe-4a43-b4d4-17d06af4b824",
+          "createdAt": "2026-10-22T01:33:15.000Z",
+          "updatedAt": "2026-10-22T01:33:15.000Z",
+          "uid": "35240-043325ad-7afe-4a43-b4d4-17d06af4b824"
+        }
+      ],
+      "id": "0b1b1e5c-a227-4a91-95df-36e5bfae4562",
+      "createdAt": "2026-10-22T01:33:15.000Z",
+      "updatedAt": "2026-10-22T01:33:15.000Z",
+      "uid": "35240-0b1b1e5c-a227-4a91-95df-36e5bfae4562"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://your-domain.atlassian.net/gateway/api"
+    }
+  ]
+}
