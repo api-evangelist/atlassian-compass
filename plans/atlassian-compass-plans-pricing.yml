@@ -1,0 +1,85 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://www.atlassian.com/software/compass/pricing
+sources:
+- https://www.atlassian.com/software/compass/pricing
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T120612
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: per-seat
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-28'
+  managed_tier: Standard
+published: true
+note: Cloud-only (no Data Center). Monthly/annual toggle shown (SAVE UP TO 17%) though page states subscriptions
+  currently monthly only, USD only. 14-day free trial of Standard.
+plan_count: 3
+currency: USD
+plans:
+- name: Free
+  price_text: $0
+  price: 0
+  currency: USD
+  period: month
+  unit: site
+  included_quota: Up to 3 full users, unlimited basic users; software component catalog with unlimited
+    services; health scorecards and metrics; 3 custom fields and scorecards; apps and integrations
+- name: Standard
+  price_text: $7.67 per user / month
+  price: 7.67
+  currency: USD
+  period: month
+  unit: user
+  included_quota: Up to 35,000 full users, unlimited basic users; 3 custom component types, 50 custom
+    fields and scorecards, 100 custom metrics; operations; one year of data retention; 9/5 regional support
+- name: Premium
+  price_text: $23.96 per user / month
+  price: 23.96
+  currency: USD
+  period: month
+  unit: user
+  included_quota: Up to 35,000 full users; 14 custom component types, 100 custom fields and scorecards,
+    200 custom metrics; enhanced operations; two years data retention; 99.9% uptime SLA; 24/7 support;
+    IP allowlisting; permissions
+rate_limit_statements:
+- Up to 3 full users, unlimited basic users
+- Up to 35,000 full users, unlimited basic users
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - metered
+  - seat
+  units:
+  - object
+  - seat
+  plans:
+  - name: Free
+    access: other
+    model: metered
+    model_how: derived
+    units:
+    - object
+    periods:
+    - month
+  - name: Standard
+    access: other
+    model: seat
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month
+  - name: Premium
+    access: other
+    model: seat
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month
