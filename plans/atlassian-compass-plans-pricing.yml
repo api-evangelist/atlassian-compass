@@ -50,7 +50,7 @@ rate_limit_statements:
 - Up to 3 full users, unlimited basic users
 - Up to 35,000 full users, unlimited basic users
 x-canonical:
-  generated: '2026-11-01'
+  generated: '2026-11-02'
   vocabulary: engine/economics/plans-canonical.yml
   models:
   - metered

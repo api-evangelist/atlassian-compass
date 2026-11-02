@@ -83,7 +83,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-10-31T095417.yml:
+  kin/checks-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -138,6 +138,15 @@ artifacts:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-10-31T095417.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-01T171331.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-01T200237.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   lifecycle/atlassian-compass-lifecycle.yml:
@@ -202,6 +211,9 @@ artifacts:
   packages/atlassian-compass-packages.yml:
     method: searched
     evidence: declared in the artifact
+  patterns/atlassian-compass-patterns.yml:
+    method: derived
+    evidence: declared in the artifact
   plans/atlassian-compass-plans-pricing.yml:
     method: searched
     evidence: declared in the artifact
@@ -210,6 +222,9 @@ artifacts:
     evidence: no authorship recorded
   rate-limits/atlassian-compass-rate-limits.yml:
     method: searched
+    evidence: declared in the artifact
+  rules/atlassian-compass-rules.yml:
+    method: generated
     evidence: declared in the artifact
   scopes/atlassian-compass-scopes.yml:
     method: searched
@@ -233,6 +248,9 @@ artifacts:
     method: generated
     evidence: declared in the artifact
   skills/atlassian-compass-send-deployment-event.md:
+    method: generated
+    evidence: declared in the artifact
+  sla/atlassian-compass-sla.yml:
     method: generated
     evidence: declared in the artifact
   well-known/atlassian-compass-auth-oauth-authorization-server.json:
